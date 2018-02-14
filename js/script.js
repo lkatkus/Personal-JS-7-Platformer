@@ -165,7 +165,7 @@ function init(){
         if(event.key == 'ArrowRight'){
             player.right = false;
         }
-        
+
         if(event.key == 'ArrowLeft'){
             player.left = false;
         }
