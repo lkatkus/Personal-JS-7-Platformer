@@ -1,4 +1,6 @@
 var player;
+var playerCurrentX;
+var playerCurrentY;
 
 function init(){
     // VARIABLES
@@ -10,7 +12,7 @@ function init(){
     var timeIndicator = document.getElementById('currentTime');
 
     // GAME SETUP
-    const FPS = 30;
+    const FPS = 60;
     var currentFrame = 0;
 
     var actualInnerWidth = document.body.clientWidth;
@@ -37,12 +39,13 @@ function init(){
         this.y = canvas.height;
 
         // MOVEMENT
-        this.speedX = 5;
-        this.speedY = 5;
+        this.speedX = 20;
+        this.speedY = 20;
 
         this.left = false;
         this.right = false;
         this.jumping = false;
+        this.landing = true;
 
         this.jumpHeight = 100;
 
@@ -65,22 +68,24 @@ function init(){
     PlayerObj.prototype.move = function(){
 
         if(this.right){
-            console.log('right');
             this.x += this.speedX;
-            this.right = false;
         }else if(this.left){
-            console.log('left');
             this.x -= this.speedX;
-            this.left = false;
         }
         if(this.jumping){
-            console.log('jump');
-            this.jumping = false;
+            if(playerCurrentY - this.jumpHeight <= this.y && this.landing){
+                this.y -= this.speedY;
+                if(playerCurrentY - this.jumpHeight == this.y){
+                    this.landing = false;
+                }
+            }else{
+                this.y += this.speedY;
+                if(playerCurrentY == this.y){
+                    this.jumping = false;
+                    this.landing = true;
+                }
+            }
         }
-    }
-
-    PlayerObj.prototype.jump = function(){
-
     }
 
     PlayerObj.prototype.update = function(){
@@ -108,24 +113,22 @@ function init(){
         player.update();
     }
 
-
     // PLAYER CONTROLS
     document.addEventListener('keydown',function(event){
         if(event.key == 'ArrowRight'){
             player.right = true;
-            player.left = false;
             player.move();
             player.draw();
         }
 
         if(event.key == 'ArrowLeft'){
-            player.right = false;
             player.left = true;
             player.move();
             player.draw();
         }
 
         if(event.key == 'ArrowUp'){
+            playerCurrentY = player.y;
             player.jumping = true;
             player.move();
             player.draw();
@@ -137,6 +140,21 @@ function init(){
         if(event.key == 0){
             console.log('zero');
         }
+    });
+
+
+
+    document.addEventListener('keyup',function(event){
+        if(event.key == 'ArrowRight'){
+            player.right = false;
+
+        }
+
+        if(event.key == 'ArrowLeft'){
+            player.left = false;
+
+        }
+
     });
 
 
