@@ -13,6 +13,14 @@ body{
     background-color: grey;
 }
 
+.container{
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
 canvas{
     background-color: #d3d3d3;
 }

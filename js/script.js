@@ -15,18 +15,15 @@ function init(){
     const FPS = 60;
     var currentFrame = 0;
 
-    var actualInnerWidth = document.body.clientWidth;
-    var actualInnerHeight = document.body.clientHeight;
-    // var actualInnerWidth = document.body.scrollWidth;
+    // CANVAS SETUP
+    canvas.width = 500;
+    canvas.height = 500;
 
-    canvas.width = actualInnerWidth - 50;
-    canvas.height = actualInnerHeight - 50;
-
+    // INTERVAL HANDLING
     var myAnimationInterval;
     var myAnimationRequest;
 
-    var mainArr = [];
-
+    var mainArr = []; /* PLACEHOLDER ARRAY */
 
     // PLAYER OBJECT
     function PlayerObj(){
@@ -38,56 +35,73 @@ function init(){
         this.x = 10;
         this.y = canvas.height;
 
-        // MOVEMENT
+        // MOVEMENT SPEED
         this.speedX = 20;
         this.speedY = 20;
+        this.jumpHeight = 200;
 
+        // LEFT - RIGHT
         this.left = false;
         this.right = false;
-        this.jumping = false;
-        this.landing = true;
 
-        this.jumpHeight = 100;
+        // JUMPING
+        this.jumping = false;
+        this.falling = false;
+        this.grounded = true;
 
         this.playerImg = new Image();
-
     }
 
     PlayerObj.prototype.make = function(){
-        ctx.fillStyle = 'grey';
+        ctx.fillStyle = 'firebrick';
         ctx.fillRect(0, 0, this.width, this.height);
         this.playerImg = ctx.getImageData(0, 0, this.width, this.height);
         void ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
-    PlayerObj.prototype.draw = function(x,y){
-        void ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.putImageData(this.playerImg, this.x, this.y-this.height);
-    }
-
+    // PLAYER OBJECT - MOVEMENT FUNCTION
     PlayerObj.prototype.move = function(){
-
-        if(this.right){
-            this.x += this.speedX;
-        }else if(this.left){
-            this.x -= this.speedX;
+        // MOVING LEFT
+        if(this.left){
+            if(this.x < 0){
+                this.x = 0;
+            }else{
+                this.x -= this.speedX;
+            }
+        // MOVING RIGHT
+        }else if(this.right){
+            if(this.x + this.width > canvas.width){
+                this.x = canvas.width - this.width;
+            }else{
+                this.x += this.speedX;
+            }
         }
+
+        // FOR JUMPING
         if(this.jumping){
-            if(playerCurrentY - this.jumpHeight <= this.y && this.landing){
+            if(playerCurrentY - this.jumpHeight <= this.y && this.jumping && !this.falling){
                 this.y -= this.speedY;
+                // CHECK WHEN MAX JUMP HEIGHT IS REACHED
                 if(playerCurrentY - this.jumpHeight == this.y){
-                    this.landing = false;
+                    this.falling = true;
                 }
             }else{
                 this.y += this.speedY;
-                if(playerCurrentY == this.y){
+                if(canvas.height == this.y){
                     this.jumping = false;
-                    this.landing = true;
+                    this.falling = false;
                 }
             }
         }
     }
 
+    // PLAYER OBJECT - DRAW
+    PlayerObj.prototype.draw = function(x,y){
+        void ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.putImageData(this.playerImg, this.x, this.y-this.height);
+    }
+
+    // PLAYER OBJECT - !!! UPDATE FUNCTION !!!
     PlayerObj.prototype.update = function(){
         player.move();
         player.draw();
@@ -97,7 +111,6 @@ function init(){
 
     player.make();
 
-
     function animate(){
         myAnimationInterval = setTimeout(
             function(){
@@ -106,9 +119,9 @@ function init(){
         1000/FPS);
 
         // TIME UTILITIES
-        // currentFrame++;
-        // frameIndicator.innerHTML = 'Frames since start ' + currentFrame;
-        // timeIndicator.innerHTML = 'Total time ' + Math.floor(currentFrame / FPS);
+        currentFrame++;
+        frameIndicator.innerHTML = 'Frames since start ' + currentFrame;
+        timeIndicator.innerHTML = 'Total time ' + Math.floor(currentFrame / FPS);
 
         player.update();
     }
@@ -128,11 +141,17 @@ function init(){
         }
 
         if(event.key == 'ArrowUp'){
-            playerCurrentY = player.y;
-            player.jumping = true;
-            player.move();
-            player.draw();
+            if(!player.jumping){
+                playerCurrentY = player.y;
+                player.jumping = true;
+                player.grounded = false;
+                player.move();
+                player.draw();
+            }else{
+                console.log('already jumping');
+            }
         }
+
         if(event.key == 'ArrowDown'){
             console.log('down');
         }
@@ -142,34 +161,17 @@ function init(){
         }
     });
 
-
-
     document.addEventListener('keyup',function(event){
         if(event.key == 'ArrowRight'){
             player.right = false;
-
         }
-
+        
         if(event.key == 'ArrowLeft'){
             player.left = false;
-
         }
 
     });
 
-
-
-
-
-
-
     animate();
-
-
-
-
-
-
-
 
 }
