@@ -15,9 +15,39 @@ function init(){
     const FPS = 60;
     var currentFrame = 0;
 
+    // WORLD SIZE PARAMETERS
+    const TILE_SIZE = 40;
+    const WORLD_COLS = 17;
+    const WORLD_ROWS = 10;
+
     // CANVAS SETUP
-    canvas.width = 500;
-    canvas.height = 500;
+    canvas.width = TILE_SIZE * WORLD_COLS;
+    canvas.height = TILE_SIZE * WORLD_ROWS;
+
+    // LEVEL LAYOUT
+    var levelLayout = [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    ];
+
+    function makeWorld(){
+        ctx.fillStyle = "black";
+        for(let i = 0; i < levelLayout.length; i++){
+            for(let j = 0; j < levelLayout[i].length; j++){
+                if(levelLayout[i][j] == 1){
+                    ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
+                }
+            }
+        }
+    }
 
     // INTERVAL HANDLING
     var myAnimationInterval;
@@ -28,16 +58,21 @@ function init(){
     // PLAYER OBJECT
     function PlayerObj(){
         // APPEARANCE
-        this.width = 40;
-        this.height = 40;
+        this.width = TILE_SIZE;
+        this.height = TILE_SIZE;
 
         // POSITION
-        this.x = 10;
-        this.y = canvas.height;
+        // ACTUAL COORDINATES
+        this.x = 100;
+        this.y = 200;
+
+        // GRID COORDINATES
+        this.playerCol;
+        this.playerRow;
 
         // MOVEMENT SPEED
-        this.speedX = 20;
-        this.speedY = 20;
+        this.speedX = 10;
+        this.speedY = 10;
         this.jumpHeight = 200;
 
         // LEFT - RIGHT
@@ -46,8 +81,8 @@ function init(){
 
         // JUMPING
         this.jumping = false;
-        this.falling = false;
-        this.grounded = true;
+        this.falling = true;
+        this.grounded = false;
 
         this.playerImg = new Image();
     }
@@ -61,38 +96,78 @@ function init(){
 
     // PLAYER OBJECT - MOVEMENT FUNCTION
     PlayerObj.prototype.move = function(){
+
         // MOVING LEFT
         if(this.left){
-            if(this.x < 0){
-                this.x = 0;
+            if(levelLayout[this.playerRow][this.playerCol] == 1){
+                this.x = this.x;
             }else{
                 this.x -= this.speedX;
+
+                // CHECK BOTTOM
+                if(!this.jumping){
+                    if(levelLayout[this.playerRow+1][this.playerCol] == 1){
+                        this.falling = false;
+                    }else{
+                        this.falling = true;
+                    }
+                }
             }
+
         // MOVING RIGHT
         }else if(this.right){
-            if(this.x + this.width > canvas.width){
-                this.x = canvas.width - this.width;
+
+            if(levelLayout[this.playerRow][this.playerCol+1] == 1){
+                this.x = this.x;
             }else{
                 this.x += this.speedX;
+                // CHECK BOTTOM
+                if(!this.jumping){
+                    if(levelLayout[this.playerRow][this.playerCol] == 1){
+                        this.falling = false;
+                    }else{
+                        this.falling = true;
+                    }
+                }
             }
+
         }
 
         // FOR JUMPING
-        if(this.jumping){
+        if(this.jumping && !this.grounded){
             if(playerCurrentY - this.jumpHeight <= this.y && this.jumping && !this.falling){
                 this.y -= this.speedY;
                 // CHECK WHEN MAX JUMP HEIGHT IS REACHED
                 if(playerCurrentY - this.jumpHeight == this.y){
                     this.falling = true;
-                }
-            }else{
-                this.y += this.speedY;
-                if(canvas.height == this.y){
                     this.jumping = false;
-                    this.falling = false;
                 }
             }
         }
+
+        if(this.falling){
+            if(levelLayout[this.playerRow+1][this.playerCol] == 1){
+                this.jumping = false;
+                this.falling = false;
+                this.grounded = true;
+                this.y = this.y;
+                console.log('grounded');
+                console.log('jumping ' + player.jumping);
+                console.log('falling ' + player.falling);
+                console.log('falling ' + player.grounded);
+            }else{
+                this.y += this.speedY;
+            }
+        }
+    }
+
+    // PLAYER OBJECT - CHECK CURRENT POSITION
+    PlayerObj.prototype.checkPosition = function (){
+        this.playerCol = Math.floor(this.x / TILE_SIZE);
+        this.playerRow = Math.floor((this.y - TILE_SIZE) / TILE_SIZE);
+
+        document.getElementById('playerCol').innerHTML = this.playerCol;
+        document.getElementById('playerRow').innerHTML = this.playerRow;
     }
 
     // PLAYER OBJECT - DRAW
@@ -103,12 +178,12 @@ function init(){
 
     // PLAYER OBJECT - !!! UPDATE FUNCTION !!!
     PlayerObj.prototype.update = function(){
+        player.checkPosition();
         player.move();
         player.draw();
     }
 
     player = new PlayerObj();
-
     player.make();
 
     function animate(){
@@ -118,12 +193,14 @@ function init(){
             },
         1000/FPS);
 
-        // TIME UTILITIES
-        currentFrame++;
-        frameIndicator.innerHTML = 'Frames since start ' + currentFrame;
-        timeIndicator.innerHTML = 'Total time ' + Math.floor(currentFrame / FPS);
+        // // TIME UTILITIES
+        // currentFrame++;
+        // frameIndicator.innerHTML = 'Frames since start ' + currentFrame;
+        // timeIndicator.innerHTML = 'Total time ' + Math.floor(currentFrame / FPS);
 
         player.update();
+        makeWorld();
+
     }
 
     // PLAYER CONTROLS
@@ -141,14 +218,17 @@ function init(){
         }
 
         if(event.key == 'ArrowUp'){
-            if(!player.jumping){
+            console.log('jumping ' + player.jumping);
+            console.log('falling ' + player.falling);
+            console.log('falling ' + player.grounded);
+
+            if(!player.jumping && player.grounded){
+                console.log('JUMPING');
                 playerCurrentY = player.y;
                 player.jumping = true;
                 player.grounded = false;
                 player.move();
                 player.draw();
-            }else{
-                console.log('already jumping');
             }
         }
 
@@ -172,6 +252,24 @@ function init(){
 
     });
 
+
+    // UTILITIES
+    // MOUSE INFORMATION
+    canvas.addEventListener('mousemove', function(event){
+        // CURRENT MOUSE POSITION ON CANVAS
+        let mouseX = event.clientX - this.offsetLeft;
+        let mouseY = event.clientY - this.offsetTop;
+
+        // CURRENT MOUSE POSITION ON GRID LAYOUT
+        let mouseCol = Math.floor(mouseX / TILE_SIZE);
+        let mouseRow = Math.floor(mouseY / TILE_SIZE);
+
+        document.getElementById('mouseCol').innerHTML = mouseCol;
+        document.getElementById('mouseRow').innerHTML = mouseRow;
+    })
+
     animate();
+
+
 
 }
