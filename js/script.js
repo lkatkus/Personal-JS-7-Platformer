@@ -30,8 +30,8 @@ function init(){
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
+        [1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
         [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
         [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -63,8 +63,8 @@ function init(){
 
         // POSITION
         // ACTUAL COORDINATES
-        this.x = 100;
-        this.y = 200;
+        this.x = 40;
+        this.y = 160;
 
         // GRID COORDINATES
         this.playerCol;
@@ -106,7 +106,7 @@ function init(){
 
                 // CHECK BOTTOM
                 if(!this.jumping){
-                    if(levelLayout[this.playerRow+1][this.playerCol] == 1){
+                    if(levelLayout[this.playerRow][this.playerCol] == 1){
                         this.falling = false;
                     }else{
                         this.falling = true;
@@ -117,10 +117,11 @@ function init(){
         // MOVING RIGHT
         }else if(this.right){
 
-            if(levelLayout[this.playerRow][this.playerCol+1] == 1){
+            if(levelLayout[this.playerRow][this.playerCol + 1] == 1){
                 this.x = this.x;
             }else{
                 this.x += this.speedX;
+
                 // CHECK BOTTOM
                 if(!this.jumping){
                     if(levelLayout[this.playerRow][this.playerCol] == 1){
@@ -130,13 +131,18 @@ function init(){
                     }
                 }
             }
-
         }
 
         // FOR JUMPING
         if(this.jumping && !this.grounded){
             if(playerCurrentY - this.jumpHeight <= this.y && this.jumping && !this.falling){
                 this.y -= this.speedY;
+
+                if(levelLayout[this.playerRow][this.playerCol] == 1){
+                    this.falling = true;
+                    this.jumping = false;
+                }
+
                 // CHECK WHEN MAX JUMP HEIGHT IS REACHED
                 if(playerCurrentY - this.jumpHeight == this.y){
                     this.falling = true;
@@ -151,10 +157,6 @@ function init(){
                 this.falling = false;
                 this.grounded = true;
                 this.y = this.y;
-                console.log('grounded');
-                console.log('jumping ' + player.jumping);
-                console.log('falling ' + player.falling);
-                console.log('falling ' + player.grounded);
             }else{
                 this.y += this.speedY;
             }
@@ -163,7 +165,7 @@ function init(){
 
     // PLAYER OBJECT - CHECK CURRENT POSITION
     PlayerObj.prototype.checkPosition = function (){
-        this.playerCol = Math.floor(this.x / TILE_SIZE);
+        this.playerCol = Math.floor((this.x + TILE_SIZE / 2) / TILE_SIZE);
         this.playerRow = Math.floor((this.y - TILE_SIZE) / TILE_SIZE);
 
         document.getElementById('playerCol').innerHTML = this.playerCol;
@@ -194,9 +196,9 @@ function init(){
         1000/FPS);
 
         // // TIME UTILITIES
-        // currentFrame++;
-        // frameIndicator.innerHTML = 'Frames since start ' + currentFrame;
-        // timeIndicator.innerHTML = 'Total time ' + Math.floor(currentFrame / FPS);
+        currentFrame++;
+        frameIndicator.innerHTML = 'Frames since start ' + currentFrame;
+        timeIndicator.innerHTML = 'Total time ' + Math.floor(currentFrame / FPS);
 
         player.update();
         makeWorld();
@@ -218,10 +220,6 @@ function init(){
         }
 
         if(event.key == 'ArrowUp'){
-            console.log('jumping ' + player.jumping);
-            console.log('falling ' + player.falling);
-            console.log('falling ' + player.grounded);
-
             if(!player.jumping && player.grounded){
                 console.log('JUMPING');
                 playerCurrentY = player.y;
