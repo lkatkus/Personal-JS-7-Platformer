@@ -2,6 +2,11 @@ var player;
 var playerCurrentX;
 var playerCurrentY;
 
+var viewport = {
+    offsetX : 0,
+    offsetY : 0
+};
+
 function init(){
     // VARIABLES
     // SELECTORS
@@ -14,6 +19,12 @@ function init(){
     // GAME SETUP
     const FPS = 60;
     var currentFrame = 0;
+
+    var camPanX = 0;
+    var camPanY = 0;
+
+    // const playerDistanceBeforePanX = 100;
+    // const playerDistanceBeforePanY = 100;
 
     // LEVEL LAYOUT
     var levelLayout = [
@@ -38,16 +49,20 @@ function init(){
     const WORLD_ROWS = levelLayout.length;
 
     // CANVAS SETUP
-    canvas.width = TILE_SIZE * WORLD_COLS;
-    canvas.height = TILE_SIZE * WORLD_ROWS;
+    canvas.width = 600;
 
+    // canvas.width = TILE_SIZE * WORLD_COLS;
+    canvas.height = TILE_SIZE * WORLD_ROWS;
 
     function makeWorld(){
         ctx.fillStyle = "black";
         for(let i = 0; i < levelLayout.length; i++){
             for(let j = 0; j < levelLayout[i].length; j++){
                 if(levelLayout[i][j] == 1){
-                    ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
+                    ctx.fillRect(j*TILE_SIZE - viewport.offsetX,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
+                    // if(i == 8 && j == 4){
+                    //     console.log(j*TILE_SIZE - viewport.offsetX);
+                    // }
                 }
             }
         }
@@ -67,15 +82,15 @@ function init(){
 
         // POSITION
         // ACTUAL COORDINATES
-        this.x = 130;
-        this.y = 150;
+        this.x = 40;
+        this.y = 400;
 
         // GRID COORDINATES
         this.playerCol;
         this.playerRow;
 
         // MOVEMENT SPEED
-        this.speedX = 10;
+        this.speedX = 40;
         this.speedY = 10;
         this.jumpHeight = 200;
 
@@ -107,6 +122,7 @@ function init(){
                 this.x = this.x;
             }else{
                 this.x -= this.speedX;
+                viewport.offsetX -= this.speedX;
 
                 // CHECK BOTTOM
                 if(!this.jumping){
@@ -124,7 +140,8 @@ function init(){
             if(returnTileGridStatus(this.x + TILE_SIZE + 1,this.y - 1) || returnTileGridStatus(this.x + TILE_SIZE + 1,this.y - TILE_SIZE)){
                 this.x = this.x;
             }else{
-                this.x += this.speedX;
+                // this.x += this.speedX;
+                viewport.offsetX += this.speedX;
 
                 // CHECK BOTTOM
                 if(!this.jumping){
@@ -146,7 +163,7 @@ function init(){
                 this.y -= this.speedY;
 
                 // CHECKING TILE ABOVE PLAYER
-                if(returnTileGridStatus(this.x,this.y-TILE_SIZE) || returnTileGridStatus(this.x + TILE_SIZE - 1,this.y - TILE_SIZE)){
+                if(returnTileGridStatus(this.x + viewport.offsetX,this.y-TILE_SIZE) || returnTileGridStatus(this.x + TILE_SIZE - 1,this.y - TILE_SIZE)){
                         this.falling = true;
                         this.jumping = false;
                 }
@@ -226,7 +243,7 @@ function init(){
     }
 
     // PLAYER CONTROLS
-    document.addEventListener('keydown',function(event){
+    document.addEventListener('keyup',function(event){
         if(event.key == 'ArrowRight'){
             player.right = true;
             player.move();
@@ -241,10 +258,6 @@ function init(){
 
         if(event.key == 'ArrowUp'){
             if(!player.jumping && player.grounded){
-                console.log('grounded ' + player.grounded);
-                console.log('jumping ' + player.jumping);
-                console.log('falling ' + player.falling);
-
                 playerCurrentY = player.y;
                 player.jumping = true;
                 player.grounded = false;
@@ -260,9 +273,11 @@ function init(){
         if(event.key == 0){
             console.log(player.x + ' ' + player.y);
 
-            console.log('grounded ' + player.grounded);
-            console.log('jumping ' + player.jumping);
-            console.log('falling ' + player.falling);
+            console.log(viewport);
+
+            // console.log('grounded ' + player.grounded);
+            // console.log('jumping ' + player.jumping);
+            // console.log('falling ' + player.falling);
         }
     });
 
