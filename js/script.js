@@ -31,10 +31,10 @@ function init(){
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
-        [1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ];
 
@@ -63,8 +63,8 @@ function init(){
 
         // POSITION
         // ACTUAL COORDINATES
-        this.x = 40;
-        this.y = 160;
+        this.x = 130;
+        this.y = 150;
 
         // GRID COORDINATES
         this.playerCol;
@@ -99,15 +99,16 @@ function init(){
 
         // MOVING LEFT
         if(this.left){
-            if(levelLayout[this.playerRow][this.playerCol] == 1){
+            if(returnTileGridStatus(this.x - 1,this.y - 1)){
                 this.x = this.x;
             }else{
                 this.x -= this.speedX;
 
                 // CHECK BOTTOM
                 if(!this.jumping){
-                    if(levelLayout[this.playerRow][this.playerCol] == 1){
+                    if(returnTileGridStatus(this.x,this.y)){
                         this.falling = false;
+                        this.grounded = true;
                     }else{
                         this.falling = true;
                     }
@@ -116,16 +117,16 @@ function init(){
 
         // MOVING RIGHT
         }else if(this.right){
-
-            if(levelLayout[this.playerRow][this.playerCol + 1] == 1){
+            if(returnTileGridStatus(this.x + TILE_SIZE + 1,this.y - 1)){
                 this.x = this.x;
             }else{
                 this.x += this.speedX;
 
                 // CHECK BOTTOM
                 if(!this.jumping){
-                    if(levelLayout[this.playerRow][this.playerCol] == 1){
+                    if(returnTileGridStatus(this.x,this.y)){
                         this.falling = false;
+                        this.grounded = true;
                     }else{
                         this.falling = true;
                     }
@@ -135,12 +136,15 @@ function init(){
 
         // FOR JUMPING
         if(this.jumping && !this.grounded){
+
+            // INITIAL JUMP
             if(playerCurrentY - this.jumpHeight <= this.y && this.jumping && !this.falling){
                 this.y -= this.speedY;
 
-                if(levelLayout[this.playerRow][this.playerCol] == 1){
-                    this.falling = true;
-                    this.jumping = false;
+                // CHECKING TILE ABOVE PLAYER
+                if(returnTileGridStatus(this.x,this.y-TILE_SIZE) || returnTileGridStatus(this.x + TILE_SIZE - 1,this.y - TILE_SIZE)){
+                        this.falling = true;
+                        this.jumping = false;
                 }
 
                 // CHECK WHEN MAX JUMP HEIGHT IS REACHED
@@ -152,20 +156,33 @@ function init(){
         }
 
         if(this.falling){
-            if(levelLayout[this.playerRow+1][this.playerCol] == 1){
-                this.jumping = false;
-                this.falling = false;
-                this.grounded = true;
-                this.y = this.y;
+            // CHECK TILE BELOW PLAYER
+            if(returnTileGridStatus(this.x,this.y) || returnTileGridStatus(this.x + TILE_SIZE - 1,this.y)){
+                    this.jumping = false;
+                    this.falling = false;
+                    this.grounded = true;
             }else{
                 this.y += this.speedY;
             }
         }
     }
 
+    function returnTileGridStatus(x, y){
+        // CONVERT TO GRID POSITION
+        let gridCol = Math.floor(x / TILE_SIZE);
+        let gridRow = Math.floor(y / TILE_SIZE);
+
+        // CHECK IF TILE IS FREE (false) OR TAKEN (true)
+        if(levelLayout[gridRow][gridCol] == 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     // PLAYER OBJECT - CHECK CURRENT POSITION
     PlayerObj.prototype.checkPosition = function (){
-        this.playerCol = Math.floor((this.x + TILE_SIZE / 2) / TILE_SIZE);
+        this.playerCol = Math.floor(this.x / TILE_SIZE);
         this.playerRow = Math.floor((this.y - TILE_SIZE) / TILE_SIZE);
 
         document.getElementById('playerCol').innerHTML = this.playerCol;
@@ -221,7 +238,10 @@ function init(){
 
         if(event.key == 'ArrowUp'){
             if(!player.jumping && player.grounded){
-                console.log('JUMPING');
+                console.log('grounded ' + player.grounded);
+                console.log('jumping ' + player.jumping);
+                console.log('falling ' + player.falling);
+
                 playerCurrentY = player.y;
                 player.jumping = true;
                 player.grounded = false;
@@ -235,7 +255,11 @@ function init(){
         }
 
         if(event.key == 0){
-            console.log('zero');
+            console.log(player.x + ' ' + player.y);
+
+            console.log('grounded ' + player.grounded);
+            console.log('jumping ' + player.jumping);
+            console.log('falling ' + player.falling);
         }
     });
 
