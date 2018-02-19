@@ -49,9 +49,9 @@ function init(){
     const WORLD_ROWS = levelLayout.length;
 
     // CANVAS SETUP
-    canvas.width = 600;
+    // canvas.width = 600;
 
-    // canvas.width = TILE_SIZE * WORLD_COLS;
+    canvas.width = TILE_SIZE * WORLD_COLS;
     canvas.height = TILE_SIZE * WORLD_ROWS;
 
     function makeWorld(){
@@ -59,7 +59,7 @@ function init(){
         for(let i = 0; i < levelLayout.length; i++){
             for(let j = 0; j < levelLayout[i].length; j++){
                 if(levelLayout[i][j] == 1){
-                    ctx.fillRect(j*TILE_SIZE - viewport.offsetX,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
+                    ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
                     // if(i == 8 && j == 4){
                     //     console.log(j*TILE_SIZE - viewport.offsetX);
                     // }
@@ -90,7 +90,7 @@ function init(){
         this.playerRow;
 
         // MOVEMENT SPEED
-        this.speedX = 40;
+        this.speedX = 10;
         this.speedY = 10;
         this.jumpHeight = 200;
 
@@ -140,7 +140,7 @@ function init(){
             if(returnTileGridStatus(this.x + TILE_SIZE + 1,this.y - 1) || returnTileGridStatus(this.x + TILE_SIZE + 1,this.y - TILE_SIZE)){
                 this.x = this.x;
             }else{
-                // this.x += this.speedX;
+                this.x += this.speedX;
                 viewport.offsetX += this.speedX;
 
                 // CHECK BOTTOM
@@ -163,7 +163,7 @@ function init(){
                 this.y -= this.speedY;
 
                 // CHECKING TILE ABOVE PLAYER
-                if(returnTileGridStatus(this.x + viewport.offsetX,this.y-TILE_SIZE) || returnTileGridStatus(this.x + TILE_SIZE - 1,this.y - TILE_SIZE)){
+                if(returnTileGridStatus(this.x,this.y-TILE_SIZE) || returnTileGridStatus(this.x + TILE_SIZE - 1,this.y - TILE_SIZE)){
                         this.falling = true;
                         this.jumping = false;
                 }
@@ -243,7 +243,7 @@ function init(){
     }
 
     // PLAYER CONTROLS
-    document.addEventListener('keyup',function(event){
+    document.addEventListener('keydown',function(event){
         if(event.key == 'ArrowRight'){
             player.right = true;
             player.move();
