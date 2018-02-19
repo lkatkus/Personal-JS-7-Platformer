@@ -15,28 +15,29 @@ function init(){
     const FPS = 60;
     var currentFrame = 0;
 
+    // LEVEL LAYOUT
+    var levelLayout = [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    ];
+
     // WORLD SIZE PARAMETERS
     const TILE_SIZE = 40;
-    const WORLD_COLS = 17;
-    const WORLD_ROWS = 10;
+    const WORLD_COLS = levelLayout[0].length;
+    const WORLD_ROWS = levelLayout.length;
 
     // CANVAS SETUP
     canvas.width = TILE_SIZE * WORLD_COLS;
     canvas.height = TILE_SIZE * WORLD_ROWS;
 
-    // LEVEL LAYOUT
-    var levelLayout = [
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
-        [1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-    ];
 
     function makeWorld(){
         ctx.fillStyle = "black";
@@ -99,7 +100,7 @@ function init(){
 
         // MOVING LEFT
         if(this.left){
-            if(returnTileGridStatus(this.x - 1,this.y - 1)){
+            if(returnTileGridStatus(this.x - 1, this.y - 1) || returnTileGridStatus(this.x - 1,this.y - TILE_SIZE)){
                 this.x = this.x;
             }else{
                 this.x -= this.speedX;
@@ -117,7 +118,7 @@ function init(){
 
         // MOVING RIGHT
         }else if(this.right){
-            if(returnTileGridStatus(this.x + TILE_SIZE + 1,this.y - 1)){
+            if(returnTileGridStatus(this.x + TILE_SIZE + 1,this.y - 1) || returnTileGridStatus(this.x + TILE_SIZE + 1,this.y - TILE_SIZE)){
                 this.x = this.x;
             }else{
                 this.x += this.speedX;
@@ -192,6 +193,7 @@ function init(){
     // PLAYER OBJECT - DRAW
     PlayerObj.prototype.draw = function(x,y){
         void ctx.clearRect(0, 0, canvas.width, canvas.height);
+        makeWorld();
         ctx.putImageData(this.playerImg, this.x, this.y-this.height);
     }
 
@@ -218,8 +220,6 @@ function init(){
         timeIndicator.innerHTML = 'Total time ' + Math.floor(currentFrame / FPS);
 
         player.update();
-        makeWorld();
-
     }
 
     // PLAYER CONTROLS
