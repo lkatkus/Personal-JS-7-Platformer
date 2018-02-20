@@ -2,17 +2,6 @@ var player;
 var playerCurrentX;
 var playerCurrentY;
 
-var viewport = {
-    offsetX : 0,
-    offsetY : 0,
-    cameraOffsetX : 0,
-    cameraOffsetY : 0,
-    // worldMinX : 0,
-    // worldMinY : 0,
-    // worldMaxX : 0,
-    // worldMaxY : 0
-};
-
 function init(){
     // VARIABLES
     // SELECTORS
@@ -26,8 +15,11 @@ function init(){
     const FPS = 60;
     var currentFrame = 0;
 
-    // const playerDistanceBeforePanX = 100;
-    // const playerDistanceBeforePanY = 100;
+
+    var camPanX = 0;
+    var camPanY = 0;
+    const PLAYER_DIST_FROM_CENTER_BEFORE_CAMERA_PAN_X = 150;
+    const PLAYER_DIST_FROM_CENTER_BEFORE_CAMERA_PAN_Y = 100;
 
     // LEVEL LAYOUT
     var levelLayout = [
@@ -40,9 +32,9 @@ function init(){
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
         [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ];
 
@@ -52,7 +44,7 @@ function init(){
     const WORLD_ROWS = levelLayout.length;
 
     // CANVAS SETUP
-    canvas.width = 600;
+    canvas.width = 800;
     // canvas.width = TILE_SIZE * WORLD_COLS;
     canvas.height = TILE_SIZE * WORLD_ROWS;
 
@@ -62,13 +54,41 @@ function init(){
             for(let j = 0; j < levelLayout[i].length; j++){
                 if(levelLayout[i][j] == 1){
                     ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
-                    // if(i == 8 && j == 4){
-                    //     console.log(j*TILE_SIZE - viewport.offsetX);
-                    // }
                 }
             }
         }
+
     }
+
+    function instantCamFollow() {
+      camPanX = player.x - canvas.width/2;
+      // camPanY = player.y - canvas.height/2;
+    }
+
+    function cameraFollow() {
+        var cameraFocusCenterX = camPanX + canvas.width / 2;
+        var cameraFocusCenterY = camPanY + canvas.height / 2;
+
+        var playerDistFromCameraFocusX = Math.abs(player.x-cameraFocusCenterX);
+
+        if(playerDistFromCameraFocusX > 0) {
+            if(cameraFocusCenterX < player.x)  {
+                camPanX += player.speedX;
+            }else{
+                camPanX -= player.speedX;
+            }
+        }
+
+      if(camPanX < 0) {
+        camPanX = 0;
+      }
+
+      var maxPanRight = WORLD_COLS * TILE_SIZE - 800;
+      if(camPanX > maxPanRight) {
+        camPanX = maxPanRight;
+      }
+    }
+
 
     // INTERVAL HANDLING
     var myAnimationInterval;
@@ -89,15 +109,13 @@ function init(){
         this.x = startX;
         this.y = startY;
 
-        viewport.offsetX = startX;
-
         // GRID COORDINATES
         this.playerCol;
         this.playerRow;
 
         // MOVEMENT SPEED
-        this.speedX = 10;
-        this.speedY = 10;
+        this.speedX = 5;
+        this.speedY = 5;
         this.jumpHeight = 200;
 
         // LEFT - RIGHT
@@ -119,6 +137,12 @@ function init(){
         void ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
+    PlayerObj.prototype.reset = function(){
+        player.x = canvas.width/2;
+        player.y = canvas.height/2;
+    }
+
+
     // PLAYER OBJECT - MOVEMENT FUNCTION
     PlayerObj.prototype.move = function(){
 
@@ -128,7 +152,6 @@ function init(){
                 this.x = this.x;
             }else{
                 this.x -= this.speedX;
-                viewport.offsetX -= this.speedX;
 
                 // CHECK BOTTOM
                 if(!this.jumping){
@@ -138,11 +161,6 @@ function init(){
                     }else{
                         this.falling = true;
                     }
-                }
-
-                // WORLD BORDER CHECKER
-                if(this.x > canvas.width / 2){
-                    console.log('outside middle');
                 }
             }
 
@@ -152,7 +170,6 @@ function init(){
                 this.x = this.x;
             }else{
                 this.x += this.speedX;
-                viewport.offsetX += this.speedX;
 
                 // CHECK BOTTOM
                 if(!this.jumping){
@@ -163,12 +180,6 @@ function init(){
                         this.falling = true;
                     }
                 }
-
-                // WORLD BORDER CHECKER
-                // if(viewport.offsetX > canvas.width / 2){
-                //     console.log('outside middle');
-                //     viewport.cameraOffsetX += this.speedX;
-                // }
             }
         }
 
@@ -177,11 +188,6 @@ function init(){
 
             // INITIAL JUMP
             if(playerCurrentY - this.jumpHeight <= this.y && this.jumping && !this.falling){
-                // console.log('current ' + playerCurrentY);
-                // console.log('this ' + this.y);
-                // let jump = Math.floor((this.jumpHeight - (playerCurrentY - this.y)) / 2 + 1);
-                // console.log(jump);
-                // this.y -= jump;
 
                 this.y -= this.speedY;
 
@@ -236,52 +242,67 @@ function init(){
 
     // PLAYER OBJECT - DRAW
     PlayerObj.prototype.draw = function(x,y){
-        void ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // DRAWING WORLD
-        ctx.translate(-viewport.cameraOffsetX,viewport.offsetY);
-        makeWorld();
-        viewport.cameraOffsetX = 0;
-        ctx.putImageData(this.playerImg, this.x, this.y-this.height);
-    }
-
-    // PLAYER OBJECT - !!! UPDATE FUNCTION !!!
-    PlayerObj.prototype.update = function(){
-        player.checkPosition();
-        player.move();
-        player.draw();
+        ctx.putImageData(this.playerImg, 400, this.y-this.height);
     }
 
     player = new PlayerObj(160, 400, 'firebrick');
     player.make();
 
+    player.reset();
+
+    function moveEverything(){
+        player.checkPosition();
+        player.move();
+        instantCamFollow();
+        // cameraFollow();
+    }
+
+    function drawEverything(){
+        void ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.save();
+        ctx.translate(-camPanX, -camPanY);
+
+        makeWorld();
+        player.draw(400, player.y);
+
+        ctx.restore();
+
+    }
+
     function animate(){
-        myAnimationInterval = setTimeout(
-            function(){
-                myAnimationRequest = requestAnimationFrame(animate);
-            },
-        1000/FPS);
+        // myAnimationInterval = setTimeout(
+        //     function(){
+        //         myAnimationRequest = requestAnimationFrame(animate);
+        //     },
+        // 1000/FPS);
+
+        setInterval(function() {
+            moveEverything();
+            drawEverything();
+        }, 1000/FPS);
 
         // // TIME UTILITIES
         currentFrame++;
         frameIndicator.innerHTML = 'Frames since start ' + currentFrame;
         timeIndicator.innerHTML = 'Total time ' + Math.floor(currentFrame / FPS);
 
-        player.update();
+        // player.update();
+        // moveEverything();
+        // drawEverything();
     }
 
     // PLAYER CONTROLS
     document.addEventListener('keydown',function(event){
         if(event.key == 'ArrowRight'){
             player.right = true;
-            player.move();
-            player.draw();
+            // player.move();
+            // player.draw();
         }
 
         if(event.key == 'ArrowLeft'){
             player.left = true;
-            player.move();
-            player.draw();
+            // player.move();
+            // player.draw();
         }
 
         if(event.key == 'ArrowUp'){
@@ -289,8 +310,8 @@ function init(){
                 playerCurrentY = player.y;
                 player.jumping = true;
                 player.grounded = false;
-                player.move();
-                player.draw();
+                // player.move();
+                // player.draw();
             }
         }
 
@@ -299,9 +320,9 @@ function init(){
         }
 
         if(event.key == 0){
-            console.log(player.x + ' ' + player.y);
-
-            console.log(viewport);
+            console.log('playerX ' + player.x);
+            console.log('camPanX ' + camPanX);
+            console.log('canvas width ' + canvas.width)
 
             // console.log('grounded ' + player.grounded);
             // console.log('jumping ' + player.jumping);
