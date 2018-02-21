@@ -22,7 +22,7 @@ body{
 }
 
 canvas{
-    background-color: #d3d3d3;
+    background-color: #9ACFF0;
 }
 
 .container{
@@ -37,4 +37,5 @@ canvas{
     position: absolute;
     top: 0;
     left: 0;
+    color: white;
 }
