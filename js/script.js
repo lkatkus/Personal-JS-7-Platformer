@@ -262,6 +262,11 @@ function init(){
                         this.falling = true;
                         this.jumping = false;
                         this.y = this.y;
+
+                        // DEMOLITION OF TILES
+                        if(levelLayout[tile.row][tile.col] == 3){
+                            levelLayout[tile.row][tile.col] = 0;
+                        }
                 }
 
                 // CHECK IF MAX JUMP HEIGHT IS REACHED
@@ -371,7 +376,8 @@ function init(){
             console.log('down');
         }
         if(event.key == 0){
-            console.log(player);
+            // console.log(player);
+            console.log(tile);
         }
     });
 
@@ -392,6 +398,7 @@ function init(){
         let gridRow = Math.floor(y / TILE_SIZE);
         let gridCol = Math.floor(x / TILE_SIZE);
 
+        // SET TOUCHED INFO
         if(player.jumping){
             tile.row = gridRow;
             tile.col = gridCol;
@@ -402,12 +409,6 @@ function init(){
         if(levelLayout[gridRow][gridCol] == 0 || levelLayout[gridRow][gridCol] == 6){
             return false;
         }else{
-
-            // DEMOLITION OF TILES
-            if(player.jumping && levelLayout[gridRow][gridCol] == 3){
-                levelLayout[gridRow][gridCol] = 0;
-            }
-
             return true;
         }
     }
