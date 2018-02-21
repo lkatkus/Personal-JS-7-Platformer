@@ -1,6 +1,28 @@
+// VARIABLES
+// MAIN PLAYER VARIABLES
 var player;
 var playerCurrentX;
 var playerCurrentY;
+
+var playerMaxSpeedX = 10;
+var playerMaxSpeedY = 20;
+
+// INTERVAL HANDLING VARIABLES
+var myAnimationInterval;
+var myAnimationRequest;
+
+// CAMERA CONTROL VARIABLES
+var camPanX = 0;
+var camPanY = 0;
+
+// HELPER VARIABLES
+var tile = {
+    row : 0,
+    col : 0,
+    type : 0
+};
+
+
 
 function init(){
     // VARIABLES
@@ -16,8 +38,6 @@ function init(){
     var currentFrame = 0;
 
 
-    var camPanX = 0;
-    var camPanY = 0;
     const PLAYER_DIST_FROM_CENTER_BEFORE_CAMERA_PAN_X = 150;
     const PLAYER_DIST_FROM_CENTER_BEFORE_CAMERA_PAN_Y = 100;
 
@@ -27,7 +47,7 @@ function init(){
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 3, 3, 3, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 3, 4, 4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -39,10 +59,7 @@ function init(){
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 0, 0, 5, 5, 5, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 0, 0, 5, 5, 5, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 0, 0, 5, 5, 5, 5, 0, 0, 0, 0, 5, 5, 5, 5, 5, 0, 0, 5, 5, 5, 5, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ];
 
     // WORLD SIZE PARAMETERS
@@ -69,7 +86,7 @@ function init(){
                     ctx.fillStyle = '#46B29D';
                     ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
                 }
-                // HANGING BLOCK
+                // BRICK BLOCK
                 if(levelLayout[i][j] == 3){
                     ctx.fillStyle = '#E37B40';
                     ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
@@ -79,7 +96,7 @@ function init(){
                     ctx.fillStyle = '#F0CA4D';
                     ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
                 }
-                // BRICK
+                // CUBE FOR STRUCTURES
                 if(levelLayout[i][j] == 5){
                     ctx.fillStyle = '#5886A1';
                     ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
@@ -87,6 +104,11 @@ function init(){
                 // FLAG POLE
                 if(levelLayout[i][j] == 6){
                     ctx.fillStyle = 'white';
+                    ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
+                }
+                // FLAG
+                if(levelLayout[i][j] == 7){
+                    ctx.fillStyle = 'green';
                     ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
                 }
             }
@@ -124,11 +146,6 @@ function init(){
     }
 
 
-    // INTERVAL HANDLING
-    var myAnimationInterval;
-    var myAnimationRequest;
-
-    var mainArr = []; /* PLACEHOLDER ARRAY */
 
     // PLAYER OBJECT
     function PlayerObj(startX, startY, color){
@@ -148,18 +165,18 @@ function init(){
         this.playerRow;
 
         // MOVEMENT SPEED
-        this.speedX = 5;
-        this.speedY = 20;
+        this.speedX = 1;
+        this.speedY = playerMaxSpeedY;
         this.jumpHeight = 200;
 
-        // LEFT - RIGHT
+        // LEFT / RIGHT MOVEMENT
         this.left = false;
         this.right = false;
 
         // JUMPING
         this.jumping = false;
-        this.falling = true;
-        this.grounded = false;
+        this.falling = false;
+        this.grounded = true;
 
         this.playerImg = new Image();
     }
@@ -171,25 +188,26 @@ function init(){
         void ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
-    PlayerObj.prototype.reset = function(){
-        player.x = canvas.width/2;
-        player.y = canvas.height/2;
-    }
-
-
     // PLAYER OBJECT - MOVEMENT FUNCTION
     PlayerObj.prototype.move = function(){
 
         // MOVING LEFT
         if(this.left){
+            let nextX = this.x;
+            this.x -= this.speedX;
+
             if(returnTileGridStatus(this.x - 1, this.y - 1) || returnTileGridStatus(this.x - 1,this.y - TILE_SIZE)){
-                this.x = this.x;
+                this.x = nextX;
             }else{
-                this.x -= this.speedX;
+
+                // ACCELERATION
+                if(this.speedX < playerMaxSpeedX){
+                    this.speedX++;
+                }
 
                 // CHECK IF BOTTOM TYLE IS EMPTY
                 if(!this.jumping){
-                    if(returnTileGridStatus(this.x,this.y)){
+                    if(returnTileGridStatus(this.x,this.y) || returnTileGridStatus(this.x + TILE_SIZE, this.y)){
                         this.falling = false;
                         this.grounded = true;
                     }else{
@@ -200,14 +218,21 @@ function init(){
 
         // MOVING RIGHT
         }else if(this.right){
-            if(returnTileGridStatus(this.x + this.width + 1,this.y - 1) || returnTileGridStatus(this.x + this.width + 1,this.y - TILE_SIZE)){
-                this.x = this.x;
+            let nextX = this.x;
+            this.x += this.speedX;
+
+            if(returnTileGridStatus(this.x + this.width,this.y - 1) || returnTileGridStatus(this.x + this.width,this.y - TILE_SIZE)){
+                this.x = nextX;
             }else{
-                this.x += this.speedX;
+
+                // ACCELERATION
+                if(this.speedX < playerMaxSpeedX){
+                    this.speedX++;
+                }
 
                 // CHECK IF BOTTOM TYLE IS EMPTY
                 if(!this.jumping){
-                    if(returnTileGridStatus(this.x,this.y)){
+                    if(returnTileGridStatus(this.x, this.y) || returnTileGridStatus(this.x + TILE_SIZE, this.y)){
                         this.falling = false;
                         this.grounded = true;
                     }else{
@@ -236,6 +261,7 @@ function init(){
                 if(returnTileGridStatus(this.x,this.y-this.height) || returnTileGridStatus(this.x + this.width - 1,this.y - this.height)){
                         this.falling = true;
                         this.jumping = false;
+                        this.y = this.y;
                 }
 
                 // CHECK IF MAX JUMP HEIGHT IS REACHED
@@ -246,9 +272,9 @@ function init(){
             }
         }
 
+        // WHEN PLAYER IS FALLING
         if(this.falling){
             let nextY = this.y;
-
             this.y += this.speedY;
 
             // CHECK TILE BELOW PLAYER
@@ -256,31 +282,19 @@ function init(){
                     this.jumping = false;
                     this.falling = false;
                     this.grounded = true;
-                    this.speedY = 20;
+                    this.speedY = playerMaxSpeedY;
 
                     // IF NEXT POSITION IS TAKEN. SET PLAYER POSITIO TO PREVIOUS
-                    this.y = nextY;
+                    this.y = (this.playerRow + 2) * TILE_SIZE;
+
             }else{
                 // ACCELERATION
-                if(this.speedY < 20){
+                if(this.speedY < playerMaxSpeedY){
                     this.speedY++;
                 }else{
-                    this.speedY = 20;
+                    this.speedY = playerMaxSpeedY;
                 }
             }
-        }
-    }
-
-    function returnTileGridStatus(x, y){
-        // CONVERT TO GRID POSITION
-        let gridCol = Math.floor(x / TILE_SIZE);
-        let gridRow = Math.floor(y / TILE_SIZE);
-
-        // CHECK IF TILE IS FREE (false) OR TAKEN (true)
-        if(levelLayout[gridRow][gridCol] == 0 || levelLayout[gridRow][gridCol] == 6){
-            return false;
-        }else{
-            return true;
         }
     }
 
@@ -295,31 +309,27 @@ function init(){
 
     // PLAYER OBJECT - DRAW
     PlayerObj.prototype.draw = function(x,y){
-        ctx.putImageData(this.playerImg, 400, this.y-this.height);
+        ctx.putImageData(this.playerImg, canvas.width / 2, this.y-this.height);
     }
 
-    player = new PlayerObj(160, 600, 'firebrick');
+    player = new PlayerObj(canvas.width / 2, 600, 'firebrick');
     player.make();
 
-    player.reset();
-
-    function moveEverything(){
+    function mainMove(){
         player.checkPosition();
         player.move();
         instantCamFollow();
         // cameraFollow();
     }
 
-    function drawEverything(){
+    function mainDraw(){
         void ctx.clearRect(0, 0, canvas.width, canvas.height);
+
         ctx.save();
         ctx.translate(-camPanX, -camPanY);
-
         makeWorld();
-        player.draw(400, player.y);
-
+        player.draw(canvas.width / 2, player.y);
         ctx.restore();
-
     }
 
     function animate(){
@@ -330,87 +340,77 @@ function init(){
         // 1000/FPS);
 
         setInterval(function() {
-            moveEverything();
-            drawEverything();
+            mainMove();
+            mainDraw();
         }, 1000/FPS);
 
-        // // TIME UTILITIES
-        currentFrame++;
-        frameIndicator.innerHTML = 'Frames since start ' + currentFrame;
-        timeIndicator.innerHTML = 'Total time ' + Math.floor(currentFrame / FPS);
-
-        // player.update();
-        // moveEverything();
-        // drawEverything();
+        // TIME UTILITIES
+        // currentFrame++;
+        // frameIndicator.innerHTML = 'Frames since start ' + currentFrame;
+        // timeIndicator.innerHTML = 'Total time ' + Math.floor(currentFrame / FPS);
     }
+
+    animate();
 
     // PLAYER CONTROLS
     document.addEventListener('keydown',function(event){
-        if(event.key == 'ArrowRight'){
-            player.right = true;
-            // player.move();
-            // player.draw();
-        }
-
         if(event.key == 'ArrowLeft'){
             player.left = true;
-            // player.move();
-            // player.draw();
         }
-
+        if(event.key == 'ArrowRight'){
+            player.right = true;
+        }
         if(event.key == 'ArrowUp'){
             if(!player.jumping && player.grounded){
                 playerCurrentY = player.y;
                 player.jumping = true;
                 player.grounded = false;
-                // player.move();
-                // player.draw();
             }
         }
-
         if(event.key == 'ArrowDown'){
             console.log('down');
         }
-
         if(event.key == 0){
-            console.log('playerX ' + player.x);
-            console.log('playerY ' + player.y);
-            console.log('camPanX ' + camPanX);
-            console.log('canvas width ' + canvas.width)
-
-            // console.log('grounded ' + player.grounded);
-            // console.log('jumping ' + player.jumping);
-            // console.log('falling ' + player.falling);
+            console.log(player);
         }
     });
 
     document.addEventListener('keyup',function(event){
         if(event.key == 'ArrowRight'){
             player.right = false;
+            player.speedX = 1;
         }
-
         if(event.key == 'ArrowLeft'){
             player.left = false;
+            player.speedX = 1;
         }
-
     });
 
+    // HELPERS
+    function returnTileGridStatus(x, y){
+        // CONVERT TO GRID POSITION
+        let gridRow = Math.floor(y / TILE_SIZE);
+        let gridCol = Math.floor(x / TILE_SIZE);
 
-    // UTILITIES
-    // MOUSE INFORMATION
-    canvas.addEventListener('mousemove', function(event){
-        // CURRENT MOUSE POSITION ON CANVAS
-        let mouseX = event.clientX - this.offsetLeft;
-        let mouseY = event.clientY - this.offsetTop;
+        if(player.jumping){
+            tile.row = gridRow;
+            tile.col = gridCol;
+            tile.type = levelLayout[gridRow][gridCol];
+        }
 
-        // // CURRENT MOUSE POSITION ON GRID LAYOUT
-        // let mouseCol = Math.floor(mouseX / TILE_SIZE);
-        // let mouseRow = Math.floor(mouseY / TILE_SIZE);
-        //
-        // document.getElementById('mouseCol').innerHTML = mouseCol;
-        // document.getElementById('mouseRow').innerHTML = mouseRow;
-    })
+        // CHECK IF TILE IS FREE (false) OR TAKEN (true)
+        if(levelLayout[gridRow][gridCol] == 0 || levelLayout[gridRow][gridCol] == 6){
+            return false;
+        }else{
 
-    animate();
+            // DEMOLITION OF TILES
+            if(player.jumping && levelLayout[gridRow][gridCol] == 3){
+                levelLayout[gridRow][gridCol] = 0;
+            }
+
+            return true;
+        }
+    }
+
 
 }
