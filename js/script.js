@@ -249,30 +249,16 @@ function checkVisibleTiles() {
     }
 
     // IMPORTING PLAYER SPRITE
-    PlayerObj.prototype.make = function(){
-        if(this.left){
-            console.log('sprite left');
-            let sprite = new Image();
-            sprite.src = 'img/player-left.png';
-            ctx.drawImage(sprite, 0, 0, TILE_SIZE , TILE_SIZE * 2);
-            this.playerImg = ctx.getImageData(0, 0, TILE_SIZE, TILE_SIZE * 2);
-            void ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }else if(this.right){
-            console.log('sprite right');
-            let sprite = new Image();
-            sprite.src = 'img/player-right.png';
-            ctx.drawImage(sprite, 0, 0, TILE_SIZE , TILE_SIZE * 2);
-            this.playerImg = ctx.getImageData(0, 0, TILE_SIZE, TILE_SIZE * 2);
-            void ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }else{
-            console.log('sprite default');
-            let sprite = new Image();
-            sprite.src = 'img/player-right.png';
-            ctx.drawImage(sprite, 0, 0, TILE_SIZE , TILE_SIZE * 2);
-            this.playerImg = ctx.getImageData(0, 0, TILE_SIZE, TILE_SIZE * 2);
-            void ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-    }
+    // PlayerObj.prototype.make = function(){
+    //         ctx.fillStyle = 'green';
+    //         ctx.fillRect(0,0,TILE_SIZE,TILE_SIZE * 2);
+    //
+    //         // let sprite = new Image();
+    //         // sprite.src = 'img/test2.png';
+    //         // ctx.drawImage(sprite, 0, 0, TILE_SIZE , TILE_SIZE);
+    //         this.playerImg = ctx.getImageData(0, 0, TILE_SIZE, TILE_SIZE * 2);
+    //         void ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // }
 
     // PLAYER OBJECT - MOVEMENT FUNCTION
     PlayerObj.prototype.move = function(){
@@ -400,11 +386,20 @@ function checkVisibleTiles() {
 
     // PLAYER OBJECT - DRAW
     PlayerObj.prototype.draw = function(){
-        ctx.putImageData(this.playerImg, canvas.width / 2, this.y-this.height * 2-camPanY);
-    }
 
-    player = new PlayerObj();
-    player.make();
+        if(this.left){
+            this.playerImg.src = 'img/player-left.png';
+            ctx.drawImage(this.playerImg, canvas.width / 2, this.y-this.height * 2 - camPanY, TILE_SIZE, TILE_SIZE*2);
+        }else if(this.right){
+            this.playerImg.src = 'img/player-right.png';
+            ctx.drawImage(this.playerImg, canvas.width / 2, this.y-this.height * 2 - camPanY, TILE_SIZE, TILE_SIZE*2);
+        }else{
+            this.playerImg.src = 'img/player-right.png';
+            ctx.drawImage(this.playerImg, canvas.width / 2, this.y-this.height * 2 - camPanY, TILE_SIZE, TILE_SIZE*2);
+        }
+
+        // ctx.putImageData(this.playerImg, canvas.width / 2, this.y-this.height * 2 - camPanY);
+    }
 
     function mainMove(){
         player.checkPosition();
@@ -419,8 +414,8 @@ function checkVisibleTiles() {
         ctx.save();
         ctx.translate(-camPanX, -camPanY);
         makeWorld();
-        player.draw();
         ctx.restore();
+        player.draw();
     }
 
     function animate(){
@@ -442,6 +437,8 @@ function checkVisibleTiles() {
         // timeIndicator.innerHTML = 'Total time ' + Math.floor(currentFrame / FPS);
     }
 
+    player = new PlayerObj();
+    // player.make();
     animate();
 
     // PLAYER CONTROLS
