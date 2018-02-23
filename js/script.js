@@ -250,11 +250,28 @@ function checkVisibleTiles() {
 
     // IMPORTING PLAYER SPRITE
     PlayerObj.prototype.make = function(){
-        let sprite = new Image();
-        sprite.src = 'img/player.png';
-        ctx.drawImage(sprite, 0, 0, TILE_SIZE , TILE_SIZE * 2);
-        this.playerImg = ctx.getImageData(0, 0, TILE_SIZE, TILE_SIZE * 2);
-        void ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if(this.left){
+            console.log('sprite left');
+            let sprite = new Image();
+            sprite.src = 'img/player-left.png';
+            ctx.drawImage(sprite, 0, 0, TILE_SIZE , TILE_SIZE * 2);
+            this.playerImg = ctx.getImageData(0, 0, TILE_SIZE, TILE_SIZE * 2);
+            void ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }else if(this.right){
+            console.log('sprite right');
+            let sprite = new Image();
+            sprite.src = 'img/player-right.png';
+            ctx.drawImage(sprite, 0, 0, TILE_SIZE , TILE_SIZE * 2);
+            this.playerImg = ctx.getImageData(0, 0, TILE_SIZE, TILE_SIZE * 2);
+            void ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }else{
+            console.log('sprite default');
+            let sprite = new Image();
+            sprite.src = 'img/player-right.png';
+            ctx.drawImage(sprite, 0, 0, TILE_SIZE , TILE_SIZE * 2);
+            this.playerImg = ctx.getImageData(0, 0, TILE_SIZE, TILE_SIZE * 2);
+            void ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
     }
 
     // PLAYER OBJECT - MOVEMENT FUNCTION
