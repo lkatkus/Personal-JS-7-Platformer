@@ -222,8 +222,6 @@ function checkVisibleTiles() {
         this.width = TILE_SIZE;
         this.height = TILE_SIZE;
 
-        this.color = 'firebrick';
-
         // POSITION
         // ACTUAL COORDINATES
         this.x = canvas.width / 2;
@@ -250,10 +248,12 @@ function checkVisibleTiles() {
         this.playerImg = new Image();
     }
 
+    // IMPORTING PLAYER SPRITE
     PlayerObj.prototype.make = function(){
-        ctx.fillStyle = this.color;
-        ctx.fillRect(0, 0, this.width, this.height);
-        this.playerImg = ctx.getImageData(0, 0, this.width, this.height);
+        let sprite = new Image();
+        sprite.src = 'img/player.png';
+        ctx.drawImage(sprite, 0, 0, TILE_SIZE , TILE_SIZE * 2);
+        this.playerImg = ctx.getImageData(0, 0, TILE_SIZE, TILE_SIZE * 2);
         void ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
@@ -383,7 +383,7 @@ function checkVisibleTiles() {
 
     // PLAYER OBJECT - DRAW
     PlayerObj.prototype.draw = function(){
-        ctx.putImageData(this.playerImg, canvas.width / 2, this.y-this.height-camPanY);
+        ctx.putImageData(this.playerImg, canvas.width / 2, this.y-this.height * 2-camPanY);
     }
 
     player = new PlayerObj();
