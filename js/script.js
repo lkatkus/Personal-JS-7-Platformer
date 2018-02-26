@@ -125,6 +125,8 @@ function init(){
                     // ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
 
                     let tile = new Image();
+
+
                     tile.src = 'img/test.png';
                     ctx.drawImage(tile, j*TILE_SIZE, i*TILE_SIZE, TILE_SIZE, TILE_SIZE);
                 }
@@ -239,6 +241,7 @@ function checkVisibleTiles() {
         // LEFT / RIGHT MOVEMENT
         this.left = false;
         this.right = false;
+        this.previousDirection = 'right';
 
         // JUMPING
         this.jumping = false;
@@ -247,18 +250,6 @@ function checkVisibleTiles() {
 
         this.playerImg = new Image();
     }
-
-    // IMPORTING PLAYER SPRITE
-    // PlayerObj.prototype.make = function(){
-    //         ctx.fillStyle = 'green';
-    //         ctx.fillRect(0,0,TILE_SIZE,TILE_SIZE * 2);
-    //
-    //         // let sprite = new Image();
-    //         // sprite.src = 'img/test2.png';
-    //         // ctx.drawImage(sprite, 0, 0, TILE_SIZE , TILE_SIZE);
-    //         this.playerImg = ctx.getImageData(0, 0, TILE_SIZE, TILE_SIZE * 2);
-    //         void ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // }
 
     // PLAYER OBJECT - MOVEMENT FUNCTION
     PlayerObj.prototype.move = function(){
@@ -394,11 +385,9 @@ function checkVisibleTiles() {
             this.playerImg.src = 'img/player-right.png';
             ctx.drawImage(this.playerImg, canvas.width / 2, this.y-this.height * 2 - camPanY, TILE_SIZE, TILE_SIZE*2);
         }else{
-            this.playerImg.src = 'img/player-right.png';
+            this.playerImg.src = 'img/player-' + this.previousDirection + '.png';
             ctx.drawImage(this.playerImg, canvas.width / 2, this.y-this.height * 2 - camPanY, TILE_SIZE, TILE_SIZE*2);
         }
-
-        // ctx.putImageData(this.playerImg, canvas.width / 2, this.y-this.height * 2 - camPanY);
     }
 
     function mainMove(){
@@ -438,7 +427,6 @@ function checkVisibleTiles() {
     }
 
     player = new PlayerObj();
-    // player.make();
     animate();
 
     // PLAYER CONTROLS
@@ -465,13 +453,15 @@ function checkVisibleTiles() {
     });
 
     document.addEventListener('keyup',function(event){
+        if(event.key == 'ArrowLeft'){
+            player.left = false;
+            player.previousDirection = 'left';
+            player.speedX = 1;
+        }
         if(event.key == 'ArrowRight'){
             player.right = false;
             player.speedX = 1;
-        }
-        if(event.key == 'ArrowLeft'){
-            player.left = false;
-            player.speedX = 1;
+            player.previousDirection = 'right';
         }
         if(event.key == 'ArrowDown'){
             console.log('down');
