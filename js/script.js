@@ -23,16 +23,12 @@ var screen = {
     visibleColRight:0
 };
 
-// const PLAYER_DIST_FROM_CENTER_BEFORE_CAMERA_PAN_X = 150;
-// const PLAYER_DIST_FROM_CENTER_BEFORE_CAMERA_PAN_Y = 100;
-
 // HELPER VARIABLES
 var tile = {
     row : 0,
     col : 0,
     type : 0
 };
-
 
 function init(){
     // VARIABLES
@@ -46,7 +42,6 @@ function init(){
     // GAME SETUP
     const FPS = 60;
     var currentFrame = 0;
-
 
     const PLAYER_DIST_FROM_CENTER_BEFORE_CAMERA_PAN_Y = 150;
 
@@ -87,13 +82,13 @@ function init(){
         [0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0],
         [0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 2, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 0, 0, 2, 2, 2, 0, 0, 2, 2, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 2, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -121,65 +116,37 @@ function init(){
                     ctx.fillStyle = '#324D5C';
                     ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
 
-                    // let tile = new Image();
-                    // tile.src = 'img/test.png';
-                    // ctx.drawImage(tile, j*TILE_SIZE, i*TILE_SIZE, TILE_SIZE, TILE_SIZE);
-
                 }
+
                 // PIPE
                 if(levelLayout[i][j] == 2){
                     ctx.fillStyle = '#46B29D';
                     ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
                 }
+
                 // BRICK BLOCK
                 if(levelLayout[i][j] == 3){
                     // ctx.fillStyle = '#E37B40';
                     // ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
 
                     let tile = new Image();
-
-
                     tile.src = 'img/test.png';
                     ctx.drawImage(tile, j*TILE_SIZE, i*TILE_SIZE, TILE_SIZE, TILE_SIZE);
                 }
+
                 // ? BLOCK
                 if(levelLayout[i][j] == 4){
-                    // ctx.fillStyle = '#F0CA4D';
-                    // ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
-
-                    let tile = new Image();
-                    tile.src = 'img/test3.png';
-                    ctx.drawImage(tile, j*TILE_SIZE, i*TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                    ctx.fillStyle = '#F0CA4D';
+                    ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
                 }
+
                 // CUBE FOR STRUCTURES
                 if(levelLayout[i][j] == 5){
-                    // ctx.fillStyle = '#5886A1';
-                    // ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
-
-                    let tile = new Image();
-                    tile.src = 'img/test2.png';
-                    ctx.drawImage(tile, j*TILE_SIZE, i*TILE_SIZE, TILE_SIZE, TILE_SIZE);
-                }
-                // FLAG POLE
-                if(levelLayout[i][j] == 6){
-                    ctx.fillStyle = 'white';
+                    ctx.fillStyle = '#5886A1';
                     ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
-                }
-                // FLAG
-                if(levelLayout[i][j] == 7){
-                    ctx.fillStyle = 'green';
-                    ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
-                }
-
-                // HILL
-                if(levelLayout[i][j] == 8){
-                    let tile = new Image();
-                    tile.src = 'img/test5.png';
-                    ctx.drawImage(tile, j*TILE_SIZE, i*TILE_SIZE-40, TILE_SIZE * 5, 100);
                 }
             }
         }
-
     }
 
     function cameraFollow() {
@@ -196,10 +163,6 @@ function init(){
         }else{
             camPanY = player.y - canvas.width/1.5;
         }
-
-        // if(playerDistFromCameraFocusY > PLAYER_DIST_FROM_CENTER_BEFORE_CAMERA_PAN_Y) {
-        //     camPanY += player.speedY;
-        // }
     }
 
 function checkVisibleTiles() {
@@ -220,7 +183,6 @@ function checkVisibleTiles() {
     if(cameraTopMostRow < 0){
         cameraTopMostRow = 0;
     }
-
 
     var cameraBottomMostRow = cameraTopMostRow + rowsThatFitOnScreen + 1;
     if(cameraBottomMostRow > levelLayout.length){
@@ -248,7 +210,10 @@ function checkVisibleTiles() {
         // GRID COORDINATES
         this.playerCol;
         this.playerRow;
-        this.playerCurrentTileType; /* FOR CHECKING INTERACTIVE TILES */
+
+        // PLACEHOLDERS FOR CHECKING TILE TYPES AROUND PLAYER
+        this.tileCurrentPlayerPositionType;
+        this.tileBelowPlayerPositionType;
 
         // MOVEMENT SPEED
         this.speedX = 1;
@@ -267,7 +232,8 @@ function checkVisibleTiles() {
         this.falling = false;
 
         this.canClimb = false;
-        this.climbing = false;
+        this.climbUp = false;
+        this.climbDown = false;
 
         this.playerImg = new Image();
     }
@@ -289,11 +255,17 @@ function checkVisibleTiles() {
                     this.speedX++;
                 }
 
-                // CHECK IF BOTTOM TYLE IS EMPTY
+                // CHECK BOTTOM TYLE
                 if(!this.jumping){
                     if(returnTileGridStatus(this.x,this.y) || returnTileGridStatus(this.x + TILE_SIZE, this.y)){
                         this.falling = false;
                         this.grounded = true;
+
+                        // CHECK IF ITS POSSIBLE TO CLIMB DOWN
+                        if(levelLayout[this.playerRow + 1][this.playerCol] == 3){
+                            this.canClimb = true;
+                        }
+
                     }else{
                         this.falling = true;
                     }
@@ -314,11 +286,17 @@ function checkVisibleTiles() {
                     this.speedX++;
                 }
 
-                // CHECK IF BOTTOM TYLE IS EMPTY
+                // CHECK BOTTOM TYLE
                 if(!this.jumping){
                     if(returnTileGridStatus(this.x, this.y) || returnTileGridStatus(this.x + TILE_SIZE, this.y)){
                         this.falling = false;
                         this.grounded = true;
+
+                        // CHECK IF ITS POSSIBLE TO CLIMB DOWN
+                        if(levelLayout[this.playerRow + 1][this.playerCol] == 3){
+                            this.canClimb = true;
+                        }
+
                     }else{
                         this.falling = true;
                     }
@@ -327,7 +305,7 @@ function checkVisibleTiles() {
         }
 
         // FOR JUMPING
-        if(this.jumping && !this.grounded && !this.climbing){
+        if(this.jumping && !this.grounded && !this.canClimb){
 
             // INITIAL JUMP
             if(playerCurrentY - this.jumpHeight <= this.y && this.jumping && !this.falling){
@@ -346,11 +324,6 @@ function checkVisibleTiles() {
                         this.falling = true;
                         this.jumping = false;
                         this.y = this.y;
-
-                        // DEMOLITION OF TILES
-                        if(levelLayout[tile.row][tile.col] == 3){
-                            levelLayout[tile.row][tile.col] = 0;
-                        }
                 }
 
                 // CHECK IF MAX JUMP HEIGHT IS REACHED
@@ -362,7 +335,10 @@ function checkVisibleTiles() {
         }
 
         // FOR CLIMBING
-        if(this.climbing && this.canClimb){
+        if(this.canClimb && this.climbUp){
+            this.y -= this.speedY;
+        }
+        if(this.canClimb && this.climbDown){
             this.y -= this.speedY;
         }
 
@@ -378,7 +354,7 @@ function checkVisibleTiles() {
                     this.grounded = true;
                     this.speedY = playerMaxSpeedY;
 
-                    // IF NEXT POSITION IS TAKEN. SET PLAYER POSITIO TO PREVIOUS
+                    // IF NEXT POSITION IS TAKEN. SET PLAYER POSITION TO PREVIOUS
                     this.y = (this.playerRow + 2) * TILE_SIZE;
 
             }else{
@@ -397,11 +373,11 @@ function checkVisibleTiles() {
         this.playerCol = Math.floor(this.x / TILE_SIZE);
         this.playerRow = Math.floor((this.y - TILE_SIZE) / TILE_SIZE);
 
-        this.playerCurrentTileType = levelLayout[this.playerRow][this.playerCol];
+        this.tileCurrentPlayerPositionType = levelLayout[this.playerRow][this.playerCol];
+        this.tileBelowPlayerPositionType = levelLayout[this.playerRow + 1][this.playerCol];
 
         // FOR CLIMBING MOVEMENT
-        if(this.playerCurrentTileType == 3){
-            console.log('climb');
+        if(this.tileCurrentPlayerPositionType == 3 || this.tileBelowPlayerPositionType == 3){
             this.canClimb = true;
             this.jumping = false;
         }else{
@@ -476,14 +452,24 @@ function checkVisibleTiles() {
             player.right = true;
         }
         if(event.key == 'ArrowUp'){
-            if(!player.jumping && player.grounded && !player.climbing){
+            if(!player.jumping && player.grounded && !player.canClimb){
                 playerCurrentY = player.y;
                 player.jumping = true;
                 player.grounded = false;
+                console.log('jump if1');
             }
             if(player.canClimb){
-                player.climbing = true;
+                console.log('jump if2');
+                player.climbUp = true;
                 player.speedY = 5;
+            }
+        }
+        if(event.key == 'ArrowDown'){
+            if(player.canClimb){
+                player.climbDown = true;
+                player.speedY = -5;
+            }else{
+                console.log('cant climb down');
             }
         }
         if(event.key == 0){
@@ -504,19 +490,17 @@ function checkVisibleTiles() {
             player.speedX = 1;
             player.previousDirection = 'right';
         }
-        if(event.key == 'ArrowDown'){
-
-        }
         if(event.key == 'ArrowUp'){
-            if(player.canClimb){
-                player.climbing = false;
-
-            }
+            player.climbUp = false;
+            player.climbDown = false;
+        }
+        if(event.key == 'ArrowDown'){
+            player.climbUp = false;
+            player.climbDown = false;
         }
     });
 
     // HELPERS
-
     function calculateSpawnLocation(){
         for(let i = 0; i < levelLayout.length; i++){
             for(let j = 0; j < levelLayout[i].length; j++){
