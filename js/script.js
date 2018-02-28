@@ -235,6 +235,7 @@ function checkVisibleTiles() {
         // GRID COORDINATES
         this.playerCol;
         this.playerRow;
+        this.playerCurrentTileType; /* FOR CHECKING INTERACTIVE TILES */
 
         // MOVEMENT SPEED
         this.speedX = 1;
