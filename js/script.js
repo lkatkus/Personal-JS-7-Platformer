@@ -1,11 +1,14 @@
 // VARIABLES
+// MAIN WORLD PARAMETERS
+const TILES_PER_ROW = 12;
+
 // MAIN PLAYER VARIABLES
 var player;
 var playerCurrentX;
 var playerCurrentY;
 
-var playerMaxSpeedX = 10;
-var playerMaxSpeedY = 20;
+var playerMaxSpeedX;
+var playerMaxSpeedY;
 
 // INTERVAL HANDLING VARIABLES
 var myAnimationInterval;
@@ -40,10 +43,8 @@ function init(){
     var timeIndicator = document.getElementById('currentTime');
 
     // GAME SETUP
-    const FPS = 60;
+    const FPS = 30;
     var currentFrame = 0;
-
-    const PLAYER_DIST_FROM_CENTER_BEFORE_CAMERA_PAN_Y = 150;
 
     // LEVEL LAYOUT
     var levelLayout = [
@@ -82,7 +83,7 @@ function init(){
         [0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0],
         [0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 2, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 0, 0, 2, 2, 2, 0, 0, 2, 2, 0, 0, 0],
@@ -97,15 +98,23 @@ function init(){
     ];
 
     // WORLD SIZE PARAMETERS
-    const TILE_SIZE = 40;
     const WORLD_COLS = levelLayout[0].length;
     const WORLD_ROWS = levelLayout.length;
 
     // CANVAS SETUP
-    canvas.width = 800;
-    canvas.height = 800;
-    // canvas.width = TILE_SIZE * WORLD_COLS;
-    // canvas.height = TILE_SIZE * WORLD_ROWS;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    var TILE_SIZE;
+
+    if(canvas.width / canvas.height < 1){
+        TILE_SIZE = Math.ceil(canvas.width / TILES_PER_ROW);
+    }else{
+        TILE_SIZE = Math.ceil(canvas.height / TILES_PER_ROW);
+    }
+
+    var playerMaxSpeedX = Math.floor(TILE_SIZE / 4);
+    var playerMaxSpeedY = Math.floor(TILE_SIZE / 2);
 
     function makeWorld(){
         ctx.fillStyle = "black";
@@ -150,19 +159,21 @@ function init(){
     }
 
     function cameraFollow() {
-        var cameraFocusCenterY = Math.floor(camPanY + canvas.height / 2);
+        camPanX = player.x - canvas.width / 2;
+        camPanY = player.y - canvas.height / 5 * 4;
+
+        var cameraFocusCenterY = Math.floor(camPanY + canvas.height / 4*3);
         var playerDistFromCameraFocusY = Math.floor(player.y - cameraFocusCenterY);
 
-        camPanX = player.x - canvas.width/2;
-
-        if(playerDistFromCameraFocusY > PLAYER_DIST_FROM_CENTER_BEFORE_CAMERA_PAN_Y){
-            camPanY += player.speedY;
-
-        }else if(playerDistFromCameraFocusY < 0 - PLAYER_DIST_FROM_CENTER_BEFORE_CAMERA_PAN_Y){
-            camPanY -= player.speedY;
-        }else{
-            camPanY = player.y - canvas.width/1.5;
-        }
+        console.log(cameraFocusCenterY + ' ' + playerDistFromCameraFocusY);
+        //
+        // if(playerDistFromCameraFocusY > 100){
+        //     camPanY += player.speedY;
+        //     console.log('1');
+        // }else if(playerDistFromCameraFocusY < 0 - 100){
+        //     camPanY -= player.speedY;
+        //     console.log('2');
+        // }
     }
 
 function checkVisibleTiles() {
@@ -217,8 +228,8 @@ function checkVisibleTiles() {
 
         // MOVEMENT SPEED
         this.speedX = 1;
-        this.speedY = playerMaxSpeedY;
-        this.jumpHeight = 200;
+        this.speedY = 10;
+        this.jumpHeight = TILE_SIZE * 3;
 
         // LEFT / RIGHT MOVEMENT
         this.left = false;
@@ -227,13 +238,12 @@ function checkVisibleTiles() {
 
         // MOVEMENT STATUS
         this.grounded = true;
-
         this.jumping = false;
         this.falling = false;
+        this.climbing = false;
 
-        this.canClimb = false;
-        this.climbUp = false;
-        this.climbDown = false;
+        this.canClimbUp = false;
+        this.canClimbDown = false;
 
         this.playerImg = new Image();
     }
@@ -260,12 +270,6 @@ function checkVisibleTiles() {
                     if(returnTileGridStatus(this.x,this.y) || returnTileGridStatus(this.x + TILE_SIZE, this.y)){
                         this.falling = false;
                         this.grounded = true;
-
-                        // CHECK IF ITS POSSIBLE TO CLIMB DOWN
-                        if(levelLayout[this.playerRow + 1][this.playerCol] == 3){
-                            this.canClimb = true;
-                        }
-
                     }else{
                         this.falling = true;
                     }
@@ -291,12 +295,6 @@ function checkVisibleTiles() {
                     if(returnTileGridStatus(this.x, this.y) || returnTileGridStatus(this.x + TILE_SIZE, this.y)){
                         this.falling = false;
                         this.grounded = true;
-
-                        // CHECK IF ITS POSSIBLE TO CLIMB DOWN
-                        if(levelLayout[this.playerRow + 1][this.playerCol] == 3){
-                            this.canClimb = true;
-                        }
-
                     }else{
                         this.falling = true;
                     }
@@ -310,14 +308,13 @@ function checkVisibleTiles() {
             // INITIAL JUMP
             if(playerCurrentY - this.jumpHeight <= this.y && this.jumping && !this.falling){
 
-                this.y -= this.speedY;
-
                 // ACCELERATION
                 if(this.speedY > 1){
                     this.speedY--;
                 }else{
                     this.speedY = 1;
                 }
+                this.y -= this.speedY;
 
                 // CHECKING TILE ABOVE PLAYER IS EMPTY
                 if(returnTileGridStatus(this.x,this.y-this.height) || returnTileGridStatus(this.x + this.width - 1,this.y - this.height)){
@@ -334,14 +331,6 @@ function checkVisibleTiles() {
             }
         }
 
-        // FOR CLIMBING
-        if(this.canClimb && this.climbUp){
-            this.y -= this.speedY;
-        }
-        if(this.canClimb && this.climbDown){
-            this.y -= this.speedY;
-        }
-
         // WHEN PLAYER IS FALLING
         if(this.falling){
             let nextY = this.y;
@@ -352,7 +341,7 @@ function checkVisibleTiles() {
                     this.jumping = false;
                     this.falling = false;
                     this.grounded = true;
-                    this.speedY = playerMaxSpeedY;
+                    this.speedY = 10;
 
                     // IF NEXT POSITION IS TAKEN. SET PLAYER POSITION TO PREVIOUS
                     this.y = (this.playerRow + 2) * TILE_SIZE;
@@ -366,6 +355,16 @@ function checkVisibleTiles() {
                 }
             }
         }
+
+        // FOR CLIMBING
+        if(this.climbing && this.canClimbUp){
+            this.y -= this.speedY;
+        }
+        if(this.climbing && this.canClimbDown){
+            this.y -= this.speedY;
+        }else{
+            this.y = this.y;
+        }
     }
 
     // PLAYER OBJECT - GET PLAYER CURRENT POSITION
@@ -377,15 +376,27 @@ function checkVisibleTiles() {
         this.tileBelowPlayerPositionType = levelLayout[this.playerRow + 1][this.playerCol];
 
         // FOR CLIMBING MOVEMENT
-        if(this.tileCurrentPlayerPositionType == 3 || this.tileBelowPlayerPositionType == 3){
-            this.canClimb = true;
-            this.jumping = false;
+        if(levelLayout[this.playerRow][this.playerCol] != 3 && levelLayout[this.playerRow + 1][this.playerCol] == 3){
+            this.canClimbDown = true;
+        }else if(levelLayout[this.playerRow][this.playerCol] == 3 && levelLayout[this.playerRow + 1][this.playerCol] != 3){
+            this.canClimbUp = true;
+        }else if(levelLayout[this.playerRow][this.playerCol] == 3 && levelLayout[this.playerRow + 1][this.playerCol] == 3){
+            this.canClimbDown = true;
+            this.canClimbUp = true;
         }else{
-            this.canClimb = false;
+            this.canClimbDown = false;
+            this.canClimbUp = false;
         }
 
+        // DEBUGGING
         document.getElementById('playerCol').innerHTML = this.playerCol;
         document.getElementById('playerRow').innerHTML = this.playerRow;
+        document.getElementById('climbing').innerHTML = this.climbing;
+        document.getElementById('climbup').innerHTML = this.canClimbUp;
+        document.getElementById('climbdown').innerHTML = this.canClimbDown;
+        document.getElementById('jumping').innerHTML = this.jumping;
+        document.getElementById('speedx').innerHTML = this.speedX;
+        document.getElementById('speedy').innerHTML = this.speedY;
     }
 
     // PLAYER OBJECT - DRAW
@@ -439,7 +450,7 @@ function checkVisibleTiles() {
 
     player = new PlayerObj();
     calculateSpawnLocation();
-    camPanY = player.y - canvas.width / 2;
+    camPanY = player.y - canvas.height / 2;
 
     animate();
 
@@ -452,28 +463,26 @@ function checkVisibleTiles() {
             player.right = true;
         }
         if(event.key == 'ArrowUp'){
-            if(!player.jumping && player.grounded && !player.canClimb){
+            if(!player.jumping && player.grounded && !player.canClimbUp){
                 playerCurrentY = player.y;
                 player.jumping = true;
                 player.grounded = false;
-                console.log('jump if1');
+                player.speedY = playerMaxSpeedY;
             }
-            if(player.canClimb){
-                console.log('jump if2');
-                player.climbUp = true;
-                player.speedY = 5;
+            if(player.canClimbUp){
+                player.climbing = true;
+                player.speedY = Math.floor(TILE_SIZE / 10);
             }
         }
         if(event.key == 'ArrowDown'){
-            if(player.canClimb){
-                player.climbDown = true;
-                player.speedY = -5;
-            }else{
-                console.log('cant climb down');
+            if(player.canClimbDown){
+                player.climbing = true;
+                player.speedY = Math.floor(-TILE_SIZE / 10);
             }
         }
         if(event.key == 0){
             console.log(player);
+            // setGameSize();
             // checkVisibleTiles();
             // console.log(tile);
         }
@@ -491,12 +500,10 @@ function checkVisibleTiles() {
             player.previousDirection = 'right';
         }
         if(event.key == 'ArrowUp'){
-            player.climbUp = false;
-            player.climbDown = false;
+            player.climbing = false;
         }
         if(event.key == 'ArrowDown'){
-            player.climbUp = false;
-            player.climbDown = false;
+            player.climbing = false;
         }
     });
 
