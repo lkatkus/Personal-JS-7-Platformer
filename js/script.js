@@ -82,7 +82,7 @@ function init(){
         [0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 5, 7, 0, 3, 0, 'f', 'f', 'f'],
         [0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 4, 4, 4, 4, 4, 7, 5, 5, 5, 7, 0, 3, 0, 0, 0, 0],
         [0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 7, 7, 7, 7, 0, 3, 0, 0, 0, 0],
-        ['f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 7, 7, 0, 3, 0, 0, 0, 0],
+        ['f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 7, 7, 0, 3, 0, 0, 0, 0],
         ['f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 7, 7, 0, 3, 0, 0, 0, 0],
         ['f', 'f', 'f', 'f', 0, 0, 0, 0, 0, 8, 8, 4, 5, 4, 5, 5, 4, 5, 5, 5, 4, 5, 5, 5, 4, 8, 8, 0, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 4, 4, 6, 4, 4, 4, 4, 6, 6, 6, 4, 6, 6, 6, 4, 4, 8, 0, 0, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0],
@@ -202,19 +202,24 @@ function init(){
 
     function cameraFollow() {
         camPanX = player.x - canvas.width / 2;
-        camPanY = player.y - canvas.height / 5 * 4;
 
-        var cameraFocusCenterY = Math.floor(camPanY + canvas.height / 4*3);
+        if(!player.jumping || !player.falling){
+            camPanY = player.y - canvas.height / 5 * 4;
+        }
+
+        var cameraFocusCenterY = Math.floor(camPanY + canvas.height / 4 * 3);
         var playerDistFromCameraFocusY = Math.floor(player.y - cameraFocusCenterY);
 
-        console.log(cameraFocusCenterY + ' ' + playerDistFromCameraFocusY);
+        // console.log(cameraFocusCenterY + ' ' + playerDistFromCameraFocusY + ' ' + player.y);
         //
         // if(playerDistFromCameraFocusY > 100){
         //     camPanY += player.speedY;
         //     console.log('1');
-        // }else if(playerDistFromCameraFocusY < 0 - 100){
+        // }else if(playerDistFromCameraFocusY < 0){
         //     camPanY -= player.speedY;
         //     console.log('2');
+        // }else if(playerDistFromCameraFocusY == 0){
+        //     camPanY = player.y;
         // }
     }
 
@@ -237,7 +242,7 @@ function checkVisibleTiles() {
         cameraTopMostRow = 0;
     }
 
-    var cameraBottomMostRow = cameraTopMostRow + rowsThatFitOnScreen + 1;
+    var cameraBottomMostRow = cameraTopMostRow + rowsThatFitOnScreen + 2;
     if(cameraBottomMostRow > levelLayout.length){
         cameraBottomMostRow = levelLayout.length;
     }
@@ -439,6 +444,8 @@ function checkVisibleTiles() {
         document.getElementById('jumping').innerHTML = this.jumping;
         document.getElementById('speedx').innerHTML = this.speedX;
         document.getElementById('speedy').innerHTML = this.speedY;
+        document.getElementById('moveLeft').innerHTML = this.left;
+        document.getElementById('moveRight').innerHTML = this.right;
     }
 
     // PLAYER OBJECT - DRAW
