@@ -10,6 +10,30 @@ var playerCurrentY;
 var playerMaxSpeedX;
 var playerMaxSpeedY;
 
+// PLAYER ANIMATION VARIABLES
+var spriteSheetWidth = 900;
+var spriteSheetHeight = 800;
+
+var rows = 4;
+var cols = 9;
+
+var trackRight = 0; /* FOR MOVING RIGHT ANIMATION */
+var trackLeft = 1; /* FOR MOVING LEFT ANIMATION */
+var trackIdleRight = 2; /* FOR IDLE RIGHT ANIMATION */
+var trackIdleLeft = 3; /* FOR IDLE LEFT ANIMATION */
+
+var width = spriteWidth/cols;
+var height = spriteHeight/rows;
+
+var curFrame = 0;
+var frameCount = 8;
+
+var srcX = 0;
+var srcY = 0;
+
+var spriteWidth = 100;
+var spriteHeight = 200;
+
 // INTERVAL HANDLING VARIABLES
 var myAnimationInterval;
 var myAnimationRequest;
@@ -36,7 +60,7 @@ var tile = {
 function init(){
     // VARIABLES
     // SELECTORS
-    var canvas = document.getElementById('canvas');
+    var canvas = document.getElementById('sceneCanvas');
     var ctx = canvas.getContext('2d');
 
     var frameIndicator = document.getElementById('currentFrame');
@@ -46,8 +70,8 @@ function init(){
     const FPS = 30;
     var currentFrame = 0;
 
-    // LEVEL LAYOUT
-    var levelLayout = [
+    // SCENE LAYOUT
+    var sceneLayout = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -89,7 +113,7 @@ function init(){
         [0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 4, 4, 4, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 8, 8, 8, 0, 0, 2, 3, 2, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 0, 0, 2, 2, 2, 0, 0, 2, 2, 0, 0, 0],
         [0, 0, 0, 0, 0, 7, 7, 7, 7, 8, 8, 4, 5, 4, 4, 4, 4, 5, 5, 5, 4, 5, 5, 5, 4, 8, 8, 8, 0, 0, 0, 3, 8, 2, 2, 8, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 7, 7, 7, 7, 7, 8, 4, 4, 6, 4, 4, 7, 4, 6, 6, 6, 4, 6, 6, 6, 4, 4, 8, 8, 8, 0, 8, 3, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 9, 0, 7, 7, 7, 7, 7, 8, 8, 4, 4, 4, 4, 7, 4, 4, 4, 4, 4, 4, 4, 4, 4, 8, 8, 8, 8, 8, 8, 3, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 9, 7, 7, 7, 7, 7, 8, 8, 4, 4, 4, 4, 7, 4, 4, 4, 4, 4, 4, 4, 4, 4, 8, 8, 8, 8, 8, 8, 3, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 'f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 'f', 'f', 'f', 'f', 'f', 0, 0, 'f', 'f', 'f', 0, 0, 0, 0],
         [0, 0, 0, 0, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 0, 0, 0, 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 0, 0, 0],
@@ -98,8 +122,8 @@ function init(){
     ];
 
     // WORLD SIZE PARAMETERS
-    const WORLD_COLS = levelLayout[0].length;
-    const WORLD_ROWS = levelLayout.length;
+    const WORLD_COLS = sceneLayout[0].length;
+    const WORLD_ROWS = sceneLayout.length;
 
     // CANVAS SETUP
     canvas.width = window.innerWidth;
@@ -113,28 +137,27 @@ function init(){
         TILE_SIZE = Math.ceil(canvas.height / TILES_PER_ROW);
     }
 
-    var playerMaxSpeedX = Math.floor(TILE_SIZE / 4);
+    var playerMaxSpeedX = Math.floor(TILE_SIZE / 10);
     var playerMaxSpeedY = Math.floor(TILE_SIZE / 2);
 
-    function makeWorld(){
+    function drawScene(){
         ctx.fillStyle = "black";
         for(let i = screen.visibleRowTop; i < screen.visibleRowBottom; i++){
             for(let j = screen.visibleColLeft; j < screen.visibleColRight; j++){
                 // PATH
-                if(levelLayout[i][j] == 1){
+                if(sceneLayout[i][j] == 1){
                     ctx.fillStyle = '#324D5C';
                     ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
-
                 }
 
                 // GROUND
-                if(levelLayout[i][j] == 2){
+                if(sceneLayout[i][j] == 2){
                     ctx.fillStyle = '#846749';
                     ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
                 }
 
                 // LADDERS
-                if(levelLayout[i][j] == 3){
+                if(sceneLayout[i][j] == 3){
                     ctx.fillStyle = '#c9805c';
                     ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
 
@@ -144,55 +167,55 @@ function init(){
                 }
 
                 // HOUSE
-                if(levelLayout[i][j] == 4){
+                if(sceneLayout[i][j] == 4){
                     ctx.fillStyle = '#b4b8b8';
                     ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
                 }
 
                 // WINDOWS
-                if(levelLayout[i][j] == 5){
+                if(sceneLayout[i][j] == 5){
                     ctx.fillStyle = '#506673';
                     ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
                 }
 
                 // BALCONY
-                if(levelLayout[i][j] == 6){
+                if(sceneLayout[i][j] == 6){
                     ctx.fillStyle = '#6f6a6a';
                     ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
                 }
 
                 // RED
-                if(levelLayout[i][j] == 7){
+                if(sceneLayout[i][j] == 7){
                     ctx.fillStyle = '#b3534e';
                     ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
                 }
 
                 // GREEN
-                if(levelLayout[i][j] == 8){
+                if(sceneLayout[i][j] == 8){
                     ctx.fillStyle = '#72af61';
                     ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
                 }
 
                 // LIGHT GREY
-                if(levelLayout[i][j] == 'a'){
+                if(sceneLayout[i][j] == 'a'){
                     ctx.fillStyle = '#cecbce';
                     ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
                 }
 
                 // BLUE
-                if(levelLayout[i][j] == 'b'){
+                if(sceneLayout[i][j] == 'b'){
                     ctx.fillStyle = '#1a40a1';
                     ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
                 }
 
                 // YELLOW
-                if(levelLayout[i][j] == 'c'){
+                if(sceneLayout[i][j] == 'c'){
                     ctx.fillStyle = '#fde352';
                     ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
                 }
 
                 // WHITE
-                if(levelLayout[i][j] == 'f'){
+                if(sceneLayout[i][j] == 'f'){
                     ctx.fillStyle = '#ffffff';
                     ctx.fillRect(j*TILE_SIZE,i*TILE_SIZE,TILE_SIZE,TILE_SIZE);
                 }
@@ -233,8 +256,8 @@ function checkVisibleTiles() {
         cameraLeftMostCol = 0;
     }
     var cameraRightMostCol = cameraLeftMostCol + colsThatFitOnScreen + 2;
-    if(cameraRightMostCol > levelLayout[0].length){
-        cameraRightMostCol = levelLayout[0].length;
+    if(cameraRightMostCol > sceneLayout[0].length){
+        cameraRightMostCol = sceneLayout[0].length;
     }
 
     var cameraTopMostRow = Math.floor(camPanY / TILE_SIZE);
@@ -243,8 +266,8 @@ function checkVisibleTiles() {
     }
 
     var cameraBottomMostRow = cameraTopMostRow + rowsThatFitOnScreen + 2;
-    if(cameraBottomMostRow > levelLayout.length){
-        cameraBottomMostRow = levelLayout.length;
+    if(cameraBottomMostRow > sceneLayout.length){
+        cameraBottomMostRow = sceneLayout.length;
     }
 
     screen.visibleColLeft = cameraLeftMostCol;
@@ -253,7 +276,6 @@ function checkVisibleTiles() {
     screen.visibleRowTop = cameraTopMostRow;
     screen.visibleRowBottom = cameraBottomMostRow;
 }
-
 
     // PLAYER OBJECT
     function PlayerObj(){
@@ -419,15 +441,31 @@ function checkVisibleTiles() {
         this.playerCol = Math.floor(this.x / TILE_SIZE);
         this.playerRow = Math.floor((this.y - TILE_SIZE) / TILE_SIZE);
 
-        this.tileCurrentPlayerPositionType = levelLayout[this.playerRow][this.playerCol];
-        this.tileBelowPlayerPositionType = levelLayout[this.playerRow + 1][this.playerCol];
+        this.tileCurrentPlayerPositionType = sceneLayout[this.playerRow][this.playerCol];
+        this.tileBelowPlayerPositionType = sceneLayout[this.playerRow + 1][this.playerCol];
+
+        if(this.playerCol >= 24 && this.playerCol < 27 && this.playerRow == 41){
+            console.log('about');
+        }else if(this.playerCol >= 34 && this.playerCol < 36 && this.playerRow == 35){
+            console.log('portfolio');
+        }else if(this.playerCol >= 38 && this.playerCol < 42 && this.playerRow == 35){
+            console.log('git');
+        }else if(this.playerCol >= 44 && this.playerCol < 45 && this.playerRow == 35){
+            console.log('other');
+        }else if(this.playerCol >= 21 && this.playerCol < 24 && this.playerRow == 24){
+            console.log('clients');
+        }else if(this.playerCol >= 8 && this.playerCol < 15 && this.playerRow == 6){
+            console.log('contact');
+        }else{
+            this.status = false;
+        }
 
         // FOR CLIMBING MOVEMENT
-        if(levelLayout[this.playerRow][this.playerCol] != 3 && levelLayout[this.playerRow + 1][this.playerCol] == 3){
+        if(sceneLayout[this.playerRow][this.playerCol] != 3 && sceneLayout[this.playerRow + 1][this.playerCol] == 3){
             this.canClimbDown = true;
-        }else if(levelLayout[this.playerRow][this.playerCol] == 3 && levelLayout[this.playerRow + 1][this.playerCol] != 3){
+        }else if(sceneLayout[this.playerRow][this.playerCol] == 3 && sceneLayout[this.playerRow + 1][this.playerCol] != 3){
             this.canClimbUp = true;
-        }else if(levelLayout[this.playerRow][this.playerCol] == 3 && levelLayout[this.playerRow + 1][this.playerCol] == 3){
+        }else if(sceneLayout[this.playerRow][this.playerCol] == 3 && sceneLayout[this.playerRow + 1][this.playerCol] == 3){
             this.canClimbDown = true;
             this.canClimbUp = true;
         }else{
@@ -450,15 +488,27 @@ function checkVisibleTiles() {
 
     // PLAYER OBJECT - DRAW
     PlayerObj.prototype.draw = function(){
-        if(this.left){
-            this.playerImg.src = 'img/player-left.png';
-            ctx.drawImage(this.playerImg, canvas.width / 2, this.y-this.height * 2 - camPanY, TILE_SIZE, TILE_SIZE*2);
-        }else if(this.right){
-            this.playerImg.src = 'img/player-right.png';
-            ctx.drawImage(this.playerImg, canvas.width / 2, this.y-this.height * 2 - camPanY, TILE_SIZE, TILE_SIZE*2);
+        this.playerImg.src = 'img/playerSpriteSheet.png';
+
+        srcX = curFrame * spriteWidth;
+
+        let x = canvas.width / 2;
+        let y = this.y-this.height * 2 - camPanY;
+
+        if(this.right){
+            srcY = trackRight * spriteHeight;
+            ctx.drawImage(this.playerImg,srcX,srcY,spriteWidth,spriteHeight,x,y,TILE_SIZE,TILE_SIZE * 2);
+        }else if(this.left){
+            srcY = trackLeft * spriteHeight;
+            ctx.drawImage(this.playerImg,srcX,srcY,spriteWidth,spriteHeight,x,y,TILE_SIZE,TILE_SIZE * 2);
         }else{
-            this.playerImg.src = 'img/player-' + this.previousDirection + '.png';
-            ctx.drawImage(this.playerImg, canvas.width / 2, this.y-this.height * 2 - camPanY, TILE_SIZE, TILE_SIZE*2);
+            if(player.previousDirection == 'right'){
+                srcY = trackIdleRight * spriteHeight;
+                ctx.drawImage(this.playerImg,srcX,srcY,spriteWidth,spriteHeight,x,y,TILE_SIZE,TILE_SIZE * 2);
+            }else{
+                srcY = trackIdleLeft * spriteHeight;
+                ctx.drawImage(this.playerImg,srcX,srcY,spriteWidth,spriteHeight,x,y,TILE_SIZE,TILE_SIZE * 2);
+            }
         }
     }
 
@@ -470,31 +520,23 @@ function checkVisibleTiles() {
 
     function mainDraw(){
         void ctx.clearRect(0, 0, canvas.width, canvas.height);
-
         ctx.save();
         ctx.translate(-camPanX, -camPanY);
-        makeWorld();
+        drawScene();
         ctx.restore();
         player.draw();
     }
 
     function animate(){
-        // myAnimationInterval = setTimeout(
-        //     function(){
-        //         myAnimationRequest = requestAnimationFrame(animate);
-        //     },
-        // 1000/FPS);
-
         setInterval(function() {
             mainMove();
             checkVisibleTiles();
             mainDraw();
         }, 1000/FPS);
 
-        // TIME UTILITIES
-        // currentFrame++;
-        // frameIndicator.innerHTML = 'Frames since start ' + currentFrame;
-        // timeIndicator.innerHTML = 'Total time ' + Math.floor(currentFrame / FPS);
+        setInterval(function(){
+            curFrame = ++curFrame % frameCount;
+        }, 100);
     }
 
     player = new PlayerObj();
@@ -502,6 +544,7 @@ function checkVisibleTiles() {
     camPanY = player.y - canvas.height / 2;
 
     animate();
+
 
     // PLAYER CONTROLS
     document.addEventListener('keydown',function(event){
@@ -558,9 +601,9 @@ function checkVisibleTiles() {
 
     // HELPERS
     function calculateSpawnLocation(){
-        for(let i = 0; i < levelLayout.length; i++){
-            for(let j = 0; j < levelLayout[i].length; j++){
-                if(levelLayout[i][j] == 9){
+        for(let i = 0; i < sceneLayout.length; i++){
+            for(let j = 0; j < sceneLayout[i].length; j++){
+                if(sceneLayout[i][j] == 9){
                     player.y = (i + 1) * TILE_SIZE;
                     player.x = j * TILE_SIZE;
                     break;
@@ -578,11 +621,11 @@ function checkVisibleTiles() {
         if(player.jumping){
             tile.row = gridRow;
             tile.col = gridCol;
-            tile.type = levelLayout[gridRow][gridCol];
+            tile.type = sceneLayout[gridRow][gridCol];
         }
 
         // CHECK IF TILE IS FREE (false) OR TAKEN (true)
-        if(levelLayout[gridRow][gridCol] != 1){
+        if(sceneLayout[gridRow][gridCol] != 1){
             return false;
         }else{
             return true;

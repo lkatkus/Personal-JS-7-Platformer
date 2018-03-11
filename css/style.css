@@ -21,8 +21,16 @@ body{
     height: 100%;
 }
 
-canvas{
+#sceneCanvas{
     background-color: #9ACFF0;
+    z-index: -1;
+}
+
+#foregroundCanvas{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
 }
 
 .container{
