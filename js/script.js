@@ -147,7 +147,7 @@ function init(){
         TILE_SIZE = Math.ceil(canvas.height / TILES_PER_ROW);
     }
 
-    var playerMaxSpeedX = Math.floor(TILE_SIZE / 10);
+    var playerMaxSpeedX = Math.floor(TILE_SIZE / 7);
     var playerMaxSpeedY = Math.floor(TILE_SIZE / 2);
 
     function drawScene(){

@@ -1,3 +1,8 @@
+@font-face {
+    font-family: Joystix;
+    src: url('../fonts/joystix monospace.ttf');
+}
+
 *{
     box-sizing: border-box;
 }
@@ -42,6 +47,7 @@ body{
 }
 
 .textBox{
+    font-family: Joystix;
     position: absolute;
     top: 20px;
     margin-left: auto;
@@ -49,9 +55,8 @@ body{
     left: 0;
     right: 0;
     width: 90%;
-    background-color: #fcd768;
+    background-color: rgba(0,0,0,0.7);
     border: solid 5px white;
-    border-radius: 10px;
     display: flex;
 }
 
@@ -65,7 +70,7 @@ body{
     vertical-align:top;
     padding: 10px;
     margin: 0;
-    /* color: white; */
+    color: white;
 }
 
 .hidden{
@@ -73,14 +78,17 @@ body{
 }
 
 .button{
-    border-radius: 5px;
     text-decoration: none;
     position: absolute;
     bottom: 0;
     right: 0;
-    background-color: blue;
-    color: white;
-    margin: 10px;
+    background-color: white;
+    color: black;
+    margin: 0 15px 10px 0;
     padding: 5px 15px 5px 15px;
-    border-bottom: solid 2px white;
+    transition: all 0.2s;
+}
+
+.button:hover{
+    background-color: firebrick;
 }
