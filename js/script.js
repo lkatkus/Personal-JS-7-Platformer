@@ -57,6 +57,16 @@ var tile = {
     type : 0
 };
 
+var informationDisplay = {
+    intro : false,
+    about : false,
+    portfolio : false,
+    git : false,
+    other : false,
+    clients : false,
+    contact : false
+};
+
 function init(){
     // VARIABLES
     // SELECTORS
@@ -444,20 +454,55 @@ function checkVisibleTiles() {
         this.tileCurrentPlayerPositionType = sceneLayout[this.playerRow][this.playerCol];
         this.tileBelowPlayerPositionType = sceneLayout[this.playerRow + 1][this.playerCol];
 
-        if(this.playerCol >= 24 && this.playerCol < 27 && this.playerRow == 41){
-            console.log('about');
-        }else if(this.playerCol >= 34 && this.playerCol < 36 && this.playerRow == 35){
-            console.log('portfolio');
+        if(this.playerCol >= 5 && this.playerCol < 12 && this.playerRow == 41){
+            document.getElementById('intro').classList.remove('hidden');
+            txt = 'This place looks strange...';
+            displayText('intro');
+        }else if(this.playerCol >= 14 && this.playerCol < 27 && this.playerRow == 41){
+            document.getElementById('about').classList.remove('hidden');
+            txt = 'Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
+            displayText('about');
+        }else if(this.playerCol >= 33 && this.playerCol < 36 && this.playerRow == 35){
+            document.getElementById('portfolio').classList.remove('hidden');
+            txt = 'Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
+            displayText('portfolio');
         }else if(this.playerCol >= 38 && this.playerCol < 42 && this.playerRow == 35){
-            console.log('git');
-        }else if(this.playerCol >= 44 && this.playerCol < 45 && this.playerRow == 35){
-            console.log('other');
+            document.getElementById('git').classList.remove('hidden');
+            txt = 'Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
+            displayText('git');
+        }else if(this.playerCol >= 44 && this.playerCol < 47 && this.playerRow == 35){
+            document.getElementById('other').classList.remove('hidden');
+            txt = 'Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
+            displayText('other');
         }else if(this.playerCol >= 21 && this.playerCol < 24 && this.playerRow == 24){
-            console.log('clients');
+            document.getElementById('clients').classList.remove('hidden');
+            txt = 'Sorry. We are still under construction. Come back later!'
+            displayText('clients');
+        }else if(this.playerCol >= 33 && this.playerCol < 47 && this.playerRow == 24){
+            document.getElementById('stuff').classList.remove('hidden');
+            txt = 'Hurr Durr Derp';
+            displayText('stuff');
         }else if(this.playerCol >= 8 && this.playerCol < 15 && this.playerRow == 6){
-            console.log('contact');
+            document.getElementById('contact').classList.remove('hidden');
+            txt = 'Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
+            displayText('contact');
         }else{
-            this.status = false;
+            document.getElementById('intro').classList.add('hidden');
+            informationDisplay.intro = false;
+            document.getElementById('about').classList.add('hidden');
+            informationDisplay.about = false;
+            document.getElementById('portfolio').classList.add('hidden');
+            informationDisplay.portfolio = false;
+            document.getElementById('git').classList.add('hidden');
+            informationDisplay.git = false;
+            document.getElementById('other').classList.add('hidden');
+            informationDisplay.other = false;
+            document.getElementById('clients').classList.add('hidden');
+            informationDisplay.clients = false;
+            document.getElementById('stuff').classList.add('hidden');
+            informationDisplay.stuff = false;
+            document.getElementById('contact').classList.add('hidden');
+            informationDisplay.contact = false;
         }
 
         // FOR CLIMBING MOVEMENT
@@ -573,10 +618,11 @@ function checkVisibleTiles() {
             }
         }
         if(event.key == 0){
-            console.log(player);
+            // console.log(player);
             // setGameSize();
             // checkVisibleTiles();
             // console.log(tile);
+            console.log(informationDisplay);
         }
     });
 
@@ -629,6 +675,28 @@ function checkVisibleTiles() {
             return false;
         }else{
             return true;
+        }
+    }
+
+    var txt;
+    var txtBox;
+    var i;
+
+    function typeText(){
+        if(i < txt.length){
+            document.getElementById(txtBox).innerHTML += txt.charAt(i);
+            i++;
+            setTimeout(typeText, 30);
+        }
+    }
+
+    function displayText(id){
+        if(!informationDisplay[id]){
+            informationDisplay[id] = true;
+            txtBox = id+'Text';
+            document.getElementById(txtBox).innerHTML = '';
+            i = 0;
+            typeText();
         }
     }
 }

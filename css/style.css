@@ -40,3 +40,51 @@ body{
     left: 0;
     color: white;
 }
+
+.textBox{
+    position: absolute;
+    top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    width: 90%;
+    background-color: rgba(150,150,150,0.7);
+    border: solid 5px white;
+}
+
+.textBox a{
+    text-decoration: none;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: blue;
+    color: white;
+    margin: 10px;
+    padding: 5px 10px 5px 10px;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.textBoxImg img{
+    max-width: 200px;
+    float: left;
+    width: 100%;
+}
+
+
+.textBoxText p{
+    vertical-align:top;
+    padding: 10px;
+    margin: 0;
+    color: white;
+}
+
+
+.hidden{
+    display: none;
+}
