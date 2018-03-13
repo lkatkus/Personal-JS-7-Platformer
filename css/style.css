@@ -49,11 +49,31 @@ body{
     left: 0;
     right: 0;
     width: 90%;
-    background-color: rgba(150,150,150,0.7);
+    background-color: #fcd768;
     border: solid 5px white;
+    border-radius: 10px;
+    display: flex;
 }
 
-.textBox a{
+
+.textBoxImg img{
+    width: 200px;
+    display: block;
+}
+
+.textBoxText p{
+    vertical-align:top;
+    padding: 10px;
+    margin: 0;
+    /* color: white; */
+}
+
+.hidden{
+    display: none;
+}
+
+.button{
+    border-radius: 5px;
     text-decoration: none;
     position: absolute;
     bottom: 0;
@@ -61,30 +81,6 @@ body{
     background-color: blue;
     color: white;
     margin: 10px;
-    padding: 5px 10px 5px 10px;
-}
-
-.clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
-}
-
-.textBoxImg img{
-    max-width: 200px;
-    float: left;
-    width: 100%;
-}
-
-
-.textBoxText p{
-    vertical-align:top;
-    padding: 10px;
-    margin: 0;
-    color: white;
-}
-
-
-.hidden{
-    display: none;
+    padding: 5px 15px 5px 15px;
+    border-bottom: solid 2px white;
 }

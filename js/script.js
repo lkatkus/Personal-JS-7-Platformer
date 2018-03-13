@@ -519,16 +519,16 @@ function checkVisibleTiles() {
         }
 
         // DEBUGGING
-        document.getElementById('playerCol').innerHTML = this.playerCol;
-        document.getElementById('playerRow').innerHTML = this.playerRow;
-        document.getElementById('climbing').innerHTML = this.climbing;
-        document.getElementById('climbup').innerHTML = this.canClimbUp;
-        document.getElementById('climbdown').innerHTML = this.canClimbDown;
-        document.getElementById('jumping').innerHTML = this.jumping;
-        document.getElementById('speedx').innerHTML = this.speedX;
-        document.getElementById('speedy').innerHTML = this.speedY;
-        document.getElementById('moveLeft').innerHTML = this.left;
-        document.getElementById('moveRight').innerHTML = this.right;
+        // document.getElementById('playerCol').innerHTML = this.playerCol;
+        // document.getElementById('playerRow').innerHTML = this.playerRow;
+        // document.getElementById('climbing').innerHTML = this.climbing;
+        // document.getElementById('climbup').innerHTML = this.canClimbUp;
+        // document.getElementById('climbdown').innerHTML = this.canClimbDown;
+        // document.getElementById('jumping').innerHTML = this.jumping;
+        // document.getElementById('speedx').innerHTML = this.speedX;
+        // document.getElementById('speedy').innerHTML = this.speedY;
+        // document.getElementById('moveLeft').innerHTML = this.left;
+        // document.getElementById('moveRight').innerHTML = this.right;
     }
 
     // PLAYER OBJECT - DRAW
