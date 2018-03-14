@@ -3,6 +3,8 @@
     src: url('../fonts/joystix monospace.ttf');
 }
 
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 *{
     box-sizing: border-box;
 }
@@ -14,15 +16,13 @@ html, body{
     height: 100%;
 }
 
-body{
-    background-color: grey;
+a{
+    text-decoration: none;
+    color: inherit;
 }
 
 .canvasContainer{
-    display: flex;
-    flex-flow: row;
-    justify-content: center;
-    align-items: center;
+    position: absolute;
     height: 100%;
 }
 
@@ -30,11 +30,10 @@ body{
     background-color: #9ACFF0;
     z-index: -1;
     position: absolute;
-
 }
 
-.container h3{
-    margin: 0;
+.container{
+    font-family: Joystix;
 }
 
 .infoContainer{
@@ -56,9 +55,7 @@ body{
     background-color: rgba(0,0,0,0.7);
     border: solid 5px white;
     display: flex;
-    z-index: 2;
 }
-
 
 .textBoxImg img{
     width: 200px;
@@ -90,12 +87,14 @@ body{
 
 .button:hover{
     background-color: firebrick;
+    cursor: pointer;
+    user-select: none;
 }
 
 /* CONTENT STYLING */
 
 .container{
-    position: absolute;
+    float: left;
     top: 0;
     left: 0;
     width: 100%;
@@ -105,7 +104,7 @@ body{
 
 /* SIDEBAR CONTROLS */
 #sidebarContainer{
-    font-family: Joystix;
+    position: relative;
     height: 100%;
     float: left;
     z-index: 3;
@@ -127,16 +126,21 @@ body{
 
 #sidebarOpen:hover{
     color: rgba(255,255,255,1);
+    cursor: pointer;
 }
 
 #sidebarClose{
     text-align: right;
-    color: rgba(0,0,0,0.3);
+}
+
+#sidebarClose i{
+    color: rgb(237,237,237);
     transition: all 0.2s;
 }
 
-#sidebarClose:hover{
-    color: rgba(0,0,0,1);
+#sidebarClose i:hover {
+    color: rgb(0,0,0);
+    cursor: pointer;
 }
 
 /* SIDEBAR STYLING */
@@ -147,12 +151,37 @@ body{
 }
 
 #sidebar li{
-    padding: 5px 20px 5px 20px;
+    padding: 10px 20px 10px 20px;
     transition: all 0.2s;
 }
 
 #sidebar li:hover{
-    color: firebrick;
+    background-color: #ededed;
     cursor: pointer;
     user-select: none;
+}
+
+.active{
+    background-color: #ededed;
+}
+
+/* CONTENT CONTAINER STYLING */
+
+.contentContainer{
+    background-color: #ededed;
+    position: absolute;
+    padding: 10px 20px 20px 10px;
+    height: 100%;
+}
+
+.contentDiv{
+    font-family: 'Roboto', sans-serif;
+}
+
+td{
+    vertical-align: top;
+}
+
+h2, h3, h4{
+    font-family: Joystix;
 }

@@ -90,104 +90,172 @@
     <!-- START CONTENT CONTAINER -->
         <div class="container">
 
-        <!-- SIDEBAR -->
+
+            <div class="textBox hidden" id="intro">
+                <div class="textBoxImg">
+                    <img src="img/portrait.gif" alt="">
+                </div>
+                <div class="textBoxText">
+                    <p id="introText"></p>
+                </div>
+            </div>
+
+            <div class="textBox hidden" id="about">
+                <div class="textBoxImg">
+                    <img src="img/portrait.gif" alt="">
+                </div>
+                <div class="textBoxText">
+                    <p id="aboutText"></p>
+                </div>
+                <div class="textboxLink button">About</div>
+            </div>
+
+            <div class="textBox hidden" id="portfolio">
+                <div class="textBoxImg">
+                    <img src="img/portrait.gif" alt="">
+                </div>
+                <div class="textBoxText">
+                    <p id="portfolioText"></p>
+                    <div class="textboxLink button">Portfolio</div>
+                </div>
+            </div>
+
+            <div class="textBox hidden" id="git">
+                <div class="textBoxImg">
+                    <img src="img/portrait.gif" alt="">
+                </div>
+                <div class="textBoxText">
+                    <p id="gitText"></p>
+                    <a class="button" href="https://github.com/lkatkus" target="_blank">Github</a>
+                </div>
+            </div>
+
+            <div class="textBox hidden" id="other">
+                <div class="textBoxImg">
+                    <img src="img/portrait.gif" alt="">
+                </div>
+                <div class="textBoxText">
+                    <p id="otherText"></p>
+                    <div class="textboxLink button">Other</div>
+                </div>
+            </div>
+
+            <div class="textBox hidden" id="stuff">
+                <div class="textBoxImg">
+                    <img src="img/portrait.gif" alt="">
+                </div>
+                <div class="textBoxText">
+                    <p id="stuffText"></p>
+                </div>
+            </div>
+
+            <div class="textBox hidden" id="clients">
+                <div class="textBoxImg">
+                    <img src="img/portrait.gif" alt="">
+                </div>
+                <div class="textBoxText">
+                    <p id="clientsText"></p>
+                </div>
+            </div>
+
+            <div class="textBox hidden" id="contact">
+                <div class="textBoxImg">
+                    <img src="img/portrait.gif" alt="">
+                </div>
+                <div class="textBoxText">
+                    <p id="contactText"></p>
+                    <div class="textboxLink button">Contact</div>
+                </div>
+            </div>
+
+        <!-- SIDEBAR CONTAINER-->
             <div id="sidebarContainer">
-
-                <div id="sidebarOpen"><i class="fas fa-bars fa-lg" onclick="openNav()"></i></div>
-
+                <!-- OPENING BUTTON -->
+                <div id="sidebarOpen"><i class="fas fa-bars fa-2x" onclick="openNav()"></i></div>
+                <!-- SIDEBAR -->
                 <div id="sidebar" class="hidden">
-
-                    <div id="sidebarClose" class="hidden"><i class="fas fa-caret-left fa-lg" onclick="closeNav()"></i></div>
-
+                    <!-- CLOSING BUTTON -->
+                    <div id="sidebarClose" class="hidden"><i class="fas fa-caret-left fa-2x" onclick="closeNav()"></i></div>
+                    <!-- MENU -->
                     <ul>
                         <li class="sidebarLink">About</li>
                         <li class="sidebarLink">Portfolio</li>
-                        <li class="sidebarLink">Github</li>
+                        <li><a href="https://github.com/lkatkus" target="_blank">Github</a></li>
                         <li class="sidebarLink">Other</li>
                         <li class="sidebarLink">Clients</li>
                         <li class="sidebarLink">Contacts</li>
                     </ul>
+                </div>
+                <!-- END SIDEBAR -->
+            </div>
+        <!-- END SIDEBAR CONTAINER-->
+
+        <!-- START INFORMACTION CONTAINERS -->
+        <div id="contentContainer" class="contentContainer hidden">
+            <div><i class="fas fa-caret-right fa-2x" onclick="closeContent()"></i></div>
+
+            <div id="contentWrapper">
+                <div id="contentAbout" class="contentDiv hidden">
+                    <h2>About me</h2>
+
+                    <h3>Before</h3>
+                    <p>Prosciutto sirloin hamburger andouille tongue chicken turducken drumstick jowl. Buffalo t-bone meatball capicola bacon tail ground round meatloaf pork loin jowl alcatra pig. Pork chop t-bone strip steak pork loin boudin tenderloin flank, cupim buffalo sausage. Cow hamburger pork loin, shoulder tail cupim porchetta venison corned beef strip steak.</p>
+
+                    <h3>Current</h3>
+                    <p>Bacon ipsum dolor amet biltong leberkas turducken, ham prosciutto beef t-bone spare ribs tail pork brisket swine ribeye. Biltong pork chop frankfurter, prosciutto meatball swine t-bone ham shank buffalo jowl. Ground round kielbasa andouille pancetta rump turducken beef pork belly tongue pork loin salami pork short ribs leberkas burgdoggen. Jowl short ribs doner t-bone, kevin meatball pork chop alcatra bresaola chicken. Venison shank buffalo porchetta picanha ribeye.</p>
+
+                    <h3>Future</h3>
+                    <p>Prosciutto sirloin hamburger andouille tongue chicken turducken drumstick jowl. Buffalo t-bone meatball capicola bacon tail ground round meatloaf pork loin jowl alcatra pig. Pork chop t-bone strip steak pork loin boudin tenderloin flank, cupim buffalo sausage. Cow hamburger pork loin, shoulder tail cupim porchetta venison corned beef strip steak.</p>
+                </div>
+
+                <div id="contentPortfolio" class="contentDiv hidden">
+                    <h2>Portfolio</h2>
+                    <p>Prosciutto sirloin hamburger andouille tongue chicken turducken drumstick jowl. Buffalo t-bone meatball capicola bacon tail ground round meatloaf pork loin jowl alcatra pig. Pork chop t-bone strip steak pork loin boudin tenderloin flank, cupim buffalo sausage. Cow hamburger pork loin, shoulder tail cupim porchetta venison corned beef strip steak.</p>
+                    <p>Bacon ipsum dolor amet biltong leberkas turducken, ham prosciutto beef t-bone spare ribs tail pork brisket swine ribeye. Biltong pork chop frankfurter, prosciutto meatball swine t-bone ham shank buffalo jowl. Ground round kielbasa andouille pancetta rump turducken beef pork belly tongue pork loin salami pork short ribs leberkas burgdoggen. Jowl short ribs doner t-bone, kevin meatball pork chop alcatra bresaola chicken. Venison shank buffalo porchetta picanha ribeye.</p>
+                </div>
+
+                <div id="contentOther" class="contentDiv hidden">
+                    <h2>Other</h2>
+                    <p>Prosciutto sirloin hamburger andouille tongue chicken turducken drumstick jowl. Buffalo t-bone meatball capicola bacon tail ground round meatloaf pork loin jowl alcatra pig. Pork chop t-bone strip steak pork loin boudin tenderloin flank, cupim buffalo sausage. Cow hamburger pork loin, shoulder tail cupim porchetta venison corned beef strip steak.</p>
+                    <p>Bacon ipsum dolor amet biltong leberkas turducken, ham prosciutto beef t-bone spare ribs tail pork brisket swine ribeye. Biltong pork chop frankfurter, prosciutto meatball swine t-bone ham shank buffalo jowl. Ground round kielbasa andouille pancetta rump turducken beef pork belly tongue pork loin salami pork short ribs leberkas burgdoggen. Jowl short ribs doner t-bone, kevin meatball pork chop alcatra bresaola chicken. Venison shank buffalo porchetta picanha ribeye.</p>
+                </div>
+
+                <div id="contentClients" class="contentDiv hidden">
+                    <h2>Clients</h2>
+                    <p>Prosciutto sirloin hamburger andouille tongue chicken turducken drumstick jowl. Buffalo t-bone meatball capicola bacon tail ground round meatloaf pork loin jowl alcatra pig. Pork chop t-bone strip steak pork loin boudin tenderloin flank, cupim buffalo sausage. Cow hamburger pork loin, shoulder tail cupim porchetta venison corned beef strip steak.</p>
+                    <p>Bacon ipsum dolor amet biltong leberkas turducken, ham prosciutto beef t-bone spare ribs tail pork brisket swine ribeye. Biltong pork chop frankfurter, prosciutto meatball swine t-bone ham shank buffalo jowl. Ground round kielbasa andouille pancetta rump turducken beef pork belly tongue pork loin salami pork short ribs leberkas burgdoggen. Jowl short ribs doner t-bone, kevin meatball pork chop alcatra bresaola chicken. Venison shank buffalo porchetta picanha ribeye.</p>
+                </div>
+
+                <div id="contentContacts" class="contentDiv hidden">
+                    <h2>Contacts</h2>
+                    <p>Prosciutto sirloin hamburger andouille tongue chicken turducken drumstick jowl. Buffalo t-bone meatball capicola bacon tail ground round meatloaf pork loin jowl alcatra pig. Pork chop t-bone strip steak pork loin boudin tenderloin flank, cupim buffalo sausage. Cow hamburger pork loin, shoulder tail cupim porchetta venison corned beef strip steak.</p>
+
+                    <table>
+                        <tr>
+                            <td>Location</td>
+                            <td>Vilnius, Lithuania</td>
+                        </tr>
+                        <tr>
+                            <td>Telephone</td>
+                            <td>00 370 671 86770</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td><a href="mailto:laimonas@katkus.eu">laimonas@katkus.eu</a></td>
+                        </tr>
+                        <tr>
+                            <td>Social media</td>
+                            <td>
+                                <div class=""><a href="https://github.com/lkatkus" target="_blank">Github</a></div>
+                                <div class="">LinkedIn</div>
+                            </td>
+                        </tr>
+                    </table>
 
                 </div>
             </div>
-        <!-- END SIDEBAR -->
-
-        <div class="textBox hidden" id="intro">
-            <div class="textBoxImg">
-                <img src="img/portrait.gif" alt="">
-            </div>
-            <div class="textBoxText">
-                <p id="introText"></p>
-            </div>
         </div>
-
-        <div class="textBox hidden" id="about">
-            <div class="textBoxImg">
-                <img src="img/portrait.gif" alt="">
-            </div>
-            <div class="textBoxText">
-                <p id="aboutText"></p>
-            </div>
-            <div class="sidebarLink button">About</div>
-        </div>
-
-        <div class="textBox hidden" id="portfolio">
-            <div class="textBoxImg">
-                <img src="img/portrait.gif" alt="">
-            </div>
-            <div class="textBoxText">
-                <p id="portfolioText"></p>
-                <a class="button" href="#">More</a>
-            </div>
-        </div>
-
-        <div class="textBox hidden" id="git">
-            <div class="textBoxImg">
-                <img src="img/portrait.gif" alt="">
-            </div>
-            <div class="textBoxText">
-                <p id="gitText"></p>
-                <a class="button" href="https://github.com/lkatkus" target="_blank">Check out my github</a>
-            </div>
-        </div>
-
-        <div class="textBox hidden" id="other">
-            <div class="textBoxImg">
-                <img src="img/portrait.gif" alt="">
-            </div>
-            <div class="textBoxText">
-                <p id="otherText"></p>
-                <a class="button" href="#">My other works</a>
-            </div>
-        </div>
-
-        <div class="textBox hidden" id="stuff">
-            <div class="textBoxImg">
-                <img src="img/portrait.gif" alt="">
-            </div>
-            <div class="textBoxText">
-                <p id="stuffText"></p>
-            </div>
-        </div>
-
-        <div class="textBox hidden" id="clients">
-            <div class="textBoxImg">
-                <img src="img/portrait.gif" alt="">
-            </div>
-            <div class="textBoxText">
-                <p id="clientsText"></p>
-            </div>
-        </div>
-
-        <div class="textBox hidden" id="contact">
-            <div class="textBoxImg">
-                <img src="img/portrait.gif" alt="">
-            </div>
-            <div class="textBoxText">
-                <p id="contactText"></p>
-                <a class="button" href="#">Read more</a>
-            </div>
-        </div>
+        <!-- END INFORMACTION CONTAINERS -->
 
 
         </div>

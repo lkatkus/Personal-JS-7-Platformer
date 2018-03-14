@@ -456,7 +456,7 @@ function checkVisibleTiles() {
 
         if(this.playerCol >= 5 && this.playerCol < 12 && this.playerRow == 41){
             document.getElementById('intro').classList.remove('hidden');
-            txt = 'This place looks strange...';
+            txt = 'This place looks strange... ';
             displayText('intro');
         }else if(this.playerCol >= 14 && this.playerCol < 27 && this.playerRow == 41){
             document.getElementById('about').classList.remove('hidden');
