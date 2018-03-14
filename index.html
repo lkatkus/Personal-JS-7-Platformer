@@ -1,26 +1,51 @@
 <!DOCTYPE html>
 <html>
+
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <title>JS PLATFORMER</title>
 
         <!-- SCRIPT -->
-        <script src="js/script.js"></script>
+            <!-- GENERAL WEBSITE JS -->
+            <script src="js/web.js"></script>
+            <!-- GAME JS -->
+            <script src="js/script.js"></script>
+
+
+            <!--  OOP -->
+            <!--  jsDoc dokumentuoti -->
+            <!-- ecmascript 6-->
+            <!-- <script src="js/class/Program.class.js"></script>
+            <script src="js/class/Camera.class.js"></script>
+            <script src="js/class/Engine.class.js"></script>
+            <script src="js/class/Canvas.class.js"></script>
+            <script src="js/class/Sprites.class.js"></script>
+            <script src="js/class/Program.class.js"></script>
+            <script src="js/class/Program.class.js"></script>
+            <script src="js/class/Program.class.js"></script> -->
 
         <!-- CSS -->
-        <link rel="stylesheet" href="css/style.css">
+            <!-- FONT AWESOME CDN -->
+            <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+            <!-- CUSTOM CSS -->
+            <link rel="stylesheet" href="css/style.css">
     </head>
 
     <body onload="init()">
-        <div class="container">
-            <div class="infoContainer">
-                <!-- <h3 id="currentFrame">0</h3>
-                <h3 id="currentTime">0</h3> -->
-                <!-- <h3>
+
+    <!-- START CANVAS CONTAINER -->
+        <div class="canvasContainer">
+
+            <!-- <div class="infoContainer">
+                <h3 id="currentFrame">0</h3>
+                <h3 id="currentTime">0</h3>
+                <h3>
                     MOUSE Col:<span id="mouseCol">0</span>
                     Row:<span id="mouseRow">0</span>
-                </h3> -->
-                <!-- <h3>
+                </h3>
+                <h3>
                     PLAYER Col:<span id="playerCol">0</span>
                     Row:<span id="playerRow">0</span>
                 </h3>
@@ -53,89 +78,120 @@
                 </h3>
                 <h3>right
                     <span id='moveRight'>0</span>
-                </h3> -->
-            </div>
+                </h3>
+            </div> -->
 
-            <div class="textBox hidden" id="intro">
-                <div class="textBoxImg">
-                    <img src="img/portrait.gif" alt="">
-                </div>
-                <div class="textBoxText">
-                    <p id="introText"></p>
-                </div>
-            </div>
 
-            <div class="textBox hidden" id="about">
-                <div class="textBoxImg">
-                    <img src="img/portrait.gif" alt="">
-                </div>
-                <div class="textBoxText">
-                    <p id="aboutText"></p>
-                </div>
-                <a class="button" href="#">More</a>
-            </div>
-
-            <div class="textBox hidden" id="portfolio">
-                <div class="textBoxImg">
-                    <img src="img/portrait.gif" alt="">
-                </div>
-                <div class="textBoxText">
-                    <p id="portfolioText"></p>
-                    <a class="button" href="#">More</a>
-                </div>
-            </div>
-
-            <div class="textBox hidden" id="git">
-                <div class="textBoxImg">
-                    <img src="img/portrait.gif" alt="">
-                </div>
-                <div class="textBoxText">
-                    <p id="gitText"></p>
-                    <a class="button" href="https://github.com/lkatkus" target="_blank">Check out my github</a>
-                </div>
-            </div>
-
-            <div class="textBox hidden" id="other">
-                <div class="textBoxImg">
-                    <img src="img/portrait.gif" alt="">
-                </div>
-                <div class="textBoxText">
-                    <p id="otherText"></p>
-                    <a class="button" href="#">My other works</a>
-                </div>
-            </div>
-
-            <div class="textBox hidden" id="stuff">
-                <div class="textBoxImg">
-                    <img src="img/portrait.gif" alt="">
-                </div>
-                <div class="textBoxText">
-                    <p id="stuffText"></p>
-                </div>
-            </div>
-
-            <div class="textBox hidden" id="clients">
-                <div class="textBoxImg">
-                    <img src="img/portrait.gif" alt="">
-                </div>
-                <div class="textBoxText">
-                    <p id="clientsText"></p>
-                </div>
-            </div>
-
-            <div class="textBox hidden" id="contact">
-                <div class="textBoxImg">
-                    <img src="img/portrait.gif" alt="">
-                </div>
-                <div class="textBoxText">
-                    <p id="contactText"></p>
-                    <a class="button" href="#">Read more</a>
-                </div>
-            </div>
 
             <canvas id="sceneCanvas"></canvas>
         </div>
+    <!-- END CANVAS CONTAINER -->
+
+    <!-- START CONTENT CONTAINER -->
+        <div class="container">
+
+        <!-- SIDEBAR -->
+            <div id="sidebarContainer">
+
+                <div id="sidebarOpen"><i class="fas fa-bars fa-lg" onclick="openNav()"></i></div>
+
+                <div id="sidebar" class="hidden">
+
+                    <div id="sidebarClose" class="hidden"><i class="fas fa-caret-left fa-lg" onclick="closeNav()"></i></div>
+
+                    <ul>
+                        <li class="sidebarLink">About</li>
+                        <li class="sidebarLink">Portfolio</li>
+                        <li class="sidebarLink">Github</li>
+                        <li class="sidebarLink">Other</li>
+                        <li class="sidebarLink">Clients</li>
+                        <li class="sidebarLink">Contacts</li>
+                    </ul>
+
+                </div>
+            </div>
+        <!-- END SIDEBAR -->
+
+        <div class="textBox hidden" id="intro">
+            <div class="textBoxImg">
+                <img src="img/portrait.gif" alt="">
+            </div>
+            <div class="textBoxText">
+                <p id="introText"></p>
+            </div>
+        </div>
+
+        <div class="textBox hidden" id="about">
+            <div class="textBoxImg">
+                <img src="img/portrait.gif" alt="">
+            </div>
+            <div class="textBoxText">
+                <p id="aboutText"></p>
+            </div>
+            <div class="sidebarLink button">About</div>
+        </div>
+
+        <div class="textBox hidden" id="portfolio">
+            <div class="textBoxImg">
+                <img src="img/portrait.gif" alt="">
+            </div>
+            <div class="textBoxText">
+                <p id="portfolioText"></p>
+                <a class="button" href="#">More</a>
+            </div>
+        </div>
+
+        <div class="textBox hidden" id="git">
+            <div class="textBoxImg">
+                <img src="img/portrait.gif" alt="">
+            </div>
+            <div class="textBoxText">
+                <p id="gitText"></p>
+                <a class="button" href="https://github.com/lkatkus" target="_blank">Check out my github</a>
+            </div>
+        </div>
+
+        <div class="textBox hidden" id="other">
+            <div class="textBoxImg">
+                <img src="img/portrait.gif" alt="">
+            </div>
+            <div class="textBoxText">
+                <p id="otherText"></p>
+                <a class="button" href="#">My other works</a>
+            </div>
+        </div>
+
+        <div class="textBox hidden" id="stuff">
+            <div class="textBoxImg">
+                <img src="img/portrait.gif" alt="">
+            </div>
+            <div class="textBoxText">
+                <p id="stuffText"></p>
+            </div>
+        </div>
+
+        <div class="textBox hidden" id="clients">
+            <div class="textBoxImg">
+                <img src="img/portrait.gif" alt="">
+            </div>
+            <div class="textBoxText">
+                <p id="clientsText"></p>
+            </div>
+        </div>
+
+        <div class="textBox hidden" id="contact">
+            <div class="textBoxImg">
+                <img src="img/portrait.gif" alt="">
+            </div>
+            <div class="textBoxText">
+                <p id="contactText"></p>
+                <a class="button" href="#">Read more</a>
+            </div>
+        </div>
+
+
+        </div>
+    <!-- END CONTENT CONTAINER -->
 
     </body>
-
 </html>
