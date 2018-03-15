@@ -27,6 +27,8 @@
             <script src="js/class/Program.class.js"></script> -->
 
         <!-- CSS -->
+            <!-- BOOTSTRAP CDN-->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
             <!-- FONT AWESOME CDN -->
             <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
             <!-- CUSTOM CSS -->
@@ -82,89 +84,27 @@
             </div> -->
 
 
-
             <canvas id="sceneCanvas"></canvas>
         </div>
     <!-- END CANVAS CONTAINER -->
 
     <!-- START CONTENT CONTAINER -->
-        <div class="container">
+        <div class="myContainer">
 
 
-            <div class="textBox hidden" id="intro">
+            <div id="textBox" class="textBox hidden">
                 <div class="textBoxImg">
                     <img src="img/portrait.gif" alt="">
                 </div>
                 <div class="textBoxText">
-                    <p id="introText"></p>
-                </div>
-            </div>
-
-            <div class="textBox hidden" id="about">
-                <div class="textBoxImg">
-                    <img src="img/portrait.gif" alt="">
-                </div>
-                <div class="textBoxText">
-                    <p id="aboutText"></p>
-                </div>
-                <div class="textboxLink button">About</div>
-            </div>
-
-            <div class="textBox hidden" id="portfolio">
-                <div class="textBoxImg">
-                    <img src="img/portrait.gif" alt="">
-                </div>
-                <div class="textBoxText">
-                    <p id="portfolioText"></p>
-                    <div class="textboxLink button">Portfolio</div>
-                </div>
-            </div>
-
-            <div class="textBox hidden" id="git">
-                <div class="textBoxImg">
-                    <img src="img/portrait.gif" alt="">
-                </div>
-                <div class="textBoxText">
-                    <p id="gitText"></p>
-                    <a class="button" href="https://github.com/lkatkus" target="_blank">Github</a>
-                </div>
-            </div>
-
-            <div class="textBox hidden" id="other">
-                <div class="textBoxImg">
-                    <img src="img/portrait.gif" alt="">
-                </div>
-                <div class="textBoxText">
-                    <p id="otherText"></p>
-                    <div class="textboxLink button">Other</div>
-                </div>
-            </div>
-
-            <div class="textBox hidden" id="stuff">
-                <div class="textBoxImg">
-                    <img src="img/portrait.gif" alt="">
-                </div>
-                <div class="textBoxText">
-                    <p id="stuffText"></p>
-                </div>
-            </div>
-
-            <div class="textBox hidden" id="clients">
-                <div class="textBoxImg">
-                    <img src="img/portrait.gif" alt="">
-                </div>
-                <div class="textBoxText">
-                    <p id="clientsText"></p>
-                </div>
-            </div>
-
-            <div class="textBox hidden" id="contact">
-                <div class="textBoxImg">
-                    <img src="img/portrait.gif" alt="">
-                </div>
-                <div class="textBoxText">
-                    <p id="contactText"></p>
-                    <div class="textboxLink button">Contact</div>
+                    <p id="textContainer"></p>
+                    <div id="textBoxButtons">
+                        <div class="textboxLink button hidden">About</div>
+                        <div class="textboxLink button hidden">Portfolio</div>
+                        <div class="hidden"><a class="button" href="https://github.com/lkatkus" target="_blank">Github</a></div>
+                        <div class="textboxLink button hidden">Other</div>
+                        <div class="textboxLink button hidden">Contact</div>
+                    </div>
                 </div>
             </div>
 
@@ -191,7 +131,8 @@
         <!-- END SIDEBAR CONTAINER-->
 
         <!-- START INFORMACTION CONTAINERS -->
-        <div id="contentContainer" class="contentContainer hidden">
+        <div id="contentContainer" class="contentContainer hidden myContainer">
+
             <div><i class="fas fa-caret-right fa-2x" onclick="closeContent()"></i></div>
 
             <div id="contentWrapper">
@@ -230,7 +171,7 @@
                     <h2>Contacts</h2>
                     <p>Prosciutto sirloin hamburger andouille tongue chicken turducken drumstick jowl. Buffalo t-bone meatball capicola bacon tail ground round meatloaf pork loin jowl alcatra pig. Pork chop t-bone strip steak pork loin boudin tenderloin flank, cupim buffalo sausage. Cow hamburger pork loin, shoulder tail cupim porchetta venison corned beef strip steak.</p>
 
-                    <table>
+                    <table class="table">
                         <tr>
                             <td>Location</td>
                             <td>Vilnius, Lithuania</td>
