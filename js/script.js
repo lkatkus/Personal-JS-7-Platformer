@@ -1,6 +1,10 @@
 // VARIABLES
 // MAIN WORLD PARAMETERS
-const TILES_PER_ROW = 12;
+var WORLD_COLS;
+var WORLD_ROWS;
+
+var TILE_SIZE;
+var TILES_PER_ROW = 10; /* CONTROLS NUMBER OF ROWS DISPLAYED ON SCREEN */
 
 // MAIN PLAYER VARIABLES
 var player;
@@ -10,29 +14,30 @@ var playerCurrentY;
 var playerMaxSpeedX;
 var playerMaxSpeedY;
 
-// PLAYER ANIMATION VARIABLES
+// PLAYER SPRITE SHEET SETUP
 var spriteSheetWidth = 900;
 var spriteSheetHeight = 800;
-
 var rows = 4;
 var cols = 9;
 
+// PLAYER SPRITE LAYOUT IN SPRITE SHEET
 var trackRight = 0; /* FOR MOVING RIGHT ANIMATION */
 var trackLeft = 1; /* FOR MOVING LEFT ANIMATION */
 var trackIdleRight = 2; /* FOR IDLE RIGHT ANIMATION */
 var trackIdleLeft = 3; /* FOR IDLE LEFT ANIMATION */
 
-var width = spriteWidth/cols;
-var height = spriteHeight/rows;
+// PLAYER SPRITE
+var spriteWidth = 100;
+var spriteHeight = 200;
+
+// var spriteWidth = Number(spriteWidth/cols);
+// var spriteHeight = Number(spriteHeight/rows);
 
 var curFrame = 0;
 var frameCount = 8;
 
 var srcX = 0;
 var srcY = 0;
-
-var spriteWidth = 100;
-var spriteHeight = 200;
 
 // INTERVAL HANDLING VARIABLES
 var myAnimationInterval;
@@ -45,7 +50,6 @@ var camPanY = 0;
 var screen = {
     visibleRowTop:0,
     visibleRowBottom:0,
-
     visibleColLeft:0,
     visibleColRight:0
 };
@@ -67,8 +71,24 @@ var informationDisplay = {
     contact : false
 };
 
+var jokes = [
+    'Why arent koalas actual bears?... They dont meet the koalafications.',
+    'How do trees get online?... They just log in.',
+    'Why did the computer show up at work late?... It had a hard drive.',
+    'Why was the cell phone wearing glasses?... Because it lost its contacts.',
+    'What do you call a cow with a twitch?... Beef jerky.',
+    'What do you call an alligator with a vest?... An investigator.',
+    'I tried to sue the airport for misplacing my luggage... I lost my case.',
+    'A gird told me, that she wanted to see my python... I only knew javascript.',
+    'What do you call a dog that does magic tricks?... A labracadabrador.',
+    'Two windmills are standing in a field and one asks the other, “What kind of music do you like?” – The other says... “I’m a big metal fan.”',
+    'My girlfriend and I often laugh about how competitive we are… But I laugh more.',
+    'My friend asked me to help him round up his 37 sheep... I said "40".'
+];
+
+// MAIN START FUNCTION
 function init(){
-    // VARIABLES
+
     // SELECTORS
     var canvas = document.getElementById('sceneCanvas');
     var ctx = canvas.getContext('2d');
@@ -82,70 +102,56 @@ function init(){
 
     // SCENE LAYOUT
     var sceneLayout = [
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'f', 'f', 'f', 0, 0, 0, 0, 'f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'f', 'f', 'f', 'f', 'f', 0, 0, 'f', 'f', 'f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'c', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 5, 5, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'c', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 5, 'f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 4, 4, 0, 0, 'a', 'a', 'a', 'a', 'a', 4, 4, 4, 'f', 'f', 'f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'c', 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'c', 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 'c', 0, 'f', 'f', 'f', 'f', 0, 'a', 'a', 5, 5, 'a', 4, 4, 4, 4, 4, 4, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'c', 0, 'f', 'f', 'f', 'f', 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 5, 7, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'c', 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 5, 7, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'b', 3, 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 4, 0, 0, 0, 'b', 'b', 'b', 'b', 'b', 'b', 'b', 0, 'a', 'a', 5, 5, 'a', 4, 4, 4, 4, 4, 4, 7, 5, 5, 5, 7, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'b', 3, 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 4, 0, 0, 0, 'b', 'b', 'b', 'b', 'b', 'b', 'b', 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 7, 0, 3, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 'a', 'a', 2, 2, 2, 2, 2, 2, 5, 5, 4, 7, 5, 5, 5, 7, 0, 3, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 2, 2, 2, 2, 4, 4, 4, 4, 7, 7, 7, 7, 7, 0, 3, 0, 0, 0, 'f'],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 5, 7, 0, 3, 0, 0, 'f', 'f'],
-        [0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 5, 7, 0, 3, 0, 'f', 'f', 'f'],
-        [0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 4, 4, 4, 4, 4, 7, 5, 5, 5, 7, 0, 3, 0, 0, 0, 0],
-        [0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 7, 7, 7, 7, 0, 3, 0, 0, 0, 0],
-        ['f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 7, 7, 0, 3, 0, 0, 0, 0],
-        ['f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 7, 7, 0, 3, 0, 0, 0, 0],
-        ['f', 'f', 'f', 'f', 0, 0, 0, 0, 0, 8, 8, 4, 5, 4, 5, 5, 4, 5, 5, 5, 4, 5, 5, 5, 4, 8, 8, 0, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 4, 4, 6, 4, 4, 4, 4, 6, 6, 6, 4, 6, 6, 6, 4, 4, 8, 0, 0, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 4, 4, 4, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 8, 8, 8, 0, 0, 2, 3, 2, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 0, 0, 2, 2, 2, 0, 0, 2, 2, 0, 0, 0],
-        [0, 0, 0, 0, 0, 7, 7, 7, 7, 8, 8, 4, 5, 4, 4, 4, 4, 5, 5, 5, 4, 5, 5, 5, 4, 8, 8, 8, 0, 0, 0, 3, 8, 2, 2, 8, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 7, 7, 7, 7, 7, 8, 4, 4, 6, 4, 4, 7, 4, 6, 6, 6, 4, 6, 6, 6, 4, 4, 8, 8, 8, 0, 8, 3, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 9, 7, 7, 7, 7, 7, 8, 8, 4, 4, 4, 4, 7, 4, 4, 4, 4, 4, 4, 4, 4, 4, 8, 8, 8, 8, 8, 8, 3, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 'f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 'f', 'f', 'f', 'f', 'f', 0, 0, 'f', 'f', 'f', 0, 0, 0, 0],
-        [0, 0, 0, 0, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 0, 0, 0, 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'f', 'f', 'f', 0, 0, 0, 0, 'f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'f', 'f', 'f', 'f', 'f', 0, 0, 'f', 'f', 'f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'c', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 5, 5, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'c', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 5, 'f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 4, 4, 0, 0, 'a', 'a', 'a', 'a', 'a', 4, 4, 4, 'f', 'f', 'f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'c', 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'c', 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 'c', 0, 'f', 'f', 'f', 'f', 0, 'a', 'a', 5, 5, 'a', 4, 4, 4, 4, 4, 4, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'c', 0, 'f', 'f', 'f', 'f', 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 5, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'c', 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 5, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'b', 3, 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 4, 0, 0, 0, 'b', 'b', 'b', 'b', 'b', 'b', 'b', 0, 'a', 'a', 5, 5, 'a', 4, 4, 4, 4, 4, 4, 7, 5, 5, 5, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'b', 3, 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 4, 0, 0, 0, 'b', 'b', 'b', 'b', 'b', 'b', 'b', 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 7, 0, 3, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 'a', 'a', 2, 2, 2, 2, 2, 2, 5, 5, 4, 7, 5, 5, 5, 7, 0, 3, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 2, 2, 2, 2, 4, 4, 4, 4, 7, 7, 7, 7, 7, 0, 3, 0, 0, 0, 'f', 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 5, 7, 0, 3, 0, 0, 'f', 'f', 'f', 0, 0],
+        [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 5, 7, 0, 3, 0, 'f', 'f', 'f', 'f', 0, 0],
+        [0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 4, 4, 4, 4, 4, 7, 5, 5, 5, 7, 0, 3, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 7, 7, 7, 7, 0, 3, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 'f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 7, 7, 0, 3, 0, 0, 0, 0, 0, 0, 0],
+        [0, 'f', 'f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 7, 7, 0, 3, 0, 0, 0, 0, 0, 0, 0],
+        [0, 'f', 'f', 'f', 'f', 'f', 0, 0, 0, 0, 0, 8, 8, 4, 5, 4, 5, 5, 4, 5, 5, 5, 4, 5, 5, 5, 4, 8, 8, 0, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 4, 4, 6, 4, 4, 4, 4, 6, 6, 6, 4, 6, 6, 6, 4, 4, 8, 0, 0, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 4, 4, 4, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 8, 8, 8, 0, 0, 2, 3, 2, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 0, 0, 2, 2, 2, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 8, 8, 4, 5, 4, 4, 4, 4, 5, 5, 5, 4, 5, 5, 5, 4, 8, 8, 8, 0, 0, 0, 3, 8, 2, 2, 8, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 8, 4, 4, 6, 4, 4, 7, 4, 6, 6, 6, 4, 6, 6, 6, 4, 4, 8, 8, 8, 0, 8, 3, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 9, 7, 7, 7, 7, 7, 8, 8, 4, 4, 4, 4, 7, 4, 4, 4, 4, 4, 4, 4, 4, 4, 8, 8, 8, 8, 8, 8, 3, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 'f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 'f', 'f', 'f', 'f', 'f', 0, 0, 'f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 0, 0, 0, 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 00]
     ];
 
-    // WORLD SIZE PARAMETERS
-    const WORLD_COLS = sceneLayout[0].length;
-    const WORLD_ROWS = sceneLayout.length;
-
-    // CANVAS SETUP
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    var TILE_SIZE;
-
-    if(canvas.width / canvas.height < 1){
-        TILE_SIZE = Math.ceil(canvas.width / TILES_PER_ROW);
-    }else{
-        TILE_SIZE = Math.ceil(canvas.height / TILES_PER_ROW);
-    }
+    setWorldSize();
 
     var playerMaxSpeedX = Math.floor(TILE_SIZE / 7);
     var playerMaxSpeedY = Math.floor(TILE_SIZE / 2);
@@ -256,36 +262,36 @@ function init(){
         // }
     }
 
-function checkVisibleTiles() {
+    function checkVisibleTiles() {
 
-    var colsThatFitOnScreen = Math.floor(canvas.width / TILE_SIZE);
-    var rowsThatFitOnScreen = Math.floor(canvas.height / TILE_SIZE);
+        var colsThatFitOnScreen = Math.floor(canvas.width / TILE_SIZE);
+        var rowsThatFitOnScreen = Math.floor(canvas.height / TILE_SIZE);
 
-    var cameraLeftMostCol = Math.floor(camPanX / TILE_SIZE);
-    if(cameraLeftMostCol < 0){
-        cameraLeftMostCol = 0;
+        var cameraLeftMostCol = Math.floor(camPanX / TILE_SIZE);
+        if(cameraLeftMostCol < 0){
+            cameraLeftMostCol = 0;
+        }
+        var cameraRightMostCol = cameraLeftMostCol + colsThatFitOnScreen + 2;
+        if(cameraRightMostCol > sceneLayout[0].length){
+            cameraRightMostCol = sceneLayout[0].length;
+        }
+
+        var cameraTopMostRow = Math.floor(camPanY / TILE_SIZE);
+        if(cameraTopMostRow < 0){
+            cameraTopMostRow = 0;
+        }
+
+        var cameraBottomMostRow = cameraTopMostRow + rowsThatFitOnScreen + 2;
+        if(cameraBottomMostRow > sceneLayout.length){
+            cameraBottomMostRow = sceneLayout.length;
+        }
+
+        screen.visibleColLeft = cameraLeftMostCol;
+        screen.visibleColRight = cameraRightMostCol;
+
+        screen.visibleRowTop = cameraTopMostRow;
+        screen.visibleRowBottom = cameraBottomMostRow;
     }
-    var cameraRightMostCol = cameraLeftMostCol + colsThatFitOnScreen + 2;
-    if(cameraRightMostCol > sceneLayout[0].length){
-        cameraRightMostCol = sceneLayout[0].length;
-    }
-
-    var cameraTopMostRow = Math.floor(camPanY / TILE_SIZE);
-    if(cameraTopMostRow < 0){
-        cameraTopMostRow = 0;
-    }
-
-    var cameraBottomMostRow = cameraTopMostRow + rowsThatFitOnScreen + 2;
-    if(cameraBottomMostRow > sceneLayout.length){
-        cameraBottomMostRow = sceneLayout.length;
-    }
-
-    screen.visibleColLeft = cameraLeftMostCol;
-    screen.visibleColRight = cameraRightMostCol;
-
-    screen.visibleRowTop = cameraTopMostRow;
-    screen.visibleRowBottom = cameraBottomMostRow;
-}
 
     // PLAYER OBJECT
     function PlayerObj(){
@@ -313,7 +319,7 @@ function checkVisibleTiles() {
         // LEFT / RIGHT MOVEMENT
         this.left = false;
         this.right = false;
-        this.previousDirection = 'right';
+        this.previousDirection = 'right'; /* HELPER FOR IDLE ANIMATION DIRECTION */
 
         // MOVEMENT STATUS
         this.grounded = true;
@@ -454,44 +460,43 @@ function checkVisibleTiles() {
         this.tileCurrentPlayerPositionType = sceneLayout[this.playerRow][this.playerCol];
         this.tileBelowPlayerPositionType = sceneLayout[this.playerRow + 1][this.playerCol];
 
-        // SETTING TEXT FOR INTERACTION POINTS
-        if(this.playerCol >= 5 && this.playerCol < 12 && this.playerRow == 41){
-            txt = 'This place looks strange... ';
-            displayText();
+        // INTERACTION BASED ON PLAYER LOCATION ON GRID
+        if(this.playerCol >= 7 && this.playerCol < 12 && this.playerRow == 41){
+            textPlaceholder = 'This place looks strange... ';
+            displayText('intro');
         }else if(this.playerCol >= 14 && this.playerCol < 27 && this.playerRow == 41){
-            txt = 'Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
-            displayText();
+            textPlaceholder = 'About Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
+            displayText('about');
         }else if(this.playerCol >= 33 && this.playerCol < 36 && this.playerRow == 35){
-            txt = 'Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
-            displayText();
+            textPlaceholder = 'Portfolio Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
+            displayText('portfolio');
         }else if(this.playerCol >= 38 && this.playerCol < 42 && this.playerRow == 35){
-            txt = 'Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
-            displayText();
+            textPlaceholder = 'Git Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
+            displayText('git');
         }else if(this.playerCol >= 44 && this.playerCol < 47 && this.playerRow == 35){
-            txt = 'Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
-            displayText();
-        }else if(this.playerCol >= 21 && this.playerCol < 24 && this.playerRow == 24){
-            txt = 'Sorry. We are still under construction. Come back later!'
-            displayText();
+            textPlaceholder = 'Other Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
+            displayText('other');
+        }else if(this.playerCol >= 21 && this.playerCol < 27 && this.playerRow == 24){
+            textPlaceholder = 'Sorry. We are still under construction. Come back later!'
+            displayText('clients');
         }else if(this.playerCol >= 33 && this.playerCol < 47 && this.playerRow == 24){
-            txt = 'Hurr Durr Derp';
-            displayText();
+            displayText('stuff');
         }else if(this.playerCol >= 8 && this.playerCol < 15 && this.playerRow == 6){
-            txt = 'Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
-            displayText();
+            textPlaceholder = 'Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
+            displayText('contact');
         }else{
             // HIDING TEXTBOX
-            document.getElementById('textBox').classList.add('hidden');
+            document.getElementById('textBoxContainer').classList.add('hidden');
 
             // RESETING VISIBILITY STATUS IF AWAY FROM INTERACTION POINT
-            informationDisplay.intro = false;
-            informationDisplay.about = false;
-            informationDisplay.portfolio = false;
-            informationDisplay.git = false;
-            informationDisplay.other = false;
-            informationDisplay.clients = false;
-            informationDisplay.stuff = false;
-            informationDisplay.contact = false;
+            for(var section in informationDisplay){
+                informationDisplay[section] = false;
+
+                // HIDING TEXTBOX BUTTONS IF THEY EXIST FOR SECTION
+                if(document.getElementById(section + 'Button')){
+                    document.getElementById(section + 'Button').classList.add('hidden');
+                };
+            };
         }
 
         // FOR CLIMBING MOVEMENT
@@ -573,12 +578,13 @@ function checkVisibleTiles() {
         }, 100);
     }
 
+    // CREATE NEW PLAYER OBJECT
     player = new PlayerObj();
     calculateSpawnLocation();
     camPanY = player.y - canvas.height / 2;
 
+    // START ANIMATION
     animate();
-
 
     // PLAYER CONTROLS
     document.addEventListener('keydown',function(event){
@@ -611,7 +617,7 @@ function checkVisibleTiles() {
             // setGameSize();
             // checkVisibleTiles();
             // console.log(tile);
-            console.log(informationDisplay);
+            // console.log(informationDisplay);
         }
     });
 
@@ -635,6 +641,30 @@ function checkVisibleTiles() {
     });
 
     // HELPERS
+
+    window.addEventListener('resize', function(){
+        // setWorldSize();
+        console.log('resize');
+    });
+
+    // SETUP CANVAS SIZE
+    function setWorldSize(){
+        // WORLD SIZE PARAMETERS
+        WORLD_COLS = sceneLayout[0].length;
+        WORLD_ROWS = sceneLayout.length;
+
+        // CANVAS SETUP
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        if(canvas.width / canvas.height < 1){
+            TILE_SIZE = Math.ceil(canvas.width / TILES_PER_ROW);
+        }else{
+            TILE_SIZE = Math.ceil(canvas.height / TILES_PER_ROW);
+        }
+    }
+
+    // CALCULATE PLAYER START POSITION
     function calculateSpawnLocation(){
         for(let i = 0; i < sceneLayout.length; i++){
             for(let j = 0; j < sceneLayout[i].length; j++){
@@ -667,25 +697,47 @@ function checkVisibleTiles() {
         }
     }
 
-    var txt;
-    var i;
+    // FOR TYPING TEXT IN TEXT BOX
+
+    var textPlaceholder; /* TEXT PLACEHOLDER FOR TEXT BOX*/
+    var displayedChar; /* DISPLAYED CHARACTER COUNTER FOR TYPING SIMULATION */
+
+    function displayText(id){
+        // DISPLAY TEXTBOX CONTAINER
+        document.getElementById('textBoxContainer').classList.remove('hidden');
+
+        // CHECK IF INFORMATION IS NOT ALREADY DISPLAYING
+        if(!informationDisplay[id]){
+
+            if(id == 'stuff'){
+                let jokeNr = Math.floor(Math.random() * jokes.length);
+                textPlaceholder = jokes[jokeNr];
+            }
+
+            // SET TRUE WHEN DISPLAYING
+            informationDisplay[id] = true;
+
+            // CLEAR TEXTBOX CONTAINER
+            document.getElementById('textContainer').innerHTML = '';
+
+            // RESET STARTING CHARACTER COUNTER
+            displayedChar = 0;
+
+            // DISPLAY BUTTON IF IT EXISTS FOR SECTION
+            if(document.getElementById(id + 'Button')){
+                document.getElementById(id + 'Button').classList.remove('hidden');
+            };
+
+            typeText();
+        }
+    }
 
     function typeText(){
-        if(i < txt.length){
-            document.getElementById('textContainer').innerHTML += txt.charAt(i);
-            i++;
+        if(displayedChar < textPlaceholder.length){
+            document.getElementById('textContainer').innerHTML += textPlaceholder.charAt(displayedChar);
+            displayedChar++;
             setTimeout(typeText, 30);
         }
     }
 
-    function displayText(id){
-        document.getElementById('textBox').classList.remove('hidden');
-
-        if(!informationDisplay[id]){
-            informationDisplay[id] = true;
-            document.getElementById('textContainer').innerHTML = '';
-            i = 0;
-            typeText();
-        }
-    }
 }

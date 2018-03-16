@@ -5,10 +5,20 @@
 
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
+
+/* ========= GLOBAL VARIABLES ========= */
+:root{
+    /* COLORS */
+    --text-red: firebrick;
+    /* UTILITIES */
+    --transition: all 0.2s;
+}
+
 *{
     box-sizing: border-box;
 }
 
+/* ========= GLOBAL SETTINGS ========= */
 html, body{
     padding: 0;
     margin: 0;
@@ -21,6 +31,20 @@ a{
     color: inherit;
 }
 
+h2, h3, h4{
+    font-family: Joystix;
+}
+
+h2{
+    margin-top: 0;
+}
+
+p{
+    margin: 0;
+}
+
+/* ========= CANVAS SETTINGS ========= */
+
 .canvasContainer{
     position: absolute;
     height: 100%;
@@ -28,7 +52,6 @@ a{
 
 #sceneCanvas{
     background-color: #9ACFF0;
-    z-index: -1;
     position: absolute;
 }
 
@@ -44,18 +67,29 @@ a{
     color: white;
 }
 
-.textBox{
-    font-family: Joystix;
+    /* ========= TEXTBOX SETTINGS ========= */
+
+#textBoxContainer{
     position: absolute;
     top: 20px;
     margin-left: auto;
     margin-right: auto;
     left: 0;
     right: 0;
-    width: 90%;
+    width: 85%;
+}
+
+#textBox{
+    font-family: Joystix;
     background-color: rgba(0,0,0,0.7);
     border: solid 5px white;
     display: flex;
+}
+
+#textBoxButtons{
+    position: relative;
+    text-align: right;
+    top: 10px;
 }
 
 .textBoxImg img{
@@ -70,24 +104,20 @@ a{
     color: white;
 }
 
-.hidden{
-    display: none;
-}
+
 
 .button{
-    text-decoration: none;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    background-color: white;
-    color: black;
-    margin: 0 15px 10px 0;
-    padding: 5px 15px 5px 15px;
-    transition: all 0.2s;
+    font-family: Joystix;
+    display: inline-block;
+    background-color: rgba(255,255,255,0.3);
+    color: rgba(0,0,0,0.3);
+    padding: 5px 10px 5px 10px;
+    transition: var(--transition);
 }
 
 .button:hover{
-    background-color: firebrick;
+    background-color: rgba(255,255,255,1);
+    color: rgba(0,0,0,1);
     cursor: pointer;
     user-select: none;
 }
@@ -113,14 +143,14 @@ a{
 #sidebar{
     height: 100%;
     padding: 10px;
-    transition: all 1s;
+    transition: var(--transition);
     background-color: white;
 }
 
 #sidebarOpen{
     padding: 10px;
     color: rgba(255,255,255,0.5);
-    transition: all 0.2s;
+    transition: var(--transition);
     width: 100%;
 }
 
@@ -135,7 +165,7 @@ a{
 
 #sidebarClose i{
     color: rgb(237,237,237);
-    transition: all 0.2s;
+    transition: var(--transition);
 }
 
 #sidebarClose i:hover {
@@ -152,7 +182,8 @@ a{
 
 #sidebar li{
     padding: 10px 20px 10px 20px;
-    transition: all 0.2s;
+    font-family: Joystix;
+    transition: var(--transition);
 }
 
 #sidebar li:hover{
@@ -166,7 +197,6 @@ a{
 }
 
 /* CONTENT CONTAINER STYLING */
-
 .contentContainer{
     background-color: #ededed;
     position: absolute;
@@ -174,14 +204,35 @@ a{
     height: 100%;
 }
 
+#contentWrapper{
+    max-width: 1000px;
+    padding-left: 20px;
+}
+
 .contentDiv{
     font-family: 'Roboto', sans-serif;
 }
 
-td{
-    vertical-align: top;
+table{
+    width: 100%;
 }
 
-h2, h3, h4{
-    font-family: Joystix;
+td{
+    vertical-align: top;
+    padding-top: 10px;
+}
+
+td a{
+    transition: var(--transition);
+}
+
+td a:hover{
+    color: var(--text-red);
+}
+
+
+/* UTILITIES */
+
+.hidden{
+    display: none!important;
 }

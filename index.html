@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>JS PLATFORMER</title>
+        <title>Laimonas Katkus WebPortfolio</title>
 
         <!-- SCRIPT -->
             <!-- GENERAL WEBSITE JS -->
@@ -27,8 +27,6 @@
             <script src="js/class/Program.class.js"></script> -->
 
         <!-- CSS -->
-            <!-- BOOTSTRAP CDN-->
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
             <!-- FONT AWESOME CDN -->
             <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
             <!-- CUSTOM CSS -->
@@ -39,51 +37,6 @@
 
     <!-- START CANVAS CONTAINER -->
         <div class="canvasContainer">
-
-            <!-- <div class="infoContainer">
-                <h3 id="currentFrame">0</h3>
-                <h3 id="currentTime">0</h3>
-                <h3>
-                    MOUSE Col:<span id="mouseCol">0</span>
-                    Row:<span id="mouseRow">0</span>
-                </h3>
-                <h3>
-                    PLAYER Col:<span id="playerCol">0</span>
-                    Row:<span id="playerRow">0</span>
-                </h3>
-
-                <h3>climbing
-                    <span id='climbing'>0</span>
-                </h3>
-
-                <h3>climbUp
-                    <span id='climbup'>0</span>
-                </h3>
-
-                <h3>climbdown
-                    <span id='climbdown'>0</span>
-                </h3>
-                <h3>jumping
-                    <span id='jumping'>0</span>
-                </h3>
-                <h3>falling
-                    <span id='falling'>0</span>
-                </h3>
-                <h3>speedx
-                    <span id='speedx'>0</span>
-                </h3>
-                <h3>speedy
-                    <span id='speedy'>0</span>
-                </h3>
-                <h3>left
-                    <span id='moveLeft'>0</span>
-                </h3>
-                <h3>right
-                    <span id='moveRight'>0</span>
-                </h3>
-            </div> -->
-
-
             <canvas id="sceneCanvas"></canvas>
         </div>
     <!-- END CANVAS CONTAINER -->
@@ -91,22 +44,29 @@
     <!-- START CONTENT CONTAINER -->
         <div class="myContainer">
 
-
-            <div id="textBox" class="textBox hidden">
-                <div class="textBoxImg">
-                    <img src="img/portrait.gif" alt="">
-                </div>
-                <div class="textBoxText">
-                    <p id="textContainer"></p>
-                    <div id="textBoxButtons">
-                        <div class="textboxLink button hidden">About</div>
-                        <div class="textboxLink button hidden">Portfolio</div>
-                        <div class="hidden"><a class="button" href="https://github.com/lkatkus" target="_blank">Github</a></div>
-                        <div class="textboxLink button hidden">Other</div>
-                        <div class="textboxLink button hidden">Contact</div>
+        <!-- TEXTBOX CONTAINER FOR "INGAME" TEXT -->
+            <div id="textBoxContainer" class="hidden">
+                <div id="textBox">
+                    <div class="textBoxImg">
+                        <img src="img/portrait.gif" alt="">
+                    </div>
+                    <div class="textBoxText">
+                        <!-- PLACEHOLDER FOR DISPLAYING TEXT -->
+                        <p id="textContainer"></p>
                     </div>
                 </div>
+
+                <!-- TEXTBOX BUTTONS -->
+                <div id="textBoxButtons">
+                    <div id="aboutButton" class="textboxLink button hidden" value="About">About</div>
+                    <div id="portfolioButton" class="textboxLink button hidden" value="Portfolio">Portfolio</div>
+                    <div id="gitButton" class="hidden"><a class="button" href="https://github.com/lkatkus" target="_blank">Github</a></div>
+                    <div id="otherButton" class="textboxLink button hidden" value="Other">Other</div>
+                    <div id="contactButton" class="textboxLink button hidden" value="Contact">Contact</div>
+                </div>
+
             </div>
+        <!-- END TEXTBOX CONTAINER -->
 
         <!-- SIDEBAR CONTAINER-->
             <div id="sidebarContainer">
@@ -118,12 +78,12 @@
                     <div id="sidebarClose" class="hidden"><i class="fas fa-caret-left fa-2x" onclick="closeNav()"></i></div>
                     <!-- MENU -->
                     <ul>
-                        <li class="sidebarLink">About</li>
-                        <li class="sidebarLink">Portfolio</li>
+                        <li class="sidebarLink" value="About">About</li>
+                        <li class="sidebarLink" value="Portfolio">Portfolio</li>
                         <li><a href="https://github.com/lkatkus" target="_blank">Github</a></li>
-                        <li class="sidebarLink">Other</li>
-                        <li class="sidebarLink">Clients</li>
-                        <li class="sidebarLink">Contacts</li>
+                        <li class="sidebarLink" value="Other">Other</li>
+                        <li class="sidebarLink" value="Clients">Clients</li>
+                        <li class="sidebarLink" value="Contacts">Contacts</li>
                     </ul>
                 </div>
                 <!-- END SIDEBAR -->
@@ -133,9 +93,12 @@
         <!-- START INFORMACTION CONTAINERS -->
         <div id="contentContainer" class="contentContainer hidden myContainer">
 
+            <!-- CONTENT PAGE CLOSING BUTTON -->
             <div><i class="fas fa-caret-right fa-2x" onclick="closeContent()"></i></div>
 
+            <!-- CONTENT WRAPPER -->
             <div id="contentWrapper">
+                <!-- ABOUT SECTION -->
                 <div id="contentAbout" class="contentDiv hidden">
                     <h2>About me</h2>
 
@@ -148,25 +111,33 @@
                     <h3>Future</h3>
                     <p>Prosciutto sirloin hamburger andouille tongue chicken turducken drumstick jowl. Buffalo t-bone meatball capicola bacon tail ground round meatloaf pork loin jowl alcatra pig. Pork chop t-bone strip steak pork loin boudin tenderloin flank, cupim buffalo sausage. Cow hamburger pork loin, shoulder tail cupim porchetta venison corned beef strip steak.</p>
                 </div>
+                <!-- END ABOUT -->
 
+                <!-- PORTFOLIO SECTION -->
                 <div id="contentPortfolio" class="contentDiv hidden">
                     <h2>Portfolio</h2>
                     <p>Prosciutto sirloin hamburger andouille tongue chicken turducken drumstick jowl. Buffalo t-bone meatball capicola bacon tail ground round meatloaf pork loin jowl alcatra pig. Pork chop t-bone strip steak pork loin boudin tenderloin flank, cupim buffalo sausage. Cow hamburger pork loin, shoulder tail cupim porchetta venison corned beef strip steak.</p>
                     <p>Bacon ipsum dolor amet biltong leberkas turducken, ham prosciutto beef t-bone spare ribs tail pork brisket swine ribeye. Biltong pork chop frankfurter, prosciutto meatball swine t-bone ham shank buffalo jowl. Ground round kielbasa andouille pancetta rump turducken beef pork belly tongue pork loin salami pork short ribs leberkas burgdoggen. Jowl short ribs doner t-bone, kevin meatball pork chop alcatra bresaola chicken. Venison shank buffalo porchetta picanha ribeye.</p>
                 </div>
+                <!-- END PORTFOLIO -->
 
+                <!-- OTHER SECTION -->
                 <div id="contentOther" class="contentDiv hidden">
                     <h2>Other</h2>
                     <p>Prosciutto sirloin hamburger andouille tongue chicken turducken drumstick jowl. Buffalo t-bone meatball capicola bacon tail ground round meatloaf pork loin jowl alcatra pig. Pork chop t-bone strip steak pork loin boudin tenderloin flank, cupim buffalo sausage. Cow hamburger pork loin, shoulder tail cupim porchetta venison corned beef strip steak.</p>
                     <p>Bacon ipsum dolor amet biltong leberkas turducken, ham prosciutto beef t-bone spare ribs tail pork brisket swine ribeye. Biltong pork chop frankfurter, prosciutto meatball swine t-bone ham shank buffalo jowl. Ground round kielbasa andouille pancetta rump turducken beef pork belly tongue pork loin salami pork short ribs leberkas burgdoggen. Jowl short ribs doner t-bone, kevin meatball pork chop alcatra bresaola chicken. Venison shank buffalo porchetta picanha ribeye.</p>
                 </div>
+                <!-- END OTHER -->
 
+                <!-- CLIENTS SECTION -->
                 <div id="contentClients" class="contentDiv hidden">
                     <h2>Clients</h2>
                     <p>Prosciutto sirloin hamburger andouille tongue chicken turducken drumstick jowl. Buffalo t-bone meatball capicola bacon tail ground round meatloaf pork loin jowl alcatra pig. Pork chop t-bone strip steak pork loin boudin tenderloin flank, cupim buffalo sausage. Cow hamburger pork loin, shoulder tail cupim porchetta venison corned beef strip steak.</p>
                     <p>Bacon ipsum dolor amet biltong leberkas turducken, ham prosciutto beef t-bone spare ribs tail pork brisket swine ribeye. Biltong pork chop frankfurter, prosciutto meatball swine t-bone ham shank buffalo jowl. Ground round kielbasa andouille pancetta rump turducken beef pork belly tongue pork loin salami pork short ribs leberkas burgdoggen. Jowl short ribs doner t-bone, kevin meatball pork chop alcatra bresaola chicken. Venison shank buffalo porchetta picanha ribeye.</p>
                 </div>
+                <!-- END CLIENTS -->
 
+                <!-- CONTACTS SECTION -->
                 <div id="contentContacts" class="contentDiv hidden">
                     <h2>Contacts</h2>
                     <p>Prosciutto sirloin hamburger andouille tongue chicken turducken drumstick jowl. Buffalo t-bone meatball capicola bacon tail ground round meatloaf pork loin jowl alcatra pig. Pork chop t-bone strip steak pork loin boudin tenderloin flank, cupim buffalo sausage. Cow hamburger pork loin, shoulder tail cupim porchetta venison corned beef strip steak.</p>
@@ -184,17 +155,11 @@
                             <td>Email</td>
                             <td><a href="mailto:laimonas@katkus.eu">laimonas@katkus.eu</a></td>
                         </tr>
-                        <tr>
-                            <td>Social media</td>
-                            <td>
-                                <div class=""><a href="https://github.com/lkatkus" target="_blank">Github</a></div>
-                                <div class="">LinkedIn</div>
-                            </td>
-                        </tr>
                     </table>
-
                 </div>
+                <!-- END CONTACTS -->
             </div>
+            <!-- END CONTENT WRAPPER -->
         </div>
         <!-- END INFORMACTION CONTAINERS -->
 

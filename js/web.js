@@ -3,6 +3,10 @@ var contentContainer;
 var contentWrapper;
 var sidebarLinks;
 
+window.addEventListener('resize', function(){
+    setContentSize();
+});
+
 window.addEventListener('load', function(){
 
     sidebar = document.getElementById('sidebar');
@@ -53,22 +57,28 @@ function showContent(target){
         sidebarLinks[i].classList.remove('active');
     };
 
-    // SET OFFSET FOR CONTENT CONTAINER
-    let contentDivOffset = document.getElementById('sidebarContainer').offsetWidth;
+    setContentSize();
 
-    contentContainer.style.left = contentDivOffset + 'px';
-
+    // HIDE ALL CONTENT DIVS
     for(let i = 0; i < contentWrapper.children.length; i++){
         contentWrapper.children[i].classList.add('hidden');
     }
 
-
     // CREATE TARGET CONTENT NAME
-    let contentDivName ='content' + target.innerHTML;
+    let contentDivName ='content' + target.getAttribute('value');
     let contentDiv = document.getElementById(contentDivName);
-
 
     // SHOW CONTENT
     contentContainer.classList.remove('hidden');
     contentDiv.classList.remove('hidden');
 };
+
+function setContentSize(){
+    // GET OFFSET AND WIDTH FOR CONTENT CONTAINER
+    let contentDivOffset = document.getElementById('sidebarContainer').offsetWidth;
+    let contentDivWidth = window.innerWidth - contentDivOffset;
+
+    // SET OFFSET AND WIDTH
+    contentContainer.style.left = contentDivOffset + 'px';
+    contentContainer.style.width = contentDivWidth + 'px';
+}
