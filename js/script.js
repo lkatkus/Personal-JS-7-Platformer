@@ -467,19 +467,19 @@ function init(){
         }else if(this.playerCol >= 14 && this.playerCol < 27 && this.playerRow == 41){
             textPlaceholder = 'About Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
             displayText('about');
-        }else if(this.playerCol >= 33 && this.playerCol < 36 && this.playerRow == 35){
+        }else if(this.playerCol >= 35 && this.playerCol < 39 && this.playerRow == 35){
             textPlaceholder = 'Portfolio Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
             displayText('portfolio');
-        }else if(this.playerCol >= 38 && this.playerCol < 42 && this.playerRow == 35){
+        }else if(this.playerCol >= 40 && this.playerCol < 44 && this.playerRow == 35){
             textPlaceholder = 'Git Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
             displayText('git');
-        }else if(this.playerCol >= 44 && this.playerCol < 47 && this.playerRow == 35){
+        }else if(this.playerCol >= 46 && this.playerCol < 50 && this.playerRow == 35){
             textPlaceholder = 'Other Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
             displayText('other');
         }else if(this.playerCol >= 21 && this.playerCol < 27 && this.playerRow == 24){
             textPlaceholder = 'Sorry. We are still under construction. Come back later!'
             displayText('clients');
-        }else if(this.playerCol >= 33 && this.playerCol < 47 && this.playerRow == 24){
+        }else if(this.playerCol >= 36 && this.playerCol < 50 && this.playerRow == 24){
             displayText('stuff');
         }else if(this.playerCol >= 8 && this.playerCol < 15 && this.playerRow == 6){
             textPlaceholder = 'Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
