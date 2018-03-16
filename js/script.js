@@ -81,7 +81,7 @@ var jokes = [
     'I tried to sue the airport for misplacing my luggage... I lost my case.',
     'A girl once told me that she wanted to see my python... I only knew javascript.',
     'What do you call a dog that does magic tricks?... A labracadabrador.',
-    'Two windmills are standing in a field and one asks the other, “What kind of music do you like?” – The other says... “I’m a big metal fan.”',
+    'Two windmills are standing in a field and one asks the other, “What kind of music do you like?”... The other says “I’m a big metal fan.”',
     'My girlfriend and I often laugh about how competitive we are… But I laugh more.',
     'My friend asked me to help him round up his 37 sheep... I said "40".'
 ];
