@@ -79,7 +79,7 @@ var jokes = [
     'What do you call a cow with a twitch?... Beef jerky.',
     'What do you call an alligator with a vest?... An investigator.',
     'I tried to sue the airport for misplacing my luggage... I lost my case.',
-    'A gird told me, that she wanted to see my python... I only knew javascript.',
+    'A girl once told me that she wanted to see my python... I only knew javascript.',
     'What do you call a dog that does magic tricks?... A labracadabrador.',
     'Two windmills are standing in a field and one asks the other, “What kind of music do you like?” – The other says... “I’m a big metal fan.”',
     'My girlfriend and I often laugh about how competitive we are… But I laugh more.',
