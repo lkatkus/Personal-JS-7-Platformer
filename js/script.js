@@ -68,6 +68,9 @@ var informationDisplay = {
     git : false,
     other : false,
     clients : false,
+    crane : false,
+    tree : false,
+    cat : false,
     contact : false
 };
 
@@ -108,7 +111,7 @@ function init(){
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -126,24 +129,24 @@ function init(){
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'c', 0, 'f', 'f', 'f', 'f', 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 5, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'c', 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 5, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'b', 3, 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 4, 0, 0, 0, 'b', 'b', 'b', 'b', 'b', 'b', 'b', 0, 'a', 'a', 5, 5, 'a', 4, 4, 4, 4, 4, 4, 7, 5, 5, 5, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'b', 3, 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 4, 0, 0, 0, 'b', 'b', 'b', 'b', 'b', 'b', 'b', 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'b', 3, 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 4, 0, 0, 0, 'b', 'b', 'b', 'b', 'b', 'b', 'b', 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 7, 7, 7, 7, 0, 0, 0, 0, 1, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 7, 0, 3, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 'a', 'a', 2, 2, 2, 2, 2, 2, 5, 5, 4, 7, 5, 5, 5, 7, 0, 3, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 2, 2, 2, 2, 4, 4, 4, 4, 7, 7, 7, 7, 7, 0, 3, 0, 0, 0, 'f', 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 5, 7, 0, 3, 0, 0, 'f', 'f', 'f', 0, 0],
+        [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 5, 7, 0, 3, 0, 0, 'f', 'f', 'f', 0, 0],
         [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 5, 7, 0, 3, 0, 'f', 'f', 'f', 'f', 0, 0],
         [0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 4, 4, 4, 4, 4, 7, 5, 5, 5, 7, 0, 3, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 7, 7, 7, 7, 0, 3, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 'f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 7, 7, 0, 3, 0, 0, 0, 0, 0, 0, 0],
-        [0, 'f', 'f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 7, 7, 0, 3, 0, 0, 0, 0, 0, 0, 0],
+        [0, 'f', 'f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 'a', 'a', 5, 5, 'a', 4, 5, 5, 5, 5, 4, 7, 5, 5, 7, 7, 0, 3, 0, 0, 0, 1, 0, 0, 0],
         [0, 'f', 'f', 'f', 'f', 'f', 0, 0, 0, 0, 0, 8, 8, 4, 5, 4, 5, 5, 4, 5, 5, 5, 4, 5, 5, 5, 4, 8, 8, 0, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 4, 4, 6, 4, 4, 4, 4, 6, 6, 6, 4, 6, 6, 6, 4, 4, 8, 0, 0, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 4, 4, 4, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 8, 8, 8, 0, 0, 2, 3, 2, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 0, 0, 2, 2, 2, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 8, 8, 4, 5, 4, 4, 4, 4, 5, 5, 5, 4, 5, 5, 5, 4, 8, 8, 8, 0, 0, 0, 3, 8, 2, 2, 8, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 8, 4, 4, 6, 4, 4, 7, 4, 6, 6, 6, 4, 6, 6, 6, 4, 4, 8, 8, 8, 0, 8, 3, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 9, 7, 7, 7, 7, 7, 8, 8, 4, 4, 4, 4, 7, 4, 4, 4, 4, 4, 4, 4, 4, 4, 8, 8, 8, 8, 8, 8, 3, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 0, 9, 7, 7, 7, 7, 7, 8, 8, 4, 4, 4, 4, 7, 4, 4, 4, 4, 4, 4, 4, 4, 4, 8, 8, 8, 8, 8, 8, 3, 8, 8, 8, 8, 8, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 'f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 'f', 'f', 'f', 'f', 'f', 0, 0, 'f', 'f', 'f', 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 0, 0, 0, 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 0, 0, 0, 0, 0, 0],
@@ -314,7 +317,6 @@ function init(){
         // MOVEMENT SPEED
         this.speedX = 1;
         this.speedY = 10;
-        this.jumpHeight = TILE_SIZE * 3;
 
         // LEFT / RIGHT MOVEMENT
         this.left = false;
@@ -323,7 +325,6 @@ function init(){
 
         // MOVEMENT STATUS
         this.grounded = true;
-        this.jumping = false;
         this.falling = false;
         this.climbing = false;
 
@@ -383,35 +384,6 @@ function init(){
                     }else{
                         this.falling = true;
                     }
-                }
-            }
-        }
-
-        // FOR JUMPING
-        if(this.jumping && !this.grounded && !this.canClimb){
-
-            // INITIAL JUMP
-            if(playerCurrentY - this.jumpHeight <= this.y && this.jumping && !this.falling){
-
-                // ACCELERATION
-                if(this.speedY > 1){
-                    this.speedY--;
-                }else{
-                    this.speedY = 1;
-                }
-                this.y -= this.speedY;
-
-                // CHECKING TILE ABOVE PLAYER IS EMPTY
-                if(returnTileGridStatus(this.x,this.y-this.height) || returnTileGridStatus(this.x + this.width - 1,this.y - this.height)){
-                        this.falling = true;
-                        this.jumping = false;
-                        this.y = this.y;
-                }
-
-                // CHECK IF MAX JUMP HEIGHT IS REACHED
-                if(playerCurrentY - this.jumpHeight >= this.y){
-                    this.falling = true;
-                    this.jumping = false;
                 }
             }
         }
@@ -480,10 +452,19 @@ function init(){
             textPlaceholder = 'Sorry. We are still under construction. Come back later!'
             displayText('clients');
         }else if(this.playerCol >= 36 && this.playerCol < 50 && this.playerRow == 24){
-            displayText('stuff');
+            displayText('jokes');
         }else if(this.playerCol >= 8 && this.playerCol < 15 && this.playerRow == 6){
             textPlaceholder = 'Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
             displayText('contact');
+        }else if(this.playerCol >= 17 && this.playerCol < 23 && this.playerRow == 19){
+            textPlaceholder = 'Wow! I can see my house from here!';
+            displayText('crane');
+        }else if(this.playerCol >= 20 && this.playerCol < 25 && this.playerRow == 33){
+            textPlaceholder = 'Meow!';
+            displayText('cat');
+        }else if(this.playerCol >= 4 && this.playerCol < 8 && this.playerRow == 30){
+            textPlaceholder = 'Ok...';
+            displayText('tree');
         }else{
             // HIDING TEXTBOX
             document.getElementById('textBoxContainer').classList.add('hidden');
@@ -502,27 +483,26 @@ function init(){
         // FOR CLIMBING MOVEMENT
         if(sceneLayout[this.playerRow][this.playerCol] != 3 && sceneLayout[this.playerRow + 1][this.playerCol] == 3){
             this.canClimbDown = true;
+            console.log('climb if 1');
         }else if(sceneLayout[this.playerRow][this.playerCol] == 3 && sceneLayout[this.playerRow + 1][this.playerCol] != 3){
             this.canClimbUp = true;
+            console.log('climb if 2');
         }else if(sceneLayout[this.playerRow][this.playerCol] == 3 && sceneLayout[this.playerRow + 1][this.playerCol] == 3){
             this.canClimbDown = true;
             this.canClimbUp = true;
+            console.log('climb if 3');
         }else{
             this.canClimbDown = false;
             this.canClimbUp = false;
+            console.log('climb if 4');
         }
 
         // DEBUGGING
-        // document.getElementById('playerCol').innerHTML = this.playerCol;
-        // document.getElementById('playerRow').innerHTML = this.playerRow;
-        // document.getElementById('climbing').innerHTML = this.climbing;
-        // document.getElementById('climbup').innerHTML = this.canClimbUp;
-        // document.getElementById('climbdown').innerHTML = this.canClimbDown;
-        // document.getElementById('jumping').innerHTML = this.jumping;
-        // document.getElementById('speedx').innerHTML = this.speedX;
-        // document.getElementById('speedy').innerHTML = this.speedY;
-        // document.getElementById('moveLeft').innerHTML = this.left;
-        // document.getElementById('moveRight').innerHTML = this.right;
+        document.getElementById('playerCol').innerHTML = this.playerCol;
+        document.getElementById('playerRow').innerHTML = this.playerRow;
+        document.getElementById('climbing').innerHTML = this.climbing;
+        document.getElementById('climbup').innerHTML = this.canClimbUp;
+        document.getElementById('climbdown').innerHTML = this.canClimbDown;
     }
 
     // PLAYER OBJECT - DRAW
@@ -595,12 +575,6 @@ function init(){
             player.right = true;
         }
         if(event.key == 'ArrowUp'){
-            if(!player.jumping && player.grounded && !player.canClimbUp){
-                playerCurrentY = player.y;
-                player.jumping = true;
-                player.grounded = false;
-                player.speedY = playerMaxSpeedY;
-            }
             if(player.canClimbUp){
                 player.climbing = true;
                 player.speedY = Math.floor(TILE_SIZE / 10);
@@ -611,13 +585,6 @@ function init(){
                 player.climbing = true;
                 player.speedY = Math.floor(-TILE_SIZE / 10);
             }
-        }
-        if(event.key == 0){
-            // console.log(player);
-            // setGameSize();
-            // checkVisibleTiles();
-            // console.log(tile);
-            // console.log(informationDisplay);
         }
     });
 
@@ -642,9 +609,9 @@ function init(){
 
     // HELPERS
 
+    // WINDOW RESIZE LISTENER
     window.addEventListener('resize', function(){
         // setWorldSize();
-        console.log('resize');
     });
 
     // SETUP CANVAS SIZE
@@ -709,10 +676,11 @@ function init(){
         // CHECK IF INFORMATION IS NOT ALREADY DISPLAYING
         if(!informationDisplay[id]){
 
-            if(id == 'stuff'){
+            // CHECK IF PLAYER LOCATED AT RANDOM JOKES LOCATION AND SET RANDOM JOKE
+            if(id == 'jokes'){
                 let jokeNr = Math.floor(Math.random() * jokes.length);
                 textPlaceholder = jokes[jokeNr];
-            }
+            };
 
             // SET TRUE WHEN DISPLAYING
             informationDisplay[id] = true;

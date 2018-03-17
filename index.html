@@ -34,11 +34,20 @@
 
     <body onload="init()">
 
+
     <!-- START CANVAS CONTAINER -->
         <div class="canvasContainer">
             <canvas id="sceneCanvas"></canvas>
         </div>
     <!-- END CANVAS CONTAINER -->
+
+    <div class="debug">
+        <p>col <span id='playerCol'></span></>
+        <p>row <span id='playerRow'></span></>
+        <p>climbing <span id='climbing'></span></>
+        <p>climbup <span id='climbup'></span></>
+        <p>climbdown <span id='climbdown'></span></>
+    </div>
 
     <!-- START CONTENT CONTAINER -->
         <div class="myContainer">
@@ -100,10 +109,11 @@
                 <div id="contentAbout" class="contentDiv hidden">
                     <h2>About me</h2>
 
-                    <h3>Before</h3>
+                    <h3>Past</h3>
                     <p>Prosciutto sirloin hamburger andouille tongue chicken turducken drumstick jowl. Buffalo t-bone meatball capicola bacon tail ground round meatloaf pork loin jowl alcatra pig. Pork chop t-bone strip steak pork loin boudin tenderloin flank, cupim buffalo sausage. Cow hamburger pork loin, shoulder tail cupim porchetta venison corned beef strip steak.</p>
+                    <p>More about my previous experience on my  profile.</p>
 
-                    <h3>Current</h3>
+                    <h3>Present</h3>
                     <p>Bacon ipsum dolor amet biltong leberkas turducken, ham prosciutto beef t-bone spare ribs tail pork brisket swine ribeye. Biltong pork chop frankfurter, prosciutto meatball swine t-bone ham shank buffalo jowl. Ground round kielbasa andouille pancetta rump turducken beef pork belly tongue pork loin salami pork short ribs leberkas burgdoggen. Jowl short ribs doner t-bone, kevin meatball pork chop alcatra bresaola chicken. Venison shank buffalo porchetta picanha ribeye.</p>
 
                     <h3>Future</h3>
@@ -114,64 +124,129 @@
                 <!-- PORTFOLIO SECTION -->
                 <div id="contentPortfolio" class="contentDiv hidden">
                     <h2>Portfolio</h2>
-                    <p>Prosciutto sirloin hamburger andouille tongue chicken turducken drumstick jowl. Buffalo t-bone meatball capicola bacon tail ground round meatloaf pork loin jowl alcatra pig. Pork chop t-bone strip steak pork loin boudin tenderloin flank, cupim buffalo sausage. Cow hamburger pork loin, shoulder tail cupim porchetta venison corned beef strip steak.</p>
+                    <h4>-!- This section is still under construction -!-</h4>
 
-                    <h2>Examples</h2>
                     <!-- PORTFOLIO ITEM CONTAINER -->
                     <div class="portfolioItemContainer">
 
                         <div class="portfolioItem">
-                            <div class="portfolioItemTag">
-                                <h4>My portfolio</h4>
-                                <a target="_blank" href="#"><i class="fas fa-external-link-square-alt fa-2x"></i></a>
-                                <a target="_blank" href="https://github.com/lkatkus/Personal-JS-7-Platformer"><i class="fab fa-github-square fa-2x"></i></a>
+                            <div class="portfolioItemImage">
+                                <img src="img/portfolio/placeholder.jpg" alt="">
                             </div>
-                            <img src="img/portfolio/placeholder.jpg" alt="">
+                            <div class="portfolioItemTag">
+                                <table>
+                                    <tr>
+                                        <td>Title</td>
+                                        <td>Portfolio (2018)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Used</td>
+                                        <td>HTML, CSS, Javascript (vanila)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Description</td>
+                                        <td>This project started as a canvas experiment to make a sidescroller game and gradually developed into personal website. Goal was to learn more complex canvas manipulation and javascript.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Other</td>
+                                        <td><a target="_blank" href="http://www.katkus.eu/">Live demo</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><a target="_blank" href="https://github.com/lkatkus/Personal-JS-7-Platformer">Github repository</a></td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
 
                         <div class="portfolioItem">
-                            <div class="portfolioItemTag">
-                                <h4>Tetris</h4>
-                                <a target="_blank" href="#"><i class="fas fa-external-link-square-alt fa-2x"></i></a>
-                                <a target="_blank" href="https://github.com/lkatkus/Personal-JS-5-Tetris"><i class="fab fa-github-square fa-2x"></i></a>
+                            <div class="portfolioItemImage">
+                                <img src="img/portfolio/placeholder.jpg" alt="">
                             </div>
-                            <img src="img/portfolio/placeholder.jpg" alt="">
+                            <div class="portfolioItemTag">
+                                <table>
+                                    <tr>
+                                        <td>Title</td>
+                                        <td>JS Tetris (2018)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Used</td>
+                                        <td>HTML, CSS, Javascript (vanila)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Description</td>
+                                        <td>Prosciutto sirloin hamburger andouille tongue chicken turducken drumstick jowl. Buffalo t-bone meatball capicola bacon tail ground round meatloaf pork loin jowl alcatra pig.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Other</td>
+                                        <td><a target="_blank" href="demo/tetris">Live demo</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><a target="_blank" href="https://github.com/lkatkus/Personal-JS-5-Tetris">Github repository</a></td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
 
                         <div class="portfolioItem">
-                            <div class="portfolioItemTag">
-                                <h4>Pong</h4>
-                                <a target="_blank" href="#"><i class="fas fa-external-link-square-alt fa-2x"></i></a>
-                                <a target="_blank" href="https://github.com/lkatkus/Personal-JS-4-Pong"><i class="fab fa-github-square fa-2x"></i></a>
+                            <div class="portfolioItemImage">
+                                <img src="img/portfolio/placeholder.jpg" alt="">
                             </div>
-                            <img src="img/portfolio/placeholder.jpg" alt="">
+                            <div class="portfolioItemTag">
+                                <table>
+                                    <tr>
+                                        <td>Title</td>
+                                        <td>JS Pong (2018)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Used</td>
+                                        <td>HTML, CSS, Javascript (vanila)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Description</td>
+                                        <td>After basic canvas experiments I wanted to create something closer to my heart. A VIDEO GAME!</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Other</td>
+                                        <td><a target="_blank" href="demo/pong">Live demo</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><a target="_blank" href="https://github.com/lkatkus/Personal-JS-4-Pong">Github repository</a></td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
 
                         <div class="portfolioItem">
-                            <div class="portfolioItemTag">
-                                <h4>Monster</h4>
-                                <a target="_blank" href="#"><i class="fas fa-external-link-square-alt fa-2x"></i></a>
-                                <a target="_blank" href="https://github.com/lkatkus/3WA-W8-5"><i class="fab fa-github-square fa-2x"></i></a>
+                            <div class="portfolioItemImage">
+                                <img src="img/portfolio/placeholder.jpg" alt="">
                             </div>
-                            <img src="img/portfolio/placeholder.jpg" alt="">
+                            <div class="portfolioItemTag">
+                                <table>
+                                    <tr>
+                                        <td>Title</td>
+                                        <td>Old portfolio (2011)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Used</td>
+                                        <td>Flash, Actionscript, XML</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Description</td>
+                                        <td>Nothing special. My first website, that went "live". Obsolete technologies, but still a great thing to remember.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Other</td>
+                                        <td><a target="_blank" href="demo/old">Live demo</a></td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
 
-                        <div class="portfolioItem">
-                            <div class="portfolioItemTag">
-                                <h4>Monster</h4>
-                                <a target="_blank" href="#"><i class="fas fa-external-link-square-alt fa-2x"></i></a>
-                                <a target="_blank" href="https://github.com/lkatkus/3WA-W8-5"><i class="fab fa-github-square fa-2x"></i></a>
-                            </div>
-                            <img src="img/portfolio/placeholder.jpg" alt="">
-                        </div>
+                        <h4>To be continued...</h4>
 
-                        <div class="portfolioItem">
-                            <div class="portfolioItemTag">
-                                <h4>To be</h4>
-                                <h4>continued</h4>
-                                <h4>...</h4>
-                            </div>
-                        </div>
                     </div>
                     <!-- END PORTFOLIO ITEM CONTAINER -->
                 </div>
@@ -240,7 +315,7 @@
                         </tr>
                         <tr>
                             <td>Telephone</td>
-                            <td>00 370 671 86770</td>
+                            <td><a href="tel:">00 370 671 86770</a></td>
                         </tr>
                         <tr>
                             <td>Email</td>

@@ -27,9 +27,17 @@ html, body{
     height: 100%;
 }
 
+.debug{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: white;
+}
+
 a{
     text-decoration: none;
     color: inherit;
+    transition: var(--transition);
 }
 
 h2, h3, h4{
@@ -41,8 +49,8 @@ h2:first-child{
     margin-top: 0;
 }
 
-p{
-    margin: 0;
+p > a:hover{
+    color: var(--text-red);
 }
 
 /* ========= CANVAS SETTINGS ========= */
@@ -204,7 +212,7 @@ p{
 
 /* ========= CONTENT CONTAINER STYLING ========= */
 .contentContainer{
-    background-color: #ededed;
+    background-color: rgba(250,250,250,0.9);
     position: absolute;
     padding: 10px 20px 20px 10px;
     min-height: 100%;
@@ -230,6 +238,7 @@ td{
 
 td:first-child{
     font-family: Joystix;
+    padding-right: 20px;
 }
 
 td a{
@@ -240,37 +249,30 @@ td a:hover{
     color: var(--text-red);
 }
 
-.portfolioItemContainer{
+
+.portfolioItem{
+    width: 100%;
+    margin-bottom: 20px;
     display: flex;
     flex-flow: row;
-    align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     flex-wrap: wrap;
 }
 
-.portfolioItem{
-    background-color: green;
+.portfolioItemImage{
     width: 100%;
-    margin-bottom: 20px;
-    position: relative;
 }
 
 .portfolioItemTag{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    transition: var(--transition);
-    opacity: 0;
-    user-select: none;
+    width: 100%;
+    padding: 10px;
 }
 
 .portfolioItem:hover .portfolioItemTag{
     opacity: 1;
 }
 
-.portfolioItem img{
+.portfolioItemImage img{
     width: 100%;
     display: block;
 }
@@ -318,11 +320,12 @@ td a:hover{
 /* MEDIA QUERIES */
 
 @media only screen and (min-width: 800px) {
-    .portfolioItemContainer{
-        justify-content: space-evenly;
+    .portfolioItemImage{
+        width: 25%;
     }
 
-    .portfolioItem {
-        width: 30%;
+    .portfolioItemTag{
+        width: 75%;
+        padding: 10px;
     }
 }
