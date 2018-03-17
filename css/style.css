@@ -34,9 +34,10 @@ a{
 
 h2, h3, h4{
     font-family: Joystix;
+    font-weight: normal;
 }
 
-h2{
+h2:first-child{
     margin-top: 0;
 }
 
@@ -47,7 +48,8 @@ p{
 /* ========= CANVAS SETTINGS ========= */
 
 .canvasContainer{
-    position: absolute;
+    position: fixed;
+    top: 0;
     height: 100%;
 }
 
@@ -132,13 +134,13 @@ p{
     float: left;
     top: 0;
     left: 0;
-    height: 100%;
     z-index: 2;
 }
 
 /* ========= SIDEBAR CONTROLS ========= */
 #sidebarContainer{
-    position: relative;
+    position: fixed;
+    top: 0;
     height: 100%;
     float: left;
     z-index: 3;
@@ -205,12 +207,12 @@ p{
     background-color: #ededed;
     position: absolute;
     padding: 10px 20px 20px 10px;
-    height: 100%;
+    min-height: 100%;
 }
 
 #contentWrapper{
     max-width: 1000px;
-    padding-left: 20px;
+    padding: 0 20px 20px 20px;
 }
 
 .contentDiv{
@@ -226,6 +228,10 @@ td{
     padding-top: 10px;
 }
 
+td:first-child{
+    font-family: Joystix;
+}
+
 td a{
     transition: var(--transition);
 }
@@ -234,9 +240,89 @@ td a:hover{
     color: var(--text-red);
 }
 
+.portfolioItemContainer{
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.portfolioItem{
+    background-color: green;
+    width: 100%;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.portfolioItemTag{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    transition: var(--transition);
+    opacity: 0;
+    user-select: none;
+}
+
+.portfolioItem:hover .portfolioItemTag{
+    opacity: 1;
+}
+
+.portfolioItem img{
+    width: 100%;
+    display: block;
+}
+
+/* ========= CAROUSEL ========= */
+
+.carousel{
+    position: relative;
+}
+
+.carouselButtonPrevious{
+    position: absolute;
+    top: 50%;
+    left: 20px;
+}
+
+.carouselButtonNext{
+    position: absolute;
+    top: 50%;
+    right: 20px;
+}
+
+.carouselButtonContainer{
+    text-align: center;
+    margin: 10px 20px 10px 20px;
+}
+
+.carouselButton{
+    font-family: Joystix;
+    display: inline-block;
+    font-size: 1.2em;
+}
+
+.carouselItem img{
+    width: 100%;
+}
 
 /* ========= UTILITIES ========= */
 
 .hidden{
     display: none!important;
+}
+
+
+/* MEDIA QUERIES */
+
+@media only screen and (min-width: 800px) {
+    .portfolioItemContainer{
+        justify-content: space-evenly;
+    }
+
+    .portfolioItem {
+        width: 30%;
+    }
 }
