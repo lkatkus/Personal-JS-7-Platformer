@@ -69,7 +69,7 @@ var informationDisplay = {
     other : false,
     clients : false,
     crane : false,
-    tree : false,
+    mario : false,
     cat : false,
     contact : false
 };
@@ -111,7 +111,7 @@ function init(){
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 5, 21, 1, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 7, 22, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -129,28 +129,28 @@ function init(){
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 169, 0, 0, 0, 0, 0, 0, 83, 84, 103, 104, 86, 41, 47, 48, 49, 50, 41, 121, 132, 133, 134, 121, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 170, 0, 0, 0, 0, 0, 0, 81, 82, 105, 106, 86, 41, 43, 44, 45, 46, 41, 121, 135, 136, 137, 121, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 173, 175, 22, 179, 175, 175, 175, 175, 175, 175, 177, 161, 0, 0, 0, 173, 175, 175, 175, 175, 175, 177, 0, 83, 84, 103, 104, 86, 41, 41, 41, 41, 41, 41, 121, 138, 139, 140, 121, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 174, 176, 23, 180, 176, 176, 176, 176, 176, 176, 178, 162, 163, 164, 165, 174, 176, 176, 176, 176, 176, 178, 0, 81, 82, 105, 106, 86, 41, 51, 52, 53, 54, 41, 121, 142, 142, 142, 121, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 174, 176, 23, 180, 176, 176, 176, 176, 176, 176, 178, 162, 163, 164, 165, 174, 176, 176, 176, 176, 176, 178, 0, 81, 82, 105, 106, 86, 41, 51, 52, 53, 54, 41, 121, 142, 142, 142, 121, 0, 0, 0, 0, -1, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 3, 3, 2, 2, 3, 2, 4, 4, 3, 2, 2, 3, 3, 4, 4, 3, 4, 2, 2, 3, 2, 4, 3, 2, 2, 4, 4, 3, 3, 2, 2, 2, 3, 4, 2, 4, 4, 5, 21, 1, 5, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 7, 8, 9, 9, 10, 9, 7, 6, 6, 8, 9, 9, 10, 10, 6, 6, 7, 6, 7, 7, 7, 9, 9, 10, 10, 10, 8, 6, 7, 9, 10, 10, 8, 8, 9, 8, 7, 7, 6, 7, 23, 24, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 12, 11, 13, 15, 0, 0, 15, 14, 13, 13, 12, 11, 11, 12, 13, 15, 15, 14, 13, 15, 0, 14, 13, 13, 12, 12, 12, 15, 14, 13, 12, 14, 15, 11, 11, 12, 11, 128, 0, 23, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 11, 12, 0, 0, 0, 0, 0, 11, 12, 11, 11, 15, 14, 13, 12, 14, 15, 0, 0, 0, 0, 87, 14, 12, 11, 14, 15, 13, 12, 42, 42, 42, 128, 128, 128, 128, 128, 0, 22, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 27, 28, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 13, 12, 11, 11, 12, 0, 0, 0, 0, 0, 0, 87, 88, 100, 14, 15, 13, 12, 42, 42, 41, 41, 121, 141, 141, 141, 121, 0, 23, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 29, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 14, 13, 0, 0, 0, 0, 0, 0, 0, 107, 83, 84, 98, 99, 85, 42, 61, 62, 53, 54, 41, 121, 132, 133, 134, 121, 0, 22, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, -1, 0, 0, 29, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 14, 13, 0, 0, 0, 0, 0, 0, 0, 107, 83, 84, 98, 99, 85, 42, 61, 62, 53, 54, 41, 121, 132, 133, 134, 121, 0, 22, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 1, 3, 2, 4, 3, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 108, 81, 82, 105, 106, 86, 41, 55, 56, 57, 58, 41, 121, 135, 136, 137, 121, 0, 22, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 8, 9, 9, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 109, 83, 84, 103, 104, 86, 41, 64, 65, 66, 67, 41, 121, 138, 139, 140, 121, 0, 23, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 14, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 31, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 110, 81, 82, 89, 90, 86, 41, 76, 77, 78, 79, 41, 121, 129, 130, 131, 121, 0, 22, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 208, 209, 209, 209, 209, 209, 209, 209, 209, 209, 209, 209, 209, 210, 0, 0, 0, 0, 0, 0, 0, 0, 111, 83, 84, 91, 92, 86, 41, 72, 73, 74, 75, 41, 121, 122, 123, 126, 121, 0, 22, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 212, 213, 213, 213, 213, 213, 213, 213, 213, 213, 213, 213, 213, 214, 0, 0, 0, 0, 0, 0, 0, 0, 0, 81, 82, 93, 94, 86, 41, 68, 69, 70, 71, 41, 121, 124, 125, 126, 121, 0, 23, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 212, 213, 213, 213, 213, 213, 213, 213, 213, 213, 213, 213, 213, 214, 0, 0, 0, -1, 0, 0, 0, 0, 0, 81, 82, 93, 94, 86, 41, 68, 69, 70, 71, 41, 121, 124, 125, 126, 121, 0, 23, 0, 0, 0, -1, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 211, 221, 222, 223, 224, 225, 211, 231, 232, 233, 211, 217, 218, 211, 0, 0, 0, 0, 1, 3, 5, 21, 1, 4, 3, 2, 2, 1, 4, 3, 3, 2, 3, 4, 4, 3, 2, 2, 4, 3, 2, 2, 3, 5, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 211, 226, 227, 228, 229, 230, 211, 234, 235, 236, 211, 219, 220, 211, 0, 0, 0, 0, 0, 6, 7, 22, 24, 8, 9, 10, 6, 7, 8, 9, 10, 10, 6, 7, 7, 8, 7, 9, 10, 10, 7, 6, 8, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 212, 213, 213, 213, 213, 213, 213, 213, 213, 213, 213, 213, 213, 214, 0, 0, 0, 0, 0, 0, 11, 23, 25, 15, 14, 13, 0, 11, 12, 15, 0, 13, 14, 0, 0, 12, 15, 14, 0, 0, 13, 11, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 201, 237, 202, 203, 204, 205, 206, 237, 237, 237, 237, 237, 237, 237, 237, 237, 207, 0, 0, 0, 0, 0, 22, 26, 13, 11, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 211, 241, 242, 243, 244, 215, 217, 218, 215, 249, 250, 251, 252, 211, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 211, 245, 246, 247, 248, 216, 219, 220, 216, 253, 254, 255, 256, 211, 0, 0, 0, 0, 0, 0, 'x', 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, -1, 0, 'x', 0, 0, 0, 0, 0, 0, 0, 211, 245, 246, 247, 248, 216, 219, 220, 216, 253, 254, 255, 256, 211, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 1, 2, 3, 3, 4, 2, 3, 2, 4, 4, 2, 3, 4, 3, 3, 2, 4, 4, 2, 3, 3, 2, 2, 4, 4, 4, 3, 2, 4, 3, 3, 4, 4, 2, 2, 3, 4, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 6, 9, 8, 8, 7, 8, 7, 10, 6, 6, 7, 8, 10, 9, 6, 7, 9, 10, 9, 9, 10, 8, 7, 7, 6, 8, 6, 6, 8, 10, 10, 8, 9, 9, 10, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 11, 12, 15, 0, 0, 14, 13, 11, 15, 11, 12, 13, 14, 15, 0, 15, 12, 11, 13, 13, 0, 11, 15, 14, 13, 12, 12, 0, 15, 14, 11, , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 14, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 11, 12, 15, 0, 0, 14, 13, 11, 15, 11, 12, 13, 14, 15, 0, 15, 12, 11, 13, 13, 0, 11, 15, 14, 13, 12, 12, 0, 15, 14, 11, 13, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 14, 13, 0, 0, 0, 0, 11, 14, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 0]
     ];
 
@@ -388,38 +388,38 @@ function init(){
         this.tileBelowPlayerPositionType = sceneLayout[this.playerRow + 1][this.playerCol];
 
         // INTERACTION BASED ON PLAYER LOCATION ON GRID
-        if(this.playerCol >= 7 && this.playerCol < 12 && this.playerRow == 41){
+        if(this.playerCol >= 5 && this.playerCol < 9 && this.playerRow == 41){
             textPlaceholder = 'This place looks strange... ';
             displayText('intro');
         }else if(this.playerCol >= 14 && this.playerCol < 27 && this.playerRow == 41){
-            textPlaceholder = 'About Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
+            textPlaceholder = 'I think that someone has told me that architects make great developers. I wonder if that is true.';
             displayText('about');
         }else if(this.playerCol >= 35 && this.playerCol < 39 && this.playerRow == 35){
-            textPlaceholder = 'Portfolio Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
+            textPlaceholder = 'Hmmm... Not too bad! Still needs some variety, but it\'s a start. I think that I should come back later.';
             displayText('portfolio');
-        }else if(this.playerCol >= 40 && this.playerCol < 44 && this.playerRow == 35){
-            textPlaceholder = 'Git Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
+        }else if(this.playerCol >= 40 && this.playerCol < 45 && this.playerRow == 35){
+            textPlaceholder = '"In case of fire - GIT commit, GIT push". Whatever that means...';
             displayText('git');
         }else if(this.playerCol >= 46 && this.playerCol < 50 && this.playerRow == 35){
-            textPlaceholder = 'Other Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
+            textPlaceholder = 'Autocad, Archicad, 3DS MAX, Photoshop, Illustrator, Nikon, Aperture, Bokeh and etc. Lots of fancy words, eh?';
             displayText('other');
-        }else if(this.playerCol >= 21 && this.playerCol < 27 && this.playerRow == 24){
+        }else if(this.playerCol >= 21 && this.playerCol < 28 && this.playerRow == 24){
             textPlaceholder = 'Sorry. We are still under construction. Do come back later!'
             displayText('clients');
         }else if(this.playerCol >= 36 && this.playerCol < 50 && this.playerRow == 24){
             displayText('jokes');
         }else if(this.playerCol >= 8 && this.playerCol < 15 && this.playerRow == 6){
-            textPlaceholder = 'Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
+            textPlaceholder = 'Contacts.';
             displayText('contact');
         }else if(this.playerCol >= 17 && this.playerCol < 23 && this.playerRow == 19){
             textPlaceholder = 'Wow! I can see my house from here!';
             displayText('crane');
         }else if(this.playerCol >= 20 && this.playerCol < 25 && this.playerRow == 33){
-            textPlaceholder = 'Meow!';
+            textPlaceholder = 'Meow! Meow!';
             displayText('cat');
-        }else if(this.playerCol >= 4 && this.playerCol < 8 && this.playerRow == 30){
-            textPlaceholder = 'I think, that you should call a plumber...';
-            displayText('tree');
+        }else if(this.playerCol >= 4 && this.playerCol < 10 && this.playerRow == 30){
+            textPlaceholder = 'I think, that you need a plumber for that...';
+            displayText('mario');
         }else{
             // HIDING TEXTBOX
             document.getElementById('textBoxContainer').classList.add('hidden');
@@ -436,7 +436,7 @@ function init(){
         }
 
         // FOR CLIMBING MOVEMENT
-        if(sceneLayout[this.playerRow + 1 ][this.playerCol] == 21 || sceneLayout[this.playerRow][this.playerCol] == 21 || sceneLayout[this.playerRow][this.playerCol] == 22 || sceneLayout[this.playerRow][this.playerCol] == 23){
+        if(sceneLayout[this.playerRow + 1][this.playerCol] == 21 || sceneLayout[this.playerRow][this.playerCol] == 21 ||sceneLayout[this.playerRow][this.playerCol] == 22 || sceneLayout[this.playerRow][this.playerCol] == 23){
             this.canClimbUp = true;
         }else{
             this.canClimbUp = false;
@@ -448,15 +448,14 @@ function init(){
             this.canClimbDown = false;
         }
 
-
         // DEBUGGING
         document.getElementById('playerCol').innerHTML = this.playerCol;
         document.getElementById('playerRow').innerHTML = this.playerRow;
         document.getElementById('climbing').innerHTML = this.climbing;
         document.getElementById('climbup').innerHTML = this.canClimbUp;
         document.getElementById('climbdown').innerHTML = this.canClimbDown;
-        document.getElementById('current').innerHTML = this.tileCurrentPlayerPositionType;
-        document.getElementById('below').innerHTML = this.tileBelowPlayerPositionType;
+        document.getElementById('current').innerHTML = sceneLayout[this.playerRow][this.playerCol];
+        document.getElementById('below').innerHTML = sceneLayout[this.playerRow + 1][this.playerCol];
     }
 
     // PLAYER OBJECT - DRAW
@@ -522,10 +521,10 @@ function init(){
 
     // PLAYER CONTROLS
     document.addEventListener('keydown',function(event){
-        if(event.key == 'ArrowLeft' && !player.climbingUp && !player.climbingDown){
+        if(event.key == 'ArrowLeft' && !player.climbingDown){
             player.left = true;
         }
-        if(event.key == 'ArrowRight' && !player.climbingUp && !player.climbingDown){
+        if(event.key == 'ArrowRight' && !player.climbingDown){
             player.right = true;
         }
         if(event.key == 'ArrowUp'){
@@ -606,7 +605,11 @@ function init(){
         let gridCol = Math.floor(x / TILE_SIZE);
 
         // CHECK IF TILE IS FREE (false) OR TAKEN (true)
-        if(sceneLayout[gridRow][gridCol] > 0 && sceneLayout[gridRow][gridCol] <= 5 || sceneLayout[gridRow][gridCol] == 21 ){
+        if(sceneLayout[gridRow][gridCol] == -1
+            || sceneLayout[gridRow][gridCol] > 0 && sceneLayout[gridRow][gridCol] <= 5
+            || sceneLayout[gridRow][gridCol] == 21
+            || sceneLayout[gridRow][gridCol] >= 181 && sceneLayout[gridRow][gridCol] <= 183
+            || sceneLayout[gridRow][gridCol] >= 208 && sceneLayout[gridRow][gridCol] <= 210){
             return true;
         }else{
             return false;
