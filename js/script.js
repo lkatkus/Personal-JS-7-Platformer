@@ -4,7 +4,7 @@ var WORLD_COLS;
 var WORLD_ROWS;
 
 var TILE_SIZE;
-var TILES_PER_ROW = 15; /* CONTROLS NUMBER OF ROWS DISPLAYED ON SCREEN */
+var TILES_PER_ROW = 11; /* CONTROLS NUMBER OF ROWS DISPLAYED ON SCREEN */
 
 // MAIN PLAYER VARIABLES
 var player;
@@ -112,9 +112,9 @@ function init(){
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 3, 21, 2, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 22, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 5, 21, 1, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 7, 22, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -122,14 +122,14 @@ function init(){
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 168, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 41, 41, 41, 41, 41, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 169, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 41, 47, 48, 49, 50, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 170, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 41, 43, 44, 45, 46, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 168, 169, 170, 169, 170, 169, 170, 169, 170, 171, 169, 170, 172, 172, 0, 0, 95, 96, 95, 96, 97, 41, 41, 41, 41, 41, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 168, 169, 170, 169, 170, 169, 170, 169, 170, 171, 169, 170, 172, 172, 0, 0, 95, 96, 112, 113, 97, 41, 41, 41, 41, 41, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 166, 0, 0, 0, 0, 0, 0, 170, 0, 0, 0, 0, 0, 0, 81, 82, 101, 102, 86, 41, 51, 52, 53, 54, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 167, 0, 0, 0, 0, 0, 0, 169, 0, 0, 0, 0, 0, 0, 83, 84, 103, 104, 86, 41, 55, 56, 57, 58, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 181, 182, 182, 182, 183, 0, 0, 0, 0, 170, 0, 0, 0, 0, 0, 0, 81, 82, 105, 106, 86, 41, 41, 41, 41, 41, 41, 142, 143, 143, 143, 144, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 169, 0, 0, 0, 0, 0, 0, 83, 84, 103, 104, 86, 41, 47, 48, 49, 50, 41, 121, 132, 133, 134, 121, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 170, 0, 0, 0, 0, 0, 0, 81, 82, 105, 106, 86, 41, 43, 44, 45, 46, 41, 121, 135, 136, 137, 121, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 173, 175, 22, 179, 175, 175, 175, 175, 175, 175, 177, 161, 0, 0, 0, 173, 175, 175, 175, 175, 175, 177, 0, 83, 84, 103, 104, 86, 41, 41, 41, 41, 41, 41, 121, 138, 139, 140, 121, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 174, 176, 23, 180, 176, 176, 176, 176, 176, 176, 178, 162, 163, 164, 165, 174, 176, 176, 176, 176, 176, 178, 'x', 81, 82, 105, 106, 86, 41, 51, 52, 53, 54, 41, 121, 142, 142, 142, 121, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 174, 176, 23, 180, 176, 176, 176, 176, 176, 176, 178, 162, 163, 164, 165, 174, 176, 176, 176, 176, 176, 178, 0, 81, 82, 105, 106, 86, 41, 51, 52, 53, 54, 41, 121, 142, 142, 142, 121, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 3, 3, 2, 2, 3, 2, 4, 4, 3, 2, 2, 3, 3, 4, 4, 3, 4, 2, 2, 3, 2, 4, 3, 2, 2, 4, 4, 3, 3, 2, 2, 2, 3, 4, 2, 4, 4, 5, 21, 1, 5, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 7, 8, 9, 9, 10, 9, 7, 6, 6, 8, 9, 9, 10, 10, 6, 6, 7, 6, 7, 7, 7, 9, 9, 10, 10, 10, 8, 6, 7, 9, 10, 10, 8, 8, 9, 8, 7, 7, 6, 7, 23, 24, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 12, 11, 13, 15, 0, 0, 15, 14, 13, 13, 12, 11, 11, 12, 13, 15, 15, 14, 13, 15, 0, 14, 13, 13, 12, 12, 12, 15, 14, 13, 12, 14, 15, 11, 11, 12, 11, 128, 0, 23, 0, 0, 0, 0, 0, 0, 0],
@@ -146,7 +146,7 @@ function init(){
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 212, 213, 213, 213, 213, 213, 213, 213, 213, 213, 213, 213, 213, 214, 0, 0, 0, 0, 0, 0, 11, 23, 25, 15, 14, 13, 0, 11, 12, 15, 0, 13, 14, 0, 0, 12, 15, 14, 0, 0, 13, 11, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 201, 237, 202, 203, 204, 205, 206, 237, 237, 237, 237, 237, 237, 237, 237, 237, 207, 0, 0, 0, 0, 0, 22, 26, 13, 11, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 211, 241, 242, 243, 244, 215, 217, 218, 215, 249, 250, 251, 252, 211, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 211, 245, 246, 247, 248, 216, 219, 220, 216, 253, 254, 255, 256, 211, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 211, 245, 246, 247, 248, 216, 219, 220, 216, 253, 254, 255, 256, 211, 0, 0, 0, 0, 0, 0, 'x', 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 1, 2, 3, 3, 4, 2, 3, 2, 4, 4, 2, 3, 4, 3, 3, 2, 4, 4, 2, 3, 3, 2, 2, 4, 4, 4, 3, 2, 4, 3, 3, 4, 4, 2, 2, 3, 4, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 6, 9, 8, 8, 7, 8, 7, 10, 6, 6, 7, 8, 10, 9, 6, 7, 9, 10, 9, 9, 10, 8, 7, 7, 6, 8, 6, 6, 8, 10, 10, 8, 9, 9, 10, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 11, 12, 15, 0, 0, 14, 13, 11, 15, 11, 12, 13, 14, 15, 0, 15, 12, 11, 13, 13, 0, 11, 15, 14, 13, 12, 12, 0, 15, 14, 11, , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -156,21 +156,22 @@ function init(){
 
     setWorldSize();
 
-var TILESHEET_WIDTH = 1200;
-var TILESHEET_HEIGHT = 1200;
-var TILESHEET_ROWS = 20;
-var TILESHEET_COLS = 20;
-var TILESHEET_SPRITE = TILESHEET_WIDTH / TILESHEET_COLS;
+    var TILESHEET_WIDTH = 1200;
+    var TILESHEET_HEIGHT = 1200;
+    var TILESHEET_ROWS = 20;
+    var TILESHEET_COLS = 20;
+    var TILESHEET_SPRITE = TILESHEET_WIDTH / TILESHEET_COLS;
 
-function getTileSheetLocation(i, j, numb){
-    numb--;
-    let sourceRow = Math.floor(numb / TILESHEET_COLS);
-    let sourceCol = numb - sourceRow * TILESHEET_COLS;
+    // FIND LOCATION OF DESIRED SPRITE BY NUMBER ON TILESHEET
+    function getTileSheetLocation(i, j, numb){
+        numb--;
+        let sourceRow = Math.floor(numb / TILESHEET_COLS);
+        let sourceCol = numb - sourceRow * TILESHEET_COLS;
 
-    let tile = new Image();
-    tile.src = 'img/tilesheet-20180320.png';
-    ctx.drawImage(tile, sourceCol * TILESHEET_SPRITE, sourceRow * TILESHEET_SPRITE, TILESHEET_SPRITE, TILESHEET_SPRITE, j*TILE_SIZE, i*TILE_SIZE, TILE_SIZE, TILE_SIZE);
-}
+        let tile = new Image();
+        tile.src = 'img/tilesheet-20180320.png';
+        ctx.drawImage(tile, sourceCol * TILESHEET_SPRITE, sourceRow * TILESHEET_SPRITE, TILESHEET_SPRITE, TILESHEET_SPRITE, j*TILE_SIZE, i*TILE_SIZE, TILE_SIZE, TILE_SIZE);
+    }
 
     var playerMaxSpeedX = Math.floor(TILE_SIZE / 7);
     var playerMaxSpeedY = Math.floor(TILE_SIZE / 2);
@@ -261,6 +262,7 @@ function getTileSheetLocation(i, j, numb){
         // MOVEMENT SPEED
         this.speedX = 1;
         this.speedY = 10;
+        this.climbingSpeed = 0;
 
         // LEFT / RIGHT MOVEMENT
         this.left = false;
@@ -272,6 +274,9 @@ function getTileSheetLocation(i, j, numb){
         this.jumping = false;
         this.falling = false;
         this.climbing = false;
+
+        this.climbingUp = false;
+        this.climbingDown = false;
 
         this.canClimbUp = false;
         this.canClimbDown = false;
@@ -312,7 +317,7 @@ function getTileSheetLocation(i, j, numb){
             let nextX = this.x;
             this.x += this.speedX;
 
-            if(returnTileGridStatus(this.x + this.width,this.y - 1) || returnTileGridStatus(this.x + this.width,this.y - TILE_SIZE)){
+            if(returnTileGridStatus(this.x,this.y - 1) || returnTileGridStatus(this.x + TILE_SIZE,this.y - TILE_SIZE)){
                 this.x = nextX;
             }else{
 
@@ -323,7 +328,7 @@ function getTileSheetLocation(i, j, numb){
 
                 // CHECK BOTTOM TYLE
                 if(!this.jumping){
-                    if(returnTileGridStatus(this.x, this.y) || returnTileGridStatus(this.x + TILE_SIZE, this.y)){
+                    if(returnTileGridStatus(this.x, this.y)){
                         this.falling = false;
                         this.grounded = true;
                     }else{
@@ -358,20 +363,25 @@ function getTileSheetLocation(i, j, numb){
             }
         }
 
-        // FOR CLIMBING
-        if(this.climbing && this.canClimbUp){
-            this.y -= this.speedY;
-        }
-        if(this.climbing && this.canClimbDown){
-            this.y -= this.speedY;
+        // CLIMBING
+        // UP
+        if(this.canClimbUp && this.climbingUp){
+            let nextY = this.y;
+            this.y += this.climbingSpeed;
+        // DOWN
+        }else if(this.canClimbDown && this.climbingDown){
+            let nextY = this.y;
+            this.y += this.climbingSpeed;
+        // STOPPED CLIMBING
         }else{
             this.y = this.y;
+            this.climbingSpeed = 0;
         }
     }
 
     // PLAYER OBJECT - GET PLAYER CURRENT POSITION
     PlayerObj.prototype.checkPosition = function (){
-        this.playerCol = Math.floor(this.x / TILE_SIZE);
+        this.playerCol = Math.floor((this.x + TILE_SIZE / 2) / TILE_SIZE);
         this.playerRow = Math.floor((this.y - TILE_SIZE) / TILE_SIZE);
 
         this.tileCurrentPlayerPositionType = sceneLayout[this.playerRow][this.playerCol];
@@ -394,7 +404,7 @@ function getTileSheetLocation(i, j, numb){
             textPlaceholder = 'Other Leaffish alfonsino mahseer brook trout Colorado squawfish yellowfin croaker bonefish American sole silver driftfish pike eel. Greenling giant wels crocodile shark, temperate ocean-bass yellowbanded perch buffalofish North American freshwater catfish. Yellowfin grouper, deep sea bonefish blue whiting, pilot fish convict cichlid bluntnose minnow.';
             displayText('other');
         }else if(this.playerCol >= 21 && this.playerCol < 27 && this.playerRow == 24){
-            textPlaceholder = 'Sorry. We are still under construction. Come back later!'
+            textPlaceholder = 'Sorry. We are still under construction. Do come back later!'
             displayText('clients');
         }else if(this.playerCol >= 36 && this.playerCol < 50 && this.playerRow == 24){
             displayText('jokes');
@@ -426,21 +436,18 @@ function getTileSheetLocation(i, j, numb){
         }
 
         // FOR CLIMBING MOVEMENT
-        if(sceneLayout[this.playerRow][this.playerCol] != 3 && sceneLayout[this.playerRow + 1][this.playerCol] == 3){
-            this.canClimbDown = true;
-            // console.log('climb if 1');
-        }else if(sceneLayout[this.playerRow][this.playerCol] == 3 && sceneLayout[this.playerRow + 1][this.playerCol] != 3){
+        if(sceneLayout[this.playerRow + 1 ][this.playerCol] == 21 || sceneLayout[this.playerRow][this.playerCol] == 21 || sceneLayout[this.playerRow][this.playerCol] == 22 || sceneLayout[this.playerRow][this.playerCol] == 23){
             this.canClimbUp = true;
-            // console.log('climb if 2');
-        }else if(sceneLayout[this.playerRow][this.playerCol] == 3 && sceneLayout[this.playerRow + 1][this.playerCol] == 3){
+        }else{
+            this.canClimbUp = false;
+        }
+
+        if(sceneLayout[this.playerRow + 1][this.playerCol] == 21 || sceneLayout[this.playerRow + 1][this.playerCol] == 22 || sceneLayout[this.playerRow + 1][this.playerCol] == 23){
             this.canClimbDown = true;
-            this.canClimbUp = true;
-            // console.log('climb if 3');
         }else{
             this.canClimbDown = false;
-            this.canClimbUp = false;
-            // console.log('climb if 4');
         }
+
 
         // DEBUGGING
         document.getElementById('playerCol').innerHTML = this.playerCol;
@@ -448,8 +455,8 @@ function getTileSheetLocation(i, j, numb){
         document.getElementById('climbing').innerHTML = this.climbing;
         document.getElementById('climbup').innerHTML = this.canClimbUp;
         document.getElementById('climbdown').innerHTML = this.canClimbDown;
-        document.getElementById('left').innerHTML = this.left;
-        document.getElementById('right').innerHTML = this.right;
+        document.getElementById('current').innerHTML = this.tileCurrentPlayerPositionType;
+        document.getElementById('below').innerHTML = this.tileBelowPlayerPositionType;
     }
 
     // PLAYER OBJECT - DRAW
@@ -508,29 +515,31 @@ function getTileSheetLocation(i, j, numb){
     // CREATE NEW PLAYER OBJECT
     player = new PlayerObj();
     calculateSpawnLocation();
-    camPanY = player.y - canvas.height / 2;
+    camPanY = player.y - canvas.height / 2; /* VERTICAL LOCATION OF PLAYER SPRITE ON SCREEN */
 
     // START ANIMATION
     animate();
 
     // PLAYER CONTROLS
     document.addEventListener('keydown',function(event){
-        if(event.key == 'ArrowLeft'){
+        if(event.key == 'ArrowLeft' && !player.climbingUp && !player.climbingDown){
             player.left = true;
         }
-        if(event.key == 'ArrowRight'){
+        if(event.key == 'ArrowRight' && !player.climbingUp && !player.climbingDown){
             player.right = true;
         }
         if(event.key == 'ArrowUp'){
             if(player.canClimbUp){
-                player.climbing = true;
-                player.speedY = Math.floor(TILE_SIZE / 10);
+                player.climbingUp = true;
+                player.climbingSpeed = -10;
+                // player.speedY = Math.floor(TILE_SIZE / 10);
             }
         }
         if(event.key == 'ArrowDown'){
             if(player.canClimbDown){
-                player.climbing = true;
-                player.speedY = Math.floor(-TILE_SIZE / 10);
+                player.climbingDown = true;
+                player.climbingSpeed = 10;
+                // player.speedY = Math.floor(TILE_SIZE / 10);
             }
         }
     });
@@ -547,10 +556,10 @@ function getTileSheetLocation(i, j, numb){
             player.previousDirection = 'right';
         }
         if(event.key == 'ArrowUp'){
-            player.climbing = false;
+            player.climbingUp = false;
         }
         if(event.key == 'ArrowDown'){
-            player.climbing = false;
+            player.climbingDown = false;
         }
     });
 
@@ -597,7 +606,7 @@ function getTileSheetLocation(i, j, numb){
         let gridCol = Math.floor(x / TILE_SIZE);
 
         // CHECK IF TILE IS FREE (false) OR TAKEN (true)
-        if(sceneLayout[gridRow][gridCol] > 0 && sceneLayout[gridRow][gridCol] < 5){
+        if(sceneLayout[gridRow][gridCol] > 0 && sceneLayout[gridRow][gridCol] <= 5 || sceneLayout[gridRow][gridCol] == 21 ){
             return true;
         }else{
             return false;

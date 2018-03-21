@@ -18,6 +18,14 @@
     box-sizing: border-box;
 }
 
+.debug{
+    background-color: white;
+}
+
+.debug p{
+    color: red;
+}
+
 /* ========= GLOBAL SETTINGS ========= */
 
 html, body{
