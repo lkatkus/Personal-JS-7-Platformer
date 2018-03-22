@@ -100,7 +100,7 @@ function init(){
     var timeIndicator = document.getElementById('currentTime');
 
     // GAME SETUP
-    const FPS = 30;
+    const FPS = 60;
     var currentFrame = 0;
 
     // SCENE LAYOUT
@@ -173,8 +173,8 @@ function init(){
         ctx.drawImage(tile, sourceCol * TILESHEET_SPRITE, sourceRow * TILESHEET_SPRITE, TILESHEET_SPRITE, TILESHEET_SPRITE, j*TILE_SIZE, i*TILE_SIZE, TILE_SIZE, TILE_SIZE);
     }
 
-    var playerMaxSpeedX = Math.floor(TILE_SIZE / 7);
-    var playerMaxSpeedY = Math.floor(TILE_SIZE / 2);
+    var playerMaxSpeedX = Math.floor(TILE_SIZE / 10);
+    var playerMaxSpeedY = Math.floor(TILE_SIZE / 6);
 
     function drawScene(){
         ctx.fillStyle = "black";
@@ -193,21 +193,6 @@ function init(){
         if(!player.jumping || !player.falling){
             camPanY = player.y - canvas.height / 5 * 4;
         }
-
-        var cameraFocusCenterY = Math.floor(camPanY + canvas.height / 4 * 3);
-        var playerDistFromCameraFocusY = Math.floor(player.y - cameraFocusCenterY);
-
-        // console.log(cameraFocusCenterY + ' ' + playerDistFromCameraFocusY + ' ' + player.y);
-        //
-        // if(playerDistFromCameraFocusY > 100){
-        //     camPanY += player.speedY;
-        //     console.log('1');
-        // }else if(playerDistFromCameraFocusY < 0){
-        //     camPanY -= player.speedY;
-        //     console.log('2');
-        // }else if(playerDistFromCameraFocusY == 0){
-        //     camPanY = player.y;
-        // }
     }
 
     function checkVisibleTiles() {
@@ -404,23 +389,28 @@ function init(){
             textPlaceholder = 'Autocad, Archicad, 3DS MAX, Photoshop, Illustrator, Nikon, Aperture, Bokeh and etc. Lots of fancy words, eh?';
             displayText('other');
         }else if(this.playerCol >= 21 && this.playerCol < 28 && this.playerRow == 24){
-            textPlaceholder = 'Sorry. We are still under construction. Do come back later!'
+            textPlaceholder = 'Still under construction? I\'ll have to come back later!'
             displayText('clients');
         }else if(this.playerCol >= 36 && this.playerCol < 50 && this.playerRow == 24){
             displayText('jokes');
-        }else if(this.playerCol >= 8 && this.playerCol < 15 && this.playerRow == 6){
-            textPlaceholder = 'Contacts.';
+        }else if(this.playerCol >= 8 && this.playerCol <= 16 && this.playerRow == 6 || this.playerRow == 5){
+            textPlaceholder = 'Whoever made this definitely deserves a cookie. I should give him a call.';
             displayText('contact');
         }else if(this.playerCol >= 17 && this.playerCol < 23 && this.playerRow == 19){
             textPlaceholder = 'Wow! I can see my house from here!';
             displayText('crane');
         }else if(this.playerCol >= 20 && this.playerCol < 25 && this.playerRow == 33){
             textPlaceholder = 'Meow! Meow!';
+            document.getElementById('textBoxImgPortrait').classList.add('hidden');
+            document.getElementById('textBoxImgCat').classList.remove('hidden');
             displayText('cat');
         }else if(this.playerCol >= 4 && this.playerCol < 10 && this.playerRow == 30){
             textPlaceholder = 'I think, that you need a plumber for that...';
             displayText('mario');
         }else{
+            document.getElementById('textBoxImgCat').classList.add('hidden');
+            document.getElementById('textBoxImgPortrait').classList.remove('hidden');
+
             // HIDING TEXTBOX
             document.getElementById('textBoxContainer').classList.add('hidden');
 
