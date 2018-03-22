@@ -6,6 +6,9 @@ var WORLD_ROWS;
 var TILE_SIZE;
 var TILES_PER_ROW = 11; /* CONTROLS NUMBER OF ROWS DISPLAYED ON SCREEN */
 
+// GAME SETUP
+const FPS = 60;
+
 // MAIN PLAYER VARIABLES
 var player;
 var playerCurrentX;
@@ -38,6 +41,7 @@ var frameCount = 8;
 
 var srcX = 0;
 var srcY = 0;
+
 
 // INTERVAL HANDLING VARIABLES
 var myAnimationInterval;
@@ -96,13 +100,6 @@ function init(){
     var canvas = document.getElementById('sceneCanvas');
     var ctx = canvas.getContext('2d');
 
-    var frameIndicator = document.getElementById('currentFrame');
-    var timeIndicator = document.getElementById('currentTime');
-
-    // GAME SETUP
-    const FPS = 60;
-    var currentFrame = 0;
-
     // SCENE LAYOUT
     var sceneLayout = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -146,7 +143,7 @@ function init(){
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 212, 213, 213, 213, 213, 213, 213, 213, 213, 213, 213, 213, 213, 214, 0, 0, 0, 0, 0, 0, 11, 23, 25, 15, 14, 13, 0, 11, 12, 15, 0, 13, 14, 0, 0, 12, 15, 14, 0, 0, 13, 11, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 201, 237, 202, 203, 204, 205, 206, 237, 237, 237, 237, 237, 237, 237, 237, 237, 207, 0, 0, 0, 0, 0, 22, 26, 13, 11, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 211, 241, 242, 243, 244, 215, 217, 218, 215, 249, 250, 251, 252, 211, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 211, 245, 246, 247, 248, 216, 219, 220, 216, 253, 254, 255, 256, 211, 0, 0, 0, 0, 0, 0, 'x', 23, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, -1, 0, 'x', 0, 0, 0, 0, 0, 0, 0, 211, 245, 246, 247, 248, 216, 219, 220, 216, 253, 254, 255, 256, 211, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 1, 2, 3, 3, 4, 2, 3, 2, 4, 4, 2, 3, 4, 3, 3, 2, 4, 4, 2, 3, 3, 2, 2, 4, 4, 4, 3, 2, 4, 3, 3, 4, 4, 2, 2, 3, 4, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 6, 9, 8, 8, 7, 8, 7, 10, 6, 6, 7, 8, 10, 9, 6, 7, 9, 10, 9, 9, 10, 8, 7, 7, 6, 8, 6, 6, 8, 10, 10, 8, 9, 9, 10, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 11, 12, 15, 0, 0, 14, 13, 11, 15, 11, 12, 13, 14, 15, 0, 15, 12, 11, 13, 13, 0, 11, 15, 14, 13, 12, 12, 0, 15, 14, 11, 13, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -171,13 +168,9 @@ function init(){
         let tile = new Image();
         tile.src = 'img/tilesheet-20180320.png';
         ctx.drawImage(tile, sourceCol * TILESHEET_SPRITE, sourceRow * TILESHEET_SPRITE, TILESHEET_SPRITE, TILESHEET_SPRITE, j*TILE_SIZE, i*TILE_SIZE, TILE_SIZE, TILE_SIZE);
-    }
-
-    var playerMaxSpeedX = Math.floor(TILE_SIZE / 12);
-    var playerMaxSpeedY = Math.floor(TILE_SIZE / 6);
+    };
 
     function drawScene(){
-        ctx.fillStyle = "black";
         for(let i = screen.visibleRowTop; i < screen.visibleRowBottom; i++){
             for(let j = screen.visibleColLeft; j < screen.visibleColRight; j++){
                 if(sceneLayout[i][j] > 0){
@@ -185,7 +178,7 @@ function init(){
                 }
             }
         }
-    }
+    };
 
     function cameraFollow() {
         camPanX = player.x - canvas.width / 2;
@@ -193,7 +186,7 @@ function init(){
         if(!player.jumping || !player.falling){
             camPanY = player.y - canvas.height / 5 * 4;
         }
-    }
+    };
 
     function checkVisibleTiles() {
 
@@ -224,7 +217,7 @@ function init(){
 
         screen.visibleRowTop = cameraTopMostRow;
         screen.visibleRowBottom = cameraBottomMostRow;
-    }
+    };
 
     // PLAYER OBJECT
     function PlayerObj(){
@@ -247,7 +240,10 @@ function init(){
         // MOVEMENT SPEED
         this.speedX = 1;
         this.speedY = 10;
+        this.playerMaxSpeedX = Math.floor(TILE_SIZE / 12);
+        this.playerMaxSpeedY = Math.floor(TILE_SIZE / 6);
         this.climbingSpeed = 0;
+
 
         // LEFT / RIGHT MOVEMENT
         this.left = false;
@@ -258,16 +254,13 @@ function init(){
         this.grounded = true;
         this.jumping = false;
         this.falling = false;
-        this.climbing = false;
-
         this.climbingUp = false;
         this.climbingDown = false;
-
         this.canClimbUp = false;
         this.canClimbDown = false;
 
         this.playerImg = new Image();
-    }
+    };
 
     // PLAYER OBJECT - MOVEMENT FUNCTION
     PlayerObj.prototype.move = function(){
@@ -282,7 +275,7 @@ function init(){
             }else{
 
                 // ACCELERATION
-                if(this.speedX < playerMaxSpeedX){
+                if(this.speedX < this.playerMaxSpeedX){
                     this.speedX++;
                 }
 
@@ -307,7 +300,7 @@ function init(){
             }else{
 
                 // ACCELERATION
-                if(this.speedX < playerMaxSpeedX){
+                if(this.speedX < this.playerMaxSpeedX){
                     this.speedX++;
                 }
 
@@ -340,10 +333,10 @@ function init(){
 
             }else{
                 // ACCELERATION
-                if(this.speedY < playerMaxSpeedY){
+                if(this.speedY < this.playerMaxSpeedY){
                     this.speedY++;
                 }else{
-                    this.speedY = playerMaxSpeedY;
+                    this.speedY = this.playerMaxSpeedY;
                 }
             }
         }
@@ -355,30 +348,28 @@ function init(){
 
             if(checkLadder(this.x + TILE_SIZE / 2, this.y - TILE_SIZE)){
                 this.y += this.climbingSpeed;
-                console.log('ladder above');
             }else{
                 this.y = nextY;
                 this.y = (this.playerRow + 1) * TILE_SIZE;
-                console.log('no ladder');
             }
+
         // DOWN
         }else if(this.canClimbDown && this.climbingDown){
             let nextY = this.y;
 
             if(checkLadder(this.x + TILE_SIZE / 2, this.y + TILE_SIZE)){
                 this.y += this.climbingSpeed;
-                console.log('ladder above');
             }else{
                 this.y = nextY;
                 this.y = (this.playerRow + 2) * TILE_SIZE;
-                console.log('no ladder');
             }
+
         // STOPPED CLIMBING
         }else{
             this.y = this.y;
             this.climbingSpeed = 0;
         }
-    }
+    };
 
     // PLAYER OBJECT - GET PLAYER CURRENT POSITION
     PlayerObj.prototype.checkPosition = function (){
@@ -457,12 +448,11 @@ function init(){
         // DEBUGGING
         document.getElementById('playerCol').innerHTML = this.playerCol;
         document.getElementById('playerRow').innerHTML = this.playerRow;
-        document.getElementById('climbing').innerHTML = this.climbing;
         document.getElementById('climbup').innerHTML = this.canClimbUp;
         document.getElementById('climbdown').innerHTML = this.canClimbDown;
         document.getElementById('current').innerHTML = sceneLayout[this.playerRow][this.playerCol];
         document.getElementById('below').innerHTML = sceneLayout[this.playerRow + 1][this.playerCol];
-    }
+    };
 
     // PLAYER OBJECT - DRAW
     PlayerObj.prototype.draw = function(){
@@ -488,13 +478,13 @@ function init(){
                 ctx.drawImage(this.playerImg,srcX,srcY,spriteWidth,spriteHeight,x,y,TILE_SIZE,TILE_SIZE * 2);
             }
         }
-    }
+    };
 
     function mainMove(){
         player.checkPosition();
         player.move();
         cameraFollow();
-    }
+    };
 
     function mainDraw(){
         void ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -503,7 +493,7 @@ function init(){
         drawScene();
         ctx.restore();
         player.draw();
-    }
+    };
 
     function animate(){
         setInterval(function() {
@@ -515,36 +505,33 @@ function init(){
         setInterval(function(){
             curFrame = ++curFrame % frameCount;
         }, 100);
-    }
+    };
 
     // CREATE NEW PLAYER OBJECT
     player = new PlayerObj();
     calculateSpawnLocation();
-    camPanY = player.y - canvas.height / 2; /* VERTICAL LOCATION OF PLAYER SPRITE ON SCREEN */
 
     // START ANIMATION
     animate();
 
     // PLAYER CONTROLS
     document.addEventListener('keydown',function(event){
-        if(event.key == 'ArrowLeft'){
+        if(event.key == 'ArrowLeft' && !player.climbingDown){
             player.left = true;
         }
-        if(event.key == 'ArrowRight'){
+        if(event.key == 'ArrowRight' && !player.climbingDown){
             player.right = true;
         }
         if(event.key == 'ArrowUp'){
             if(player.canClimbUp){
                 player.climbingUp = true;
-                player.climbingSpeed = -10;
-                // player.speedY = Math.floor(TILE_SIZE / 10);
+                player.climbingSpeed = Math.floor(-TILE_SIZE / 8);
             }
         }
         if(event.key == 'ArrowDown'){
             if(player.canClimbDown){
                 player.climbingDown = true;
-                player.climbingSpeed = 10;
-                // player.speedY = Math.floor(TILE_SIZE / 10);
+                player.climbingSpeed = Math.floor(TILE_SIZE / 8);
             }
         }
     });
@@ -573,6 +560,7 @@ function init(){
     // WINDOW RESIZE LISTENER
     window.addEventListener('resize', function(){
         // setWorldSize();
+        // cameraFollow();
     });
 
     // SETUP CANVAS SIZE
@@ -590,7 +578,7 @@ function init(){
         }else{
             TILE_SIZE = Math.ceil(canvas.height / TILES_PER_ROW);
         }
-    }
+    };
 
     // CALCULATE PLAYER START POSITION
     function calculateSpawnLocation(){
@@ -603,8 +591,9 @@ function init(){
                 }
             }
         }
-    }
+    };
 
+    // FOR COLLISION DETECTION
     function returnTileGridStatus(x, y){
         // CONVERT TO GRID POSITION
         let gridRow = Math.floor(y / TILE_SIZE);
@@ -620,14 +609,13 @@ function init(){
         }else{
             return false;
         }
-    }
+    };
 
+    // FOR CHECKING IF PLAYER IS ON A LADDER
     function checkLadder(x, y){
         // CONVERT TO GRID POSITION
         let gridRow = Math.floor(y / TILE_SIZE);
         let gridCol = Math.floor(x / TILE_SIZE);
-
-        console.log(gridRow + ' ' + gridCol);
 
         // CHECK IF TILE IS LADDER (true) OR NOT (false)
         if(sceneLayout[gridRow][gridCol] >= 21 && sceneLayout[gridRow][gridCol] <= 23){
@@ -635,7 +623,7 @@ function init(){
         }else{
             return false;
         }
-    }
+    };
 
     // FOR TYPING TEXT IN TEXT BOX
 
@@ -671,7 +659,7 @@ function init(){
 
             typeText();
         }
-    }
+    };
 
     function typeText(){
         if(displayedChar < textPlaceholder.length){
@@ -679,6 +667,6 @@ function init(){
             displayedChar++;
             setTimeout(typeText, 30);
         }
-    }
+    };
 
 }

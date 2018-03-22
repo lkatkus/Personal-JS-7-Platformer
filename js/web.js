@@ -17,8 +17,6 @@ window.addEventListener('load', function(){
     contentContainer = document.getElementById('contentContainer');
     contentWrapper = document.getElementById('contentWrapper');
 
-    sidebar.style.left = sidebar.offsetWidth*-1 + 'px';
-
     // GET ALL SIDEBAR LINKS
     sidebarLinks = document.getElementsByClassName('sidebarLink');
     // ADD EVENT LISTENERS TO BUTTONS
@@ -48,8 +46,8 @@ function openNav(){
 };
 
 function closeNav(){
-    sidebar.style.left = sidebar.offsetWidth*-1 + 'px';
-    contentContainer.style.left = '100%';
+    sidebar.style.left = -sidebar.offsetWidth + 'px';
+    closeContent();
     // sidebar.classList.add('hidden');
     // document.getElementById('sidebarClose').classList.add('hidden');
     document.getElementById('sidebarOpen').classList.remove('hidden');
@@ -93,5 +91,32 @@ function setContentSize(){
 
     // SET OFFSET AND WIDTH
     contentContainer.style.left = contentDivOffset + 'px';
-    // contentContainer.style.width = contentDivWidth + 'px';
+    contentContainer.style.width = contentDivWidth + 'px';
 }
+
+// function getScrollbarWidth() {
+//   const outer = document.createElement('div');
+//   const inner = document.createElement('div');
+//
+//   outer.style.visibility = 'hidden';
+//   outer.style.width = '100px';
+//
+//   inner.style.width = '100%';
+//
+//
+//   outer.appendChild(inner);
+//   document.body.appendChild(outer);
+//
+//
+//   const widthWithoutScrollbar = outer.offsetWidth;
+//
+//   outer.style.overflow = 'scroll';
+//
+//   const widthWithScrollbar = inner.offsetWidth;
+//
+//
+//   document.body.removeChild(outer);
+//
+//
+//   return (widthWithoutScrollbar - widthWithScrollbar);
+// }
