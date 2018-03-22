@@ -146,7 +146,7 @@ function init(){
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 212, 213, 213, 213, 213, 213, 213, 213, 213, 213, 213, 213, 213, 214, 0, 0, 0, 0, 0, 0, 11, 23, 25, 15, 14, 13, 0, 11, 12, 15, 0, 13, 14, 0, 0, 12, 15, 14, 0, 0, 13, 11, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 201, 237, 202, 203, 204, 205, 206, 237, 237, 237, 237, 237, 237, 237, 237, 237, 207, 0, 0, 0, 0, 0, 22, 26, 13, 11, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 211, 241, 242, 243, 244, 215, 217, 218, 215, 249, 250, 251, 252, 211, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, -1, 0, 'x', 0, 0, 0, 0, 0, 0, 0, 211, 245, 246, 247, 248, 216, 219, 220, 216, 253, 254, 255, 256, 211, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 211, 245, 246, 247, 248, 216, 219, 220, 216, 253, 254, 255, 256, 211, 0, 0, 0, 0, 0, 0, 'x', 23, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 1, 2, 3, 3, 4, 2, 3, 2, 4, 4, 2, 3, 4, 3, 3, 2, 4, 4, 2, 3, 3, 2, 2, 4, 4, 4, 3, 2, 4, 3, 3, 4, 4, 2, 2, 3, 4, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 6, 9, 8, 8, 7, 8, 7, 10, 6, 6, 7, 8, 10, 9, 6, 7, 9, 10, 9, 9, 10, 8, 7, 7, 6, 8, 6, 6, 8, 10, 10, 8, 9, 9, 10, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 11, 12, 15, 0, 0, 14, 13, 11, 15, 11, 12, 13, 14, 15, 0, 15, 12, 11, 13, 13, 0, 11, 15, 14, 13, 12, 12, 0, 15, 14, 11, 13, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -173,7 +173,7 @@ function init(){
         ctx.drawImage(tile, sourceCol * TILESHEET_SPRITE, sourceRow * TILESHEET_SPRITE, TILESHEET_SPRITE, TILESHEET_SPRITE, j*TILE_SIZE, i*TILE_SIZE, TILE_SIZE, TILE_SIZE);
     }
 
-    var playerMaxSpeedX = Math.floor(TILE_SIZE / 10);
+    var playerMaxSpeedX = Math.floor(TILE_SIZE / 12);
     var playerMaxSpeedY = Math.floor(TILE_SIZE / 6);
 
     function drawScene(){
@@ -352,11 +352,27 @@ function init(){
         // UP
         if(this.canClimbUp && this.climbingUp){
             let nextY = this.y;
-            this.y += this.climbingSpeed;
+
+            if(checkLadder(this.x + TILE_SIZE / 2, this.y - TILE_SIZE)){
+                this.y += this.climbingSpeed;
+                console.log('ladder above');
+            }else{
+                this.y = nextY;
+                this.y = (this.playerRow + 1) * TILE_SIZE;
+                console.log('no ladder');
+            }
         // DOWN
         }else if(this.canClimbDown && this.climbingDown){
             let nextY = this.y;
-            this.y += this.climbingSpeed;
+
+            if(checkLadder(this.x + TILE_SIZE / 2, this.y + TILE_SIZE)){
+                this.y += this.climbingSpeed;
+                console.log('ladder above');
+            }else{
+                this.y = nextY;
+                this.y = (this.playerRow + 2) * TILE_SIZE;
+                console.log('no ladder');
+            }
         // STOPPED CLIMBING
         }else{
             this.y = this.y;
@@ -386,7 +402,7 @@ function init(){
             textPlaceholder = '"In case of fire - GIT commit, GIT push". Whatever that means...';
             displayText('git');
         }else if(this.playerCol >= 46 && this.playerCol < 50 && this.playerRow == 35){
-            textPlaceholder = 'Autocad, Archicad, 3DS MAX, Photoshop, Illustrator, Nikon, Aperture, Bokeh and etc. Lots of fancy words, eh?';
+            textPlaceholder = 'Autocad, Archicad, 3DS MAX, Photoshop, Illustrator, Nikon, Aperture, Bokeh and etc. Lots of fancy words, huh?';
             displayText('other');
         }else if(this.playerCol >= 21 && this.playerCol < 28 && this.playerRow == 24){
             textPlaceholder = 'Still under construction? I\'ll have to come back later!'
@@ -511,10 +527,10 @@ function init(){
 
     // PLAYER CONTROLS
     document.addEventListener('keydown',function(event){
-        if(event.key == 'ArrowLeft' && !player.climbingDown){
+        if(event.key == 'ArrowLeft'){
             player.left = true;
         }
-        if(event.key == 'ArrowRight' && !player.climbingDown){
+        if(event.key == 'ArrowRight'){
             player.right = true;
         }
         if(event.key == 'ArrowUp'){
@@ -600,6 +616,21 @@ function init(){
             || sceneLayout[gridRow][gridCol] == 21
             || sceneLayout[gridRow][gridCol] >= 181 && sceneLayout[gridRow][gridCol] <= 183
             || sceneLayout[gridRow][gridCol] >= 208 && sceneLayout[gridRow][gridCol] <= 210){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    function checkLadder(x, y){
+        // CONVERT TO GRID POSITION
+        let gridRow = Math.floor(y / TILE_SIZE);
+        let gridCol = Math.floor(x / TILE_SIZE);
+
+        console.log(gridRow + ' ' + gridCol);
+
+        // CHECK IF TILE IS LADDER (true) OR NOT (false)
+        if(sceneLayout[gridRow][gridCol] >= 21 && sceneLayout[gridRow][gridCol] <= 23){
             return true;
         }else{
             return false;

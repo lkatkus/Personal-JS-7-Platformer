@@ -52,7 +52,7 @@
     </div>
 
     <!-- START CONTENT CONTAINER -->
-        <div class="myContainer">
+        <div id="myContainer">
 
         <!-- TEXTBOX CONTAINER FOR "INGAME" TEXT -->
             <div id="textBoxContainer" class="hidden">
@@ -83,25 +83,26 @@
             <div id="sidebarContainer">
                 <!-- OPENING BUTTON -->
                 <div id="sidebarOpen"><i class="fas fa-bars fa-2x" onclick="openNav()"></i></div>
-                <!-- SIDEBAR -->
-                <div id="sidebar" class="hidden">
-                    <!-- CLOSING BUTTON -->
-                    <div id="sidebarClose" class="hidden"><i class="fas fa-caret-left fa-2x" onclick="closeNav()"></i></div>
-                    <!-- MENU -->
-                    <ul>
-                        <li class="sidebarLink" value="About">About</li>
-                        <li class="sidebarLink" value="Portfolio">Portfolio</li>
-                        <li><a href="https://github.com/lkatkus" target="_blank">Github</a></li>
-                        <li class="sidebarLink" value="Other">Other</li>
-                        <li class="sidebarLink" value="Contacts">Contacts</li>
-                    </ul>
-                </div>
-                <!-- END SIDEBAR -->
             </div>
         <!-- END SIDEBAR CONTAINER-->
 
+        <!-- SIDEBAR -->
+        <div id="sidebar">
+            <!-- CLOSING BUTTON -->
+            <div id="sidebarClose"><i class="fas fa-caret-left fa-2x" onclick="closeNav()"></i></div>
+            <!-- MENU -->
+            <ul>
+                <li class="sidebarLink" value="About">About</li>
+                <li class="sidebarLink" value="Portfolio">Portfolio</li>
+                <li><a href="https://github.com/lkatkus" target="_blank">Github</a></li>
+                <li class="sidebarLink" value="Other">Other</li>
+                <li class="sidebarLink" value="Contacts">Contacts</li>
+            </ul>
+        </div>
+        <!-- END SIDEBAR -->
+
         <!-- START INFORMACTION CONTAINERS -->
-        <div id="contentContainer" class="contentContainer hidden myContainer">
+        <div id="contentContainer" class="contentContainer">
 
             <!-- CONTENT PAGE CLOSING BUTTON -->
             <div><i class="fas fa-caret-right fa-2x" onclick="closeContent()"></i></div>
