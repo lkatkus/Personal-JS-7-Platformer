@@ -123,8 +123,8 @@ function init(){
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 166, 0, 0, 0, 0, 0, 0, 170, 0, 0, 0, 0, 0, 0, 81, 82, 101, 102, 86, 41, 51, 52, 53, 54, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 167, 0, 0, 0, 0, 0, 0, 169, 0, 0, 0, 0, 0, 0, 83, 84, 103, 104, 86, 41, 55, 56, 57, 58, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 181, 182, 182, 182, 183, 0, 0, 0, 0, 170, 0, 0, 0, 0, 0, 0, 81, 82, 105, 106, 86, 41, 41, 41, 41, 41, 41, 142, 143, 143, 143, 144, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 169, 0, 0, 0, 0, 0, 0, 83, 84, 103, 104, 86, 41, 47, 48, 49, 50, 41, 121, 132, 133, 134, 121, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 170, 0, 0, 0, 0, 0, 0, 81, 82, 105, 106, 86, 41, 43, 44, 45, 46, 41, 121, 135, 136, 137, 121, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 169, 0, 188, 189, 190, 191, 0, 83, 84, 103, 104, 86, 41, 47, 48, 49, 50, 41, 121, 132, 133, 134, 121, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 170, 0, 184, 185, 186, 187, 0, 81, 82, 105, 106, 86, 41, 43, 44, 45, 46, 41, 121, 135, 136, 137, 121, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 173, 175, 22, 179, 175, 175, 175, 175, 175, 175, 177, 161, 0, 0, 0, 173, 175, 175, 175, 175, 175, 177, 0, 83, 84, 103, 104, 86, 41, 41, 41, 41, 41, 41, 121, 138, 139, 140, 121, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 174, 176, 23, 180, 176, 176, 176, 176, 176, 176, 178, 162, 163, 164, 165, 174, 176, 176, 176, 176, 176, 178, 0, 81, 82, 105, 106, 86, 41, 51, 52, 53, 54, 41, 121, 142, 142, 142, 121, 0, 0, 0, 0, -1, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 3, 3, 2, 2, 3, 2, 4, 4, 3, 2, 2, 3, 3, 4, 4, 3, 4, 2, 2, 3, 2, 4, 3, 2, 2, 4, 4, 3, 3, 2, 2, 2, 3, 4, 2, 4, 4, 5, 21, 1, 5, 0, 0, 0, 0, 0],
@@ -396,12 +396,14 @@ function init(){
             textPlaceholder = 'Autocad, Archicad, 3DS MAX, Photoshop, Illustrator, Nikon, Aperture, Bokeh and etc. Lots of fancy words, huh?';
             displayText('other');
         }else if(this.playerCol >= 21 && this.playerCol < 28 && this.playerRow == 24){
-            textPlaceholder = 'Still under construction? I\'ll have to come back later!'
+            textPlaceholder = 'Sorry. We are still under construction. Please, come back later!'
+            document.getElementById('textBoxImgPortrait').classList.add('hidden');
+            document.getElementById('textBoxImgWorker').classList.remove('hidden');
             displayText('clients');
         }else if(this.playerCol >= 36 && this.playerCol < 50 && this.playerRow == 24){
             displayText('jokes');
         }else if(this.playerCol >= 8 && this.playerCol <= 16 && this.playerRow == 6 || this.playerRow == 5){
-            textPlaceholder = 'Whoever made this definitely deserves a cookie. I should give him a call.';
+            textPlaceholder = 'Whoever made this definitely deserves a cookie. Maybe I should give him a call and see what is he up to?.';
             displayText('contact');
         }else if(this.playerCol >= 17 && this.playerCol < 23 && this.playerRow == 19){
             textPlaceholder = 'Wow! I can see my house from here!';
@@ -416,6 +418,7 @@ function init(){
             displayText('mario');
         }else{
             document.getElementById('textBoxImgCat').classList.add('hidden');
+            document.getElementById('textBoxImgWorker').classList.add('hidden');
             document.getElementById('textBoxImgPortrait').classList.remove('hidden');
 
             // HIDING TEXTBOX
