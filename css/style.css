@@ -171,6 +171,7 @@ p > a:hover{
     top: 0;
     left: -200px;
     transition: var(--transition);
+    z-index: 1;
 }
 
 #sidebarOpen{
@@ -223,7 +224,7 @@ p > a:hover{
 }
 
 /* ========= CONTENT CONTAINER STYLING ========= */
-.contentContainer{
+#contentContainer{
     background-color: rgba(250,250,250,0.9);
     float: left;
     position: absolute;
@@ -231,6 +232,7 @@ p > a:hover{
     padding: 10px 20px 20px 10px;
     min-height: 100%;
     transition: var(--transition);
+    z-index: 1;
 }
 
 #contentWrapper{
@@ -343,4 +345,27 @@ td a:hover{
         width: 75%;
         padding: 10px;
     }
+}
+
+.titleContainer{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+    background-color: #9ACFF0;
+    text-align: center;
+    color: white;
+    font-family: Joystix;
+}
+
+.titleContainer h1{
+    font-family: Joystix;
+    color: white;
+    font-size: 4rem;
 }

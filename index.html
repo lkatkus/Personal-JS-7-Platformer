@@ -22,7 +22,7 @@
             <link rel="stylesheet" href="css/style.css">
     </head>
 
-    <body onload="init()">
+    <body>
 
 
     <!-- START CANVAS CONTAINER -->
@@ -93,7 +93,7 @@
         <!-- END SIDEBAR -->
 
         <!-- START INFORMACTION CONTAINERS -->
-        <div id="contentContainer" class="contentContainer">
+        <div id="contentContainer">
 
             <!-- CONTENT PAGE CLOSING BUTTON -->
             <div><i class="fas fa-caret-right fa-2x" onclick="closeContent()"></i></div>
@@ -320,6 +320,17 @@
         </div>
         <!-- END INFORMACTION CONTAINERS -->
 
+        <div id="titleContainer" class="titleContainer">
+            <div class="title">
+                <h1>My<br>Super<br>Javascript<br>Adventure</h1>
+            </div>
+            <div id="startGameButton">
+                <div class="button" onclick="startGame()">Start</div>
+            </div>
+            <div class="">
+                <p>Use arrow keys for controls</p>
+            </div>
+        </div>
 
         </div>
     <!-- END CONTENT CONTAINER -->

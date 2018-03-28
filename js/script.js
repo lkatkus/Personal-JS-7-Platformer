@@ -94,11 +94,13 @@ var jokes = [
 ];
 
 // MAIN START FUNCTION
-function init(){
+function startGame(){
 
     // SELECTORS
     var canvas = document.getElementById('sceneCanvas');
     var ctx = canvas.getContext('2d');
+
+    document.getElementById('titleContainer').classList.add('hidden');
 
     // SCENE LAYOUT
     var sceneLayout = [
