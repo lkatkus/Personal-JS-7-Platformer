@@ -449,14 +449,6 @@ function startGame(){
         }else{
             this.canClimbDown = false;
         }
-
-        // DEBUGGING
-        document.getElementById('playerCol').innerHTML = this.playerCol;
-        document.getElementById('playerRow').innerHTML = this.playerRow;
-        document.getElementById('climbup').innerHTML = this.canClimbUp;
-        document.getElementById('climbdown').innerHTML = this.canClimbDown;
-        document.getElementById('current').innerHTML = sceneLayout[this.playerRow][this.playerCol];
-        document.getElementById('below').innerHTML = sceneLayout[this.playerRow + 1][this.playerCol];
     };
 
     // PLAYER OBJECT - DRAW

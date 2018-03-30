@@ -1,16 +1,16 @@
-#carousel{
+.carousel{
     width: 100%;
     display: block;
     margin: 0 auto;
     position: relative;
 }
 
-#carousel-viewport{
+.carousel-viewport{
     width: 100%;
     overflow: hidden;
 }
 
-#carousel-item-container{
+.carousel-item-container{
     white-space: nowrap;
     position: relative;
     transition: all 0.2s;
@@ -18,18 +18,18 @@
 }
 
 .carousel-buttons-container{
-    /* position: absolute;
+    position: absolute;
     left: 0;
     top: 50%;
     transform: translateY(-50%);
     z-index: 2;
-    width: 100%; */
+    width: 100%;
 }
 
 .carouselButton{
     background-color: rgba(255,255,255,0.5);
     padding: 10px;
-    color: red;
+    color: white;
     user-select: none;
     cursor: pointer;
     opacity: 0.2;
