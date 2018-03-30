@@ -1,0 +1,85 @@
+#carousel{
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+}
+
+#carousel-viewport{
+    width: 100%;
+    overflow: hidden;
+}
+
+#carousel-item-container{
+    white-space: nowrap;
+    position: relative;
+    transition: all 0.2s;
+    left: 0;
+}
+
+.carousel-buttons-container{
+    /* position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 100%; */
+}
+
+.carouselButton{
+    background-color: rgba(255,255,255,0.5);
+    padding: 10px;
+    color: red;
+    user-select: none;
+    cursor: pointer;
+    opacity: 0.2;
+    transition: all 0.2s;
+    border-radius: 5px;
+}
+
+.carouselButton:hover{
+    opacity: 1;
+}
+
+.float-left{
+    float: left;
+    margin-left: 10px;
+}
+
+.float-right{
+    float: right;
+    margin-right: 10px;
+}
+
+.carousel-item{
+  background-color: lime;
+  width: 100%;
+  display: inline-block;
+  height: 600px;
+  overflow: hidden;
+  position: relative;
+}
+
+img{
+    display: block;
+}
+
+.imgLandscape{
+    width: 100%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+}
+
+.imgPortrait{
+    height: 100%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+}
+
+.d-none{
+    display: none;
+}

@@ -13,6 +13,8 @@ window.addEventListener('resize', function(){
 
 window.addEventListener('load', function(){
 
+    startCarousel();
+
     sidebar = document.getElementById('sidebar');
     contentContainer = document.getElementById('contentContainer');
     contentWrapper = document.getElementById('contentWrapper');

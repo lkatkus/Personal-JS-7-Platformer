@@ -10,6 +10,8 @@
         <!-- SCRIPT -->
             <!-- GENERAL WEBSITE JS -->
             <script src="js/web.js"></script>
+            <script src="js/carousel.js"></script>
+
             <!-- GAME JS -->
             <script src="js/script.js"></script>
 
@@ -20,6 +22,7 @@
             <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
             <!-- CUSTOM CSS -->
             <link rel="stylesheet" href="css/style.css">
+            <link rel="stylesheet" href="css/carousel.css">
     </head>
 
     <body>
@@ -250,47 +253,62 @@
                     <h2>Other</h2>
                     <p>Prosciutto sirloin hamburger andouille tongue chicken turducken drumstick jowl. Buffalo t-bone meatball capicola bacon tail ground round meatloaf pork loin jowl alcatra pig. Pork chop t-bone strip steak pork loin boudin tenderloin flank, cupim buffalo sausage. Cow hamburger pork loin, shoulder tail cupim porchetta venison corned beef strip steak.</p>
 
-                    <div class="carouselContainer">
-                        <div class="carouselButtonContainer">
-                            <div class="carouselButton">Architecture</div>
+                    <h2>ARCHITECTURE</h2>
+                    <div id="carousel">
+                        <div class="carousel-buttons-container">
+                            <div class="carouselButton float-left" id="slider-previous">Previous</div>
+                            <div class="carouselButton float-right" id="slider-next">Next</div>
                         </div>
 
-                        <div class="carousel" id="carousel1">
-                            <div class="carouselButtonPrevious"><i class="fas fa-caret-square-left fa-2x"></i></div>
-                            <div class="carouselButtonNext"><i class="fas fa-caret-square-right fa-2x"></i></div>
-                            <div class="carouselItem">
-                                <img src="img/other/image_placeholder.png">
+                        <div id="carousel-viewport">
+                            <div id="carousel-item-container">
+                                <div class="carousel-item active">
+                                    <img class="carousel-item-image" src="img/other/architecture/1.jpg" alt="">
+                                </div>
+
+                                <div class="carousel-item">
+                                    <img class="carousel-item-image" src="img/other/architecture/2.jpg" alt="">
+                                </div>
+
+                                <div class="carousel-item">
+                                    <img class="carousel-item-image" src="img/other/architecture/3.jpg" alt="">
+                                </div>
+
+                                <div class="carousel-item">
+                                    <img class="carousel-item-image" src="img/other/architecture/4.jpg" alt="">
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="carouselContainer">
-                        <div class="carouselButtonContainer">
-                            <div class="carouselButton">Graphic design</div>
+                    <h2>PHOTOGRAPHY</h2>
+                    <div id="carousel2">
+                        <div class="carousel-buttons-container">
+                            <div class="carouselButton float-left slider-previous">Previous</div>
+                            <div class="carouselButton float-right slider-next">Next</div>
                         </div>
 
-                        <div class="carousel" id="carousel2">
-                            <div class="carouselButtonPrevious"><i class="fas fa-caret-square-left fa-2x"></i></div>
-                            <div class="carouselButtonNext"><i class="fas fa-caret-square-right fa-2x"></i></div>
-                            <div class="carouselItem">
-                                <img src="img/other/image_placeholder.png">
+                        <div class="carousel-viewport">
+                            <div class="carousel-item-container">
+                                <div class="carousel-item active">
+                                    <img class="carousel-item-image" src="img/other/architecture/1.jpg" alt="">
+                                </div>
+
+                                <div class="carousel-item">
+                                    <img class="carousel-item-image" src="img/other/architecture/2.jpg" alt="">
+                                </div>
+
+                                <div class="carousel-item">
+                                    <img class="carousel-item-image" src="img/other/architecture/3.jpg" alt="">
+                                </div>
+
+                                <div class="carousel-item">
+                                    <img class="carousel-item-image" src="img/other/architecture/4.jpg" alt="">
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="carouselContainer">
-                        <div class="carouselButtonContainer">
-                            <div class="carouselButton">Photography</div>
-                        </div>
-
-                        <div class="carousel" id="carousel3">
-                            <div class="carouselButtonPrevious"><i class="fas fa-caret-square-left fa-2x"></i></div>
-                            <div class="carouselButtonNext"><i class="fas fa-caret-square-right fa-2x"></i></div>
-                            <div class="carouselItem">
-                                <img src="img/other/image_placeholder.png">
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
                 <!-- END OTHER -->
