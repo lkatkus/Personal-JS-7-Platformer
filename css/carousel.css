@@ -27,7 +27,7 @@
 }
 
 .carouselButton{
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(0,0,0,0.5);
     padding: 10px;
     color: white;
     user-select: none;
@@ -35,6 +35,9 @@
     opacity: 0.2;
     transition: all 0.2s;
     border-radius: 5px;
+    font-family: Joystix;
+    display: inline-block;
+    font-size: 1.2em;
 }
 
 .carouselButton:hover{
@@ -55,13 +58,13 @@
   background-color: lime;
   width: 100%;
   display: inline-block;
-  height: 600px;
   overflow: hidden;
   position: relative;
 }
 
-img{
+.carousel-item img{
     display: block;
+    width: 100%;
 }
 
 .imgLandscape{

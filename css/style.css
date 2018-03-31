@@ -6,7 +6,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 /* ========= GLOBAL VARIABLES ========= */
-
 :root{
     /* COLORS */
     --text-red: firebrick;
@@ -14,32 +13,16 @@
     --transition: all 0.2s;
 }
 
+/* ========= GLOBAL SETTINGS ========= */
 *{
     box-sizing: border-box;
 }
-
-.debug{
-    background-color: white;
-}
-
-.debug p{
-    color: red;
-}
-
-/* ========= GLOBAL SETTINGS ========= */
 
 html, body{
     padding: 0;
     margin: 0;
     width: 100%;
     height: 100%;
-}
-
-.debug{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    color: white;
 }
 
 a{
@@ -62,7 +45,6 @@ p > a:hover{
 }
 
 /* ========= CANVAS SETTINGS ========= */
-
 .canvasContainer{
     position: fixed;
     top: 0;
@@ -79,15 +61,7 @@ p > a:hover{
     padding: 0;
 }
 
-.infoContainer{
-    position: absolute;
-    top: 0;
-    left: 0;
-    color: white;
-}
-
-/* ========= TEXTBOX SETTINGS ========= */
-
+/* ========= INGAME TEXTBOX SETTINGS ========= */
 #textBoxContainer{
     position: fixed;
     top: 20px;
@@ -144,8 +118,31 @@ p > a:hover{
     user-select: none;
 }
 
-/* ========= CONTENT STYLING ========= */
+/* ========= TITLE SCREEN STYLING ========= */
+.titleContainer{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+    background-color: #9ACFF0;
+    text-align: center;
+    color: white;
+    font-family: Joystix;
+}
 
+.titleContainer h1{
+    font-family: Joystix;
+    color: white;
+    font-size: 4rem;
+}
+
+/* ========= CONTENT STYLING ========= */
 #myContainer{
     position: fixed;
     top: 0;
@@ -155,7 +152,7 @@ p > a:hover{
     overflow-x: hidden;
 }
 
-/* ========= SIDEBAR CONTROLS ========= */
+/* ========= SIDEBAR STYLING ========= */
 #sidebarContainer{
     position: fixed;
     top: 0;
@@ -200,7 +197,6 @@ p > a:hover{
     cursor: pointer;
 }
 
-/* ========= SIDEBAR STYLING ========= */
 #sidebar ul{
     list-style: none;
     padding: 0;
@@ -224,6 +220,7 @@ p > a:hover{
 }
 
 /* ========= CONTENT CONTAINER STYLING ========= */
+
 #contentContainer{
     background-color: rgba(250,250,250,0.9);
     float: left;
@@ -266,106 +263,11 @@ td a:hover{
     color: var(--text-red);
 }
 
-
-.portfolioItem{
-    width: 100%;
-    margin-bottom: 20px;
-    display: flex;
-    flex-flow: row;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-}
-
-.portfolioItemImage{
-    width: 100%;
-}
-
-.portfolioItemTag{
-    width: 100%;
-    padding: 10px;
-}
-
-.portfolioItem:hover .portfolioItemTag{
-    opacity: 1;
-}
-
-.portfolioItemImage img{
-    width: 100%;
-    display: block;
-}
-
-/* ========= CAROUSEL ========= */
-
-.carousel{
-    position: relative;
-}
-
-.carouselButtonPrevious{
-    position: absolute;
-    top: 50%;
-    left: 20px;
-}
-
-.carouselButtonNext{
-    position: absolute;
-    top: 50%;
-    right: 20px;
-}
-
-.carouselButtonContainer{
-    text-align: center;
-    margin: 10px 20px 10px 20px;
-}
-
-.carouselButton{
-    font-family: Joystix;
-    display: inline-block;
-    font-size: 1.2em;
-}
-
-.carouselItem img{
-    width: 100%;
+.emptyRow{
+    height: 30px;
 }
 
 /* ========= UTILITIES ========= */
-
 .hidden{
     display: none!important;
-}
-
-
-/* MEDIA QUERIES */
-
-@media only screen and (min-width: 800px) {
-    .portfolioItemImage{
-        width: 25%;
-    }
-
-    .portfolioItemTag{
-        width: 75%;
-        padding: 10px;
-    }
-}
-
-.titleContainer{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: red;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-flow: column;
-    background-color: #9ACFF0;
-    text-align: center;
-    color: white;
-    font-family: Joystix;
-}
-
-.titleContainer h1{
-    font-family: Joystix;
-    color: white;
-    font-size: 4rem;
 }

@@ -1,12 +1,10 @@
 
 var carousel1;
 var carousel2;
-var carousel3;
 
 function setCarousel(){
     carousel1 = new Carousel('carousel1');
     carousel2 = new Carousel('carousel2');
-    carousel3 = new Carousel('carousel3');
 };
 
 function Carousel(name){
