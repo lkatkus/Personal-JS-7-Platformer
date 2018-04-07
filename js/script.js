@@ -145,7 +145,7 @@ function startGame(){
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 212, 213, 213, 213, 213, 213, 213, 213, 213, 213, 213, 213, 213, 214, 0, 0, 0, 0, 0, 0, 11, 23, 25, 15, 14, 13, 0, 11, 12, 15, 0, 13, 14, 0, 0, 12, 15, 14, 0, 0, 13, 11, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 201, 237, 202, 203, 204, 205, 206, 237, 237, 237, 237, 237, 237, 237, 237, 237, 207, 0, 0, 0, 0, 0, 22, 26, 13, 11, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 211, 241, 242, 243, 244, 215, 217, 218, 215, 249, 250, 251, 252, 211, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, -1, 0, 'x', 0, 0, 0, 0, 0, 0, 0, 211, 245, 246, 247, 248, 216, 219, 220, 216, 253, 254, 255, 256, 211, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 'x', 0, 0, 0, 0, 0, 0, 0, 211, 245, 246, 247, 248, 216, 219, 220, 216, 253, 254, 255, 256, 211, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 1, 2, 3, 3, 4, 2, 3, 2, 4, 4, 2, 3, 4, 3, 3, 2, 4, 4, 2, 3, 3, 2, 2, 4, 4, 4, 3, 2, 4, 3, 3, 4, 4, 2, 2, 3, 4, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 6, 9, 8, 8, 7, 8, 7, 10, 6, 6, 7, 8, 10, 9, 6, 7, 9, 10, 9, 9, 10, 8, 7, 7, 6, 8, 6, 6, 8, 10, 10, 8, 9, 9, 10, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 11, 12, 15, 0, 0, 14, 13, 11, 15, 11, 12, 13, 14, 15, 0, 15, 12, 11, 13, 13, 0, 11, 15, 14, 13, 12, 12, 0, 15, 14, 11, 13, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -378,12 +378,15 @@ function startGame(){
         this.playerCol = Math.floor((this.x + TILE_SIZE / 2) / TILE_SIZE);
         this.playerRow = Math.floor((this.y - TILE_SIZE) / TILE_SIZE);
 
-        this.tileCurrentPlayerPositionType = sceneLayout[this.playerRow][this.playerCol];
-        this.tileBelowPlayerPositionType = sceneLayout[this.playerRow + 1][this.playerCol];
+        // this.tileCurrentPlayerPositionType = sceneLayout[this.playerRow][this.playerCol];
+        // this.tileBelowPlayerPositionType = sceneLayout[this.playerRow + 1][this.playerCol];
 
         // INTERACTION BASED ON PLAYER LOCATION ON GRID
         if(this.playerCol >= 5 && this.playerCol < 9 && this.playerRow == 41){
             textPlaceholder = 'This place looks strange... ';
+            displayText('intro');
+        }else if(this.playerRow == sceneLayout.length - 1){
+            textPlaceholder = 'Oh well... Guess you will have to reload the page!';
             displayText('intro');
         }else if(this.playerCol >= 14 && this.playerCol < 27 && this.playerRow == 41){
             textPlaceholder = 'I think that someone has told me that architects make great developers. I wonder if that is true.';
@@ -437,17 +440,19 @@ function startGame(){
             };
         }
 
-        // FOR CLIMBING MOVEMENT
-        if(sceneLayout[this.playerRow + 1][this.playerCol] == 21 || sceneLayout[this.playerRow][this.playerCol] == 21 ||sceneLayout[this.playerRow][this.playerCol] == 22 || sceneLayout[this.playerRow][this.playerCol] == 23){
-            this.canClimbUp = true;
-        }else{
-            this.canClimbUp = false;
-        }
+        if(this.playerRow + 1 != sceneLayout.length){
+            // FOR CLIMBING MOVEMENT
+            if(sceneLayout[this.playerRow + 1][this.playerCol] == 21 || sceneLayout[this.playerRow][this.playerCol] == 21 ||sceneLayout[this.playerRow][this.playerCol] == 22 || sceneLayout[this.playerRow][this.playerCol] == 23){
+                this.canClimbUp = true;
+            }else{
+                this.canClimbUp = false;
+            }
 
-        if(sceneLayout[this.playerRow + 1][this.playerCol] == 21 || sceneLayout[this.playerRow + 1][this.playerCol] == 22 || sceneLayout[this.playerRow + 1][this.playerCol] == 23){
-            this.canClimbDown = true;
-        }else{
-            this.canClimbDown = false;
+            if(sceneLayout[this.playerRow + 1][this.playerCol] == 21 || sceneLayout[this.playerRow + 1][this.playerCol] == 22 || sceneLayout[this.playerRow + 1][this.playerCol] == 23){
+                this.canClimbDown = true;
+            }else{
+                this.canClimbDown = false;
+            }
         }
     };
 
@@ -597,11 +602,13 @@ function startGame(){
         let gridCol = Math.floor(x / TILE_SIZE);
 
         // CHECK IF TILE IS FREE (false) OR TAKEN (true)
-        if(sceneLayout[gridRow][gridCol] == -1
+        if(gridRow < 0 || gridRow > sceneLayout.length - 1
+            || sceneLayout[gridRow][gridCol] == -1
             || sceneLayout[gridRow][gridCol] > 0 && sceneLayout[gridRow][gridCol] <= 5
             || sceneLayout[gridRow][gridCol] == 21
             || sceneLayout[gridRow][gridCol] >= 181 && sceneLayout[gridRow][gridCol] <= 183
-            || sceneLayout[gridRow][gridCol] >= 208 && sceneLayout[gridRow][gridCol] <= 210){
+            || sceneLayout[gridRow][gridCol] >= 208 && sceneLayout[gridRow][gridCol] <= 210
+            ){
             return true;
         }else{
             return false;
