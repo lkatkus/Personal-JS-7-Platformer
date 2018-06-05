@@ -16,6 +16,7 @@
 /* ========= GLOBAL SETTINGS ========= */
 *{
     box-sizing: border-box;
+    font-size: 16px;
 }
 
 html, body{
@@ -139,7 +140,7 @@ p > a:hover{
 .titleContainer h1{
     font-family: Joystix;
     color: white;
-    font-size: 4rem;
+    font-size: 3rem;
 }
 
 /* ========= CONTENT STYLING ========= */
@@ -273,7 +274,7 @@ td a:hover{
 }
 
 /* ========= UTILITIES ========= */
-@media only screen and (max-height: 700px) {
+@media only screen and (max-height: 1080px) {
 
     *{
         font-size: 16px;
