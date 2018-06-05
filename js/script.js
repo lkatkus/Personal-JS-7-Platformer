@@ -557,12 +557,66 @@ function startGame(){
         }
     });
 
-    // HELPERS
+    // MOBILE CONTROLS
+    let touchEvents = {};
 
+    document.addEventListener('touchstart', function(event){
+        touchEvents.startX = event.targetTouches[0].screenX;
+        touchEvents.startY = event.targetTouches[0].screenY;
+    });
+
+    document.addEventListener('touchmove', function(event){
+        touchEvents.moveX = event.targetTouches[0].screenX;
+        touchEvents.moveY = event.targetTouches[0].screenY;
+
+        if(Math.abs(touchEvents.startX - touchEvents.moveX) >= Math.abs(touchEvents.startY - touchEvents.moveY)){
+            if(touchEvents.startX > touchEvents.moveX && !player.climbingDown){
+                player.left = true;
+            }
+    
+            if(touchEvents.startX < touchEvents.moveX && !player.climbingDown){
+                player.right = true;
+            }
+        }else{
+            if(touchEvents.startY > touchEvents.moveY && player.canClimbUp){
+                player.climbingUp = true;
+                player.climbingSpeed = Math.floor(-TILE_SIZE / 8);
+            }else if(touchEvents.startY < touchEvents.moveY && player.canClimbDown){
+                player.climbingDown = true;
+                player.climbingSpeed = Math.floor(TILE_SIZE / 8);
+            }
+        }
+    });
+
+    document.addEventListener('touchend', function(event){
+        // Clear touch events array
+        
+        if(touchEvents.startX > touchEvents.moveX){
+            player.left = false;
+            player.previousDirection = 'left';
+            player.speedX = 1;
+        }
+
+        if(touchEvents.startX < touchEvents.moveX){
+            player.right = false;
+            player.speedX = 1;
+            player.previousDirection = 'right';
+        }
+
+        if(touchEvents.startY > touchEvents.moveY){
+            player.climbingUp = false;
+        }
+
+        if(touchEvents.startY < touchEvents.moveY){
+            player.climbingDown = false;
+        }
+    });
+
+    // HELPERS
     // WINDOW RESIZE LISTENER
     window.addEventListener('resize', function(){
-        // setWorldSize();
-        // cameraFollow();
+        setWorldSize();
+        cameraFollow();
     });
 
     // SETUP CANVAS SIZE
