@@ -27,7 +27,6 @@
 
     <body>
 
-
     <!-- START CANVAS CONTAINER -->
         <div class="canvasContainer">
             <canvas id="sceneCanvas"></canvas>
@@ -89,7 +88,7 @@
         <div id="contentContainer">
 
             <!-- CONTENT PAGE CLOSING BUTTON -->
-            <div><i class="fas fa-caret-right fa-2x" onclick="closeContent()"></i></div>
+            <div id="closeContentButton" onclick="closeContent()"><i class="fas fa-caret-right fa-2x"></i></div>
 
             <!-- CONTENT WRAPPER -->
             <div id="contentWrapper">
@@ -115,7 +114,32 @@
                     <!-- PORTFOLIO ITEM CONTAINER -->
                     <div class="portfolioItemContainer">
 
+                        <h4>Check out my <a href="https://github.com/lkatkus">Github</a> for the latest project!</h4>
+
                         <table>
+                            <tr>
+                                <td>Title</td>
+                                <td>Online Pong (2018)</td>
+                            </tr>
+                            <tr>
+                                <td>Used</td>
+                                <td>HTML, CSS, Javascript (plain), NodeJS, Socket-IO</td>
+                            </tr>
+                            <tr>
+                                <td>Desc.</td>
+                                <td>A project made for fun to study NodeJS with Socket-IO.</td>
+                            </tr>
+                            <tr>
+                                <td>Links</td>
+                                <td><a target="_blank" href="https://calm-journey-43054.herokuapp.com/">Live demo</a></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><a target="_blank" href="https://github.com/lkatkus/Personal-Node-5-OnlinePong">Github repository</a></td>
+                            </tr>
+
+                        <tr class="emptyRow"></tr>
+
                             <tr>
                                 <td>Title</td>
                                 <td>Phat The Cat (2018)</td>
@@ -125,7 +149,7 @@
                                 <td>HTML, CSS, Javascript (plain), Laravel</td>
                             </tr>
                             <tr>
-                                <td>Description</td>
+                                <td>Desc.</td>
                                 <td>3W Academy Lithuanian web developer course final project.</td>
                             </tr>
                             <tr>
@@ -148,7 +172,7 @@
                                 <td>HTML, CSS, Javascript (plain)</td>
                             </tr>
                             <tr>
-                                <td>Description</td>
+                                <td>Desc.</td>
                                 <td>Current website You are visiting. It started as an attempt to make a simple 2D sidescroller game with JavaScript and HTML Canvas and evolved into my personal portfolio website.</td>
                             </tr>
                             <tr>
@@ -171,7 +195,7 @@
                                 <td>HTML, CSS, Javascript (plain)</td>
                             </tr>
                             <tr>
-                                <td>Description</td>
+                                <td>Desc.</td>
                                 <td>Futher experimets with HTML Canvas and a wish to make something more complex.</td>
                             </tr>
                             <tr>
@@ -194,7 +218,7 @@
                                 <td>HTML, CSS, Javascript (plain)</td>
                             </tr>
                             <tr>
-                                <td>Description</td>
+                                <td>Desc.</td>
                                 <td>After basic experiments with HTML Canvas I wanted to create something closer to my heart. A VIDEO GAME!</td>
                             </tr>
                             <tr>
@@ -217,16 +241,15 @@
                                 <td>Flash, Actionscript, XML</td>
                             </tr>
                             <tr>
-                                <td>Description</td>
+                                <td>Desc.</td>
                                 <td>My previous website portfolio. Obsolete technologies, but still a great thing to remember.</td>
                             </tr>
                             <tr>
                                 <td>Links</td>
                                 <td><a target="_blank" href="demo/old/index.html">Live demo</a></td>
                             </tr>
-                        </table>
 
-                        <h4>To be continued...</h4>
+                        </table>
 
                     </div>
                     <!-- END PORTFOLIO ITEM CONTAINER -->

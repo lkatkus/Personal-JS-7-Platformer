@@ -49,7 +49,9 @@ function openNav(){
 
 function closeNav(){
     sidebar.style.left = -sidebar.offsetWidth + 'px';
-    closeContent();
+    closeContent(()=>{
+        contentContainer.classList.add('hidden');
+    });
     // sidebar.classList.add('hidden');
     // document.getElementById('sidebarClose').classList.add('hidden');
     document.getElementById('sidebarOpen').classList.remove('hidden');
@@ -81,9 +83,12 @@ function showContent(target){
     contentDiv.classList.remove('hidden');
 };
 
-function closeContent(){
+function closeContent(callback = () => { contentContainer.classList.add('hidden'); }){
     contentContainer.style.left = '100%';
     contentVisible = false;
+    setTimeout(()=>{
+        callback()
+    },50)
 };
 
 function setContentSize(){
@@ -92,8 +97,13 @@ function setContentSize(){
     let contentDivWidth = window.innerWidth - contentDivOffset;
 
     // SET OFFSET AND WIDTH
-    contentContainer.style.left = contentDivOffset + 'px';
-    contentContainer.style.width = contentDivWidth + 'px';
+    if(window.innerWidth > 500){
+        contentContainer.style.left = contentDivOffset + 'px';
+        contentContainer.style.width = contentDivWidth + 'px';
+    }else{
+        contentContainer.style.left = 0;
+        contentContainer.style.width = '100%';
+    }
 }
 
 // function getScrollbarWidth() {
