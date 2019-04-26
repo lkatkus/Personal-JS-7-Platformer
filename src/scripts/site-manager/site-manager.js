@@ -1,15 +1,26 @@
+import Game from './../game/Game';
+
 class SiteManager {
     constructor() {
+        this.onLoadGame = this.onLoadGame.bind(this);
+
+        // TODO create set method
         this.sideBarWrapper = document.getElementById('sideBarWrapper');
+        this.contentWrapper = document.getElementById('contentWrapper');
+        this.titleWrapper = document.getElementById('titleWrapper');
+        this.canvasWrapper = document.getElementById('canvasWrapper');
+
         this.sideBarOpenButton = document.getElementById('sideBarOpenButton');
         this.sideBarCloseButton = document.getElementById('sideBarCloseButton');
         this.sideBarList = document.querySelectorAll('.sidebarLink');
-        this.contentWrapper = document.getElementById('contentWrapper');
+        this.contentCloseButton = document.getElementById('contentCloseButton');
+        this.startGameButton = document.getElementById('startGameButton');
         
         this.sideBarOpen = false;
         this.contentWrapperOpen = false;
         this.contentWrapper.className = 'closed';
         this.currentContentTab = null;
+        this.game = null;
         
         this.setListeners();
     }
@@ -46,6 +57,18 @@ class SiteManager {
         this.currentContentTab = null;
     }
 
+    startGame() {
+        if (!this.game) {
+            this.game = new Game(this.onLoadGame);
+        }
+    }
+    
+    onLoadGame() {
+        console.log('GAME LOADED!');
+        this.titleWrapper.className = 'hidden';
+        this.canvasWrapper.className = null;
+    }
+
     setListeners() {
         this.sideBarOpenButton.addEventListener('click', () => {
             this.openSideBar();
@@ -59,7 +82,7 @@ class SiteManager {
             }
         });
 
-        document.getElementById('contentButton').addEventListener('click', () => {
+        this.contentCloseButton.addEventListener('click', () => {
             this.closeContentWrapper();
         });
         
@@ -70,8 +93,8 @@ class SiteManager {
             });
         });
 
-        document.getElementById('startGameButton').addEventListener('click', () => {
-            alert('startGameButton')
+        this.startGameButton.addEventListener('click', () => {
+            this.startGame();
         });
     }
 }

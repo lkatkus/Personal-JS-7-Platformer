@@ -3,6 +3,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     entry: ["@babel/polyfill", "./src/index"],
+    devServer: {
+        compress: true,
+    },
     module: {
         rules: [
             {
