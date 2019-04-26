@@ -94,7 +94,7 @@ var jokes = [
 ];
 
 // MAIN START FUNCTION
-function startGame(){
+export function startGame(){
 
     // SELECTORS
     var canvas = document.getElementById('sceneCanvas');

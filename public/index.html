@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Laimonas Katkus WebPortfolio</title>
+
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+</head>
+<body>
+    <div id="canvasContainer">
+        <canvas id="sceneCanvas"></canvas>
+    </div>
+
+    <div id="contentContainer">
+        <div id="sideBarOpenButton">
+            <i class="fas fa-bars fa-2x"></i>
+        </div>
+
+        <div id="titleWrapper">
+            <div class="title">
+                <h1>My<br>Super<br>Javascript<br>Adventure</h1>
+                <p>Swipe or use arrow keys for controls</p>
+            </div>
+            <div id="startGameButton">Start</div>
+        </div>
+
+        <div id="sideBarWrapper" class="closed">
+            <div id="sideBarCloseButton">
+                <i class="fas fa-caret-left fa-2x"></i>
+            </div>
+    
+            <div id="sideBar">
+                <div id="sideBarList">
+                    <div class="sidebarLink" value="contentAbout">About</div>
+                    <div class="sidebarLink" value="contentPortfolio">Portfolio</div>
+                    <div class="sidebarLink"><a href="https://github.com/lkatkus" target="_blank">Github</a></div>
+                    <div class="sidebarLink" value="contentOther">Other</div>
+                    <div class="sidebarLink" value="contentContacts">Contacts</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="contentWrapper" class="closed">
+            <div id="contentButton">
+                <i class="fas fa-caret-right fa-2x"></i>
+            </div>
+
+            <div id="content">
+                <div id="contentAbout" class="closed">
+                    <h2>ABOUT</h2>
+
+                    <h3>Past</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, ipsam debitis tempora perferendis assumenda doloremque quos fugit. Vero suscipit alias dignissimos aperiam, iusto numquam officiis dolorum reiciendis eos eaque laboriosam.</p>
+
+                    <h3>Present</h3>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit ea voluptatem minima vel dolore corrupti ut doloremque, culpa vero libero, amet ab, animi itaque velit est laudantium quia fuga debitis!</p>
+
+                    <h3>Future</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem accusantium nihil quo recusandae vel repellendus aspernatur unde suscipit culpa. Iusto, incidunt expedita consectetur facilis est enim ea. Illo, aspernatur consequuntur.</p>
+                </div>
+
+                <div id="contentPortfolio" class="closed">
+                    <h2>PORTFOLIO</h2>
+                </div>
+
+                <div id="contentOther" class="closed">
+                    <h2>OTHER</h2>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestias quos fugit quibusdam deleniti beatae est nisi corporis illum nemo officia alias adipisci exercitationem eos facere iusto architecto, corrupti numquam! Autem!</p>
+                </div>
+
+                <div id="contentContacts" class="closed">
+                    <h2>CONTACTS</h2>
+
+                    <h3>Location</h3>
+                    <p>TODO</p>
+
+                    <h3>Telephone</h3>
+                    <p>TODO</p>
+
+                    <h3>Email</h3>
+                    <p>TODO</p>
+
+                    <h3>Social</h3>
+                    <p>TODO</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

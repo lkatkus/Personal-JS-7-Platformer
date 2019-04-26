@@ -1,0 +1,147 @@
+@import './common/colors';
+@import './common/grid';
+
+* {
+    box-sizing: border-box;
+    transition-duration: 0.2s;
+}
+
+body {
+    margin: 0;
+}
+
+#canvasContainer {
+    background-color: aquamarine;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+}
+
+#titleWrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    #startGameButton {
+        cursor: pointer;
+        border: 1px solid red;
+        border-radius: 5px;
+        padding: $spacer;
+    }
+}
+
+#contentContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    #sideBarOpenButton {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        & > * {
+            padding: $spacer;
+        }
+    }
+
+    @media screen and (min-width: $break-small) {
+        display: flex;
+    }
+
+    #sideBarWrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        transition-duration: 0.2s;
+    
+        &.open {
+            left: 0;
+        }
+    
+        &.closed {
+            left: -100%;
+        }
+        
+        #sideBarCloseButton {
+            display: flex;
+            justify-content: flex-end;
+            background-color: $grey-light;
+            
+            & > * {
+                padding: $spacer;
+            }
+        }
+        
+        #sideBar {
+            flex: 1;
+            position: relative;
+            background-color: $grey-light;
+    
+            #sideBarList {
+                & > * {
+                    padding: $spacer $spacer-double;
+                    cursor: pointer;
+                }
+            }
+        }
+    
+        @media screen and (max-width: $break-small) {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    #contentWrapper {
+        background-color: $grey-light;
+        position: relative;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        
+        #contentButton {
+            padding: $spacer;
+        }
+    
+        #content {
+            overflow-y: auto;
+            padding: $spacer;
+    
+            & > * {
+                &.open {
+                    display: unset;
+                }
+    
+                &.closed {
+                    display: none;
+                }
+            }
+        }
+    
+        &.open {
+            left: 0;
+        }
+    
+        &.closed {
+            left: 100%;
+        }
+    
+        @media screen and (max-width: $break-small) {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
