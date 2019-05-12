@@ -1,12 +1,12 @@
 export const SPAWN_MARKER = 'x';
 export const TILE_SIZE = 30;
+export const TILES_PER_ROW = 11;
 
 export const TILESHEET_WIDTH = 1200;
 export const TILESHEET_HEIGHT = 1200;
 export const TILESHEET_ROWS = 20;
 export const TILESHEET_COLS = 20;
-export const TILESHEET_SPRITE_WIDTH = TILESHEET_WIDTH / TILESHEET_COLS;
-export const TILESHEET_SPRITE_HEIGHT = TILESHEET_HEIGHT / TILESHEET_ROWS;
+export const TILESHEET_SPRITE_SIZE = TILESHEET_WIDTH / TILESHEET_COLS;
 
 export const LEVEL_LAYOUT = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

@@ -1,28 +1,26 @@
-import Level from './level/level';
+import LevelManager from './level-manager/level-manager';
+import Camera from './camera';
 import Player from './Player';
 
 import {
+    FPS,
     MOVEMENT_KEYS,
     MOVEMENT_KEY_CODES,
 } from './constants';
 
 class Game {
     constructor(onLoadCallback) {
-        this.setSpawnMarker = this.setSpawnMarker.bind(this);
         this.mainDraw = this.mainDraw.bind(this);
+        this.handleResize = this.handleResize.bind(this);
 
         this.setCanvas();
         this.setControls();
-
-        this.level = new Level(this.canvas, this.context, this.setSpawnMarker);
-        this.player = new Player(this.spawnRow, this.spawnCol);
-
+        
+        this.level = new LevelManager(this.canvas, this.context, this.setPlayerPosition);
+        this.player = new Player(this.canvas, this.context, this.level.initialPlayerLocation);
+        this.camera = new Camera(this.canvas, this.level, this.player);
+        
         this.startGame(onLoadCallback);
-    }
-
-    setSpawnMarker(row, col) {
-        this.spawnRow = row;
-        this.spawnCol = col;
     }
 
     setCanvas() {
@@ -31,13 +29,28 @@ class Game {
 
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', this.handleResize);
+    }
+
+    handleResize() {
+        window.clearInterval(this.drawInterval);
+
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+
+        this.level.resetTileSize();
+        this.player.resetPosition(this.level.TILE_SIZE);
+        this.camera.resetCameraOffset();
+
+        this.drawInterval = setInterval(this.mainDraw, FPS);
     }
 
     setControls() {
         document.addEventListener('keydown', (event) => {
             if (MOVEMENT_KEY_CODES.includes(event.keyCode)) {
                 if (event.key.includes('Arrow')) {
-                    return this.player.move(MOVEMENT_KEYS[event.key]);
+                    return this.player.move(MOVEMENT_KEYS[event.key], this.level.TILE_SIZE);
                 }
                 
                 this.player.move(MOVEMENT_KEYS[`Arrow${event.key}`]);
@@ -48,15 +61,21 @@ class Game {
     }
 
     mainDraw() {
+        this.camera.updateCameraOffset();
+
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.save();
+        this.context.translate(this.camera.offsetX, this.camera.offsetY);
+
         this.level.draw();
-        this.player.draw();
+        this.player.draw(this.level.TILE_SIZE);
+
+        this.context.restore();
     }
 
     startGame(onLoadCallback) {
-        onLoadCallback()
-        this.mainDraw();
-        // setInterval(this.mainDraw, 1000);
+        onLoadCallback();
+        this.drawInterval = setInterval(this.mainDraw, FPS);
     }
 }
 
