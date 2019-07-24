@@ -15,11 +15,15 @@ class LevelManager {
         this.canvas = canvas;
         this.ctx = canvasContext;
         this.levelTextureManager = new LevelTextureManager();
-        this.textureSheet = new Image();
-        this.textureSheet.src = LevelTileSheet;
-
+        
         this.setTileSize();
         this.setTileContainer(setPlayerPosition);
+        
+        this.loadingHandler = new Promise((resolve) => {
+            this.textureSheet = new Image();
+            this.textureSheet.src = LevelTileSheet;
+            this.textureSheet.onload = () => resolve()
+        })
     }
 
     setTileSize() {

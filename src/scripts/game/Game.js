@@ -20,7 +20,9 @@ class Game {
         this.player = new Player(this.canvas, this.context, this.level.initialPlayerLocation);
         this.camera = new Camera(this.canvas, this.level, this.player);
         
-        this.startGame(onLoadCallback);
+        this.level.loadingHandler.then(() => {
+            this.startGame(onLoadCallback);
+        })
     }
 
     setCanvas() {
@@ -34,7 +36,7 @@ class Game {
     }
 
     handleResize() {
-        window.clearInterval(this.drawInterval);
+        window.cancelAnimationFrame(this.drawInterval);
 
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
@@ -43,7 +45,7 @@ class Game {
         this.player.resetPosition(this.level.TILE_SIZE);
         this.camera.resetCameraOffset();
 
-        this.drawInterval = setInterval(this.mainDraw, FPS);
+        this.drawInterval = requestAnimationFrame(this.mainDraw);
     }
 
     setControls() {
@@ -71,11 +73,13 @@ class Game {
         this.player.draw(this.level.TILE_SIZE);
 
         this.context.restore();
+
+        requestAnimationFrame(this.mainDraw)
     }
 
     startGame(onLoadCallback) {
         onLoadCallback();
-        this.drawInterval = setInterval(this.mainDraw, FPS);
+        this.drawInterval = requestAnimationFrame(this.mainDraw);
     }
 }
 

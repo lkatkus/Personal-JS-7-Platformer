@@ -8,10 +8,6 @@ const TILESHEET_COLS = 20;
 const TILESHEET_SPRITE = TILESHEET_WIDTH / TILESHEET_COLS;
 
 class LevelTextureManager {
-    constructor() {
-        console.log('LevelTextureManager constructor');
-    }
-
     getTexture(type) {
         const adjustedType = type - 1;
         const sourceRow = Math.floor(adjustedType / TILESHEET_COLS);

@@ -3,7 +3,6 @@
 
 * {
     box-sizing: border-box;
-    transition-duration: 0.2s;
 }
 
 body {
@@ -73,7 +72,7 @@ body {
         position: relative;
         display: flex;
         flex-direction: column;
-        transition-duration: 0.2s;
+        transition-duration: 0.3s;
     
         &.open {
             left: 0;
@@ -119,6 +118,7 @@ body {
         flex: 1;
         display: flex;
         flex-direction: column;
+        transition-duration: 0.3s;
         
         #contentCloseButton {
             & > * {

@@ -39,6 +39,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
+                // TODO configure MiniCssExtractPlugin to optimize css loading
                 use:  [ 'style-loader', MiniCssExtractPlugin.loader, 'css-loader' ]
             }
         ],

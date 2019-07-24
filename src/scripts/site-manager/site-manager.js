@@ -60,6 +60,7 @@ class SiteManager {
     startGame() {
         if (!this.game) {
             this.game = new Game(this.onLoadGame);
+            this.startGameButton.innerHTML = 'Loading...'
         }
     }
     
