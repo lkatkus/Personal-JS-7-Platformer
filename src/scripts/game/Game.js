@@ -69,7 +69,7 @@ class Game {
         this.context.save();
         this.context.translate(this.camera.offsetX, this.camera.offsetY);
 
-        this.level.draw();
+        this.level.draw(this.camera.offsetX, this.camera.offsetY);
         this.player.draw(this.level.TILE_SIZE);
 
         this.context.restore();

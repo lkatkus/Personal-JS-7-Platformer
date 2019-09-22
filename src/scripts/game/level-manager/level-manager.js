@@ -13,7 +13,7 @@ import LevelTileSheet from './../../../assets/textures/level-tile-sheet.png'
 class LevelManager {
     constructor(canvas, canvasContext, setPlayerPosition) {
         this.canvas = canvas;
-        this.ctx = canvasContext;
+        this.context = canvasContext;
         this.levelTextureManager = new LevelTextureManager();
         
         this.setTileSize();
@@ -33,6 +33,10 @@ class LevelManager {
         } else {
             this.TILE_SIZE = Math.ceil(this.canvas.height / TILES_PER_ROW);
         }
+
+        this.colsOnScreen = Math.floor(this.canvas.width / this.TILE_SIZE);
+        this.rowsOnScreen = Math.floor(this.canvas.height / this.TILE_SIZE);
+
     }
 
     resetTileSize() {
@@ -41,6 +45,9 @@ class LevelManager {
         } else {
             this.TILE_SIZE = Math.ceil(this.canvas.height / TILES_PER_ROW);
         }
+
+        this.colsOnScreen = Math.floor(this.canvas.width / this.TILE_SIZE);
+        this.rowsOnScreen = Math.floor(this.canvas.height / this.TILE_SIZE);
 
         this.tileContainer.forEach((tileRow) => {
             tileRow.forEach((tile) => {
@@ -74,25 +81,63 @@ class LevelManager {
         ));
     }
 
-    draw() {       
+    updateVisibleTiles() {
+        let leftCol = Math.floor(this.cameraOffsetX / this.TILE_SIZE) - 2;
+        if (leftCol < 0) {
+            leftCol = 0
+        }
+
+        let rightCol = leftCol + this.colsOnScreen + 4;
+        if (rightCol > LEVEL_LAYOUT[0].length) {
+            rightCol = LEVEL_LAYOUT[0].length
+        }
+
+        let topRow = Math.floor(this.cameraOffsetY / this.TILE_SIZE) - 2;
+        if (topRow < 0) {
+            topRow = 0
+        }
+
+        let bottomRow = topRow + this.rowsOnScreen + 4;
+        if (bottomRow > LEVEL_LAYOUT.length) {
+            bottomRow = LEVEL_LAYOUT.length
+        }
+
+        this.visibleLeftCol = leftCol;
+        this.visibleRightCol = rightCol;
+        this.visibleTopRow = topRow;
+        this.visibleBottomRow = bottomRow;
+    }
+
+    draw(newOffsetX, newOffsetY) {       
+        if (this.cameraOffsetX !== newOffsetX || this.cameraOffsetY !== newOffsetY) {
+            this.cameraOffsetX = -newOffsetX;
+            this.cameraOffsetY = -newOffsetY;
+
+            this.updateVisibleTiles();
+        }
+
         this.drawTiles();
     }
 
     drawTiles() {
-        this.tileContainer.map((tileRow) => {
-            tileRow.map((tile) => {
-                this.ctx.drawImage(
-                    this.textureSheet,
-                    tile.texture.x,
-                    tile.texture.y,
-                    TILESHEET_SPRITE_SIZE,
-                    TILESHEET_SPRITE_SIZE,
-                    tile.x,
-                    tile.y,
-                    tile.width,
-                    tile.height
-                );
-            })
+        this.tileContainer.forEach((tileRow, rowIndex) => {
+            if (rowIndex > this.visibleTopRow && rowIndex < this.visibleBottomRow) {
+                tileRow.forEach((tile, colIndex) => {
+                    if (colIndex > this.visibleLeftCol && colIndex < this.visibleRightCol) {
+                        this.context.drawImage(
+                            this.textureSheet,
+                            tile.texture.x,
+                            tile.texture.y,
+                            TILESHEET_SPRITE_SIZE,
+                            TILESHEET_SPRITE_SIZE,
+                            tile.x,
+                            tile.y,
+                            tile.width,
+                            tile.height
+                        );
+                    }
+                })
+            }
         });
     }
 }
