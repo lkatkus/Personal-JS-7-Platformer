@@ -1,6 +1,6 @@
 import LevelManager from './level-manager/level-manager';
 import Camera from './camera';
-import Player from './Player';
+import Player from './player';
 
 import {
     FPS,
@@ -15,14 +15,17 @@ class Game {
 
         this.setCanvas();
         this.setControls();
-        
+
         this.level = new LevelManager(this.canvas, this.context, this.setPlayerPosition);
         this.player = new Player(this.canvas, this.context, this.level.initialPlayerLocation);
         this.camera = new Camera(this.canvas, this.level, this.player);
-        
-        this.level.loadingHandler.then(() => {
+
+        Promise.all([
+            this.level.loadingHandler,
+            this.player.loadingHandler
+        ]).then(() => {
             this.startGame(onLoadCallback);
-        })
+        });
     }
 
     setCanvas() {
@@ -51,11 +54,13 @@ class Game {
     setControls() {
         document.addEventListener('keydown', (event) => {
             if (MOVEMENT_KEY_CODES.includes(event.keyCode)) {
-                if (event.key.includes('Arrow')) {
-                    return this.player.move(MOVEMENT_KEYS[event.key], this.level.TILE_SIZE);
-                }
-                
-                this.player.move(MOVEMENT_KEYS[`Arrow${event.key}`]);
+                this.player.moveStart(MOVEMENT_KEYS[event.key]);
+            }
+        });
+
+        document.addEventListener('keyup', (event) => {
+            if (MOVEMENT_KEY_CODES.includes(event.keyCode)) {
+                this.player.moveEnd(MOVEMENT_KEYS[event.key]);
             }
         });
 
@@ -74,7 +79,7 @@ class Game {
 
         this.context.restore();
 
-        requestAnimationFrame(this.mainDraw)
+        requestAnimationFrame(this.mainDraw);
     }
 
     startGame(onLoadCallback) {

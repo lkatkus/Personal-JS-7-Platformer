@@ -1,4 +1,4 @@
-import Game from './../game/Game';
+import Game from './../game/game';
 
 class SiteManager {
     constructor() {
@@ -15,13 +15,13 @@ class SiteManager {
         this.sideBarList = document.querySelectorAll('.sidebarLink');
         this.contentCloseButton = document.getElementById('contentCloseButton');
         this.startGameButton = document.getElementById('startGameButton');
-        
+
         this.sideBarOpen = false;
         this.contentWrapperOpen = false;
         this.contentWrapper.className = 'closed';
         this.currentContentTab = null;
         this.game = null;
-        
+
         this.setListeners();
     }
 
@@ -60,12 +60,11 @@ class SiteManager {
     startGame() {
         if (!this.game) {
             this.game = new Game(this.onLoadGame);
-            this.startGameButton.innerHTML = 'Loading...'
+            this.startGameButton.innerHTML = 'Loading...';
         }
     }
-    
+
     onLoadGame() {
-        console.log('GAME LOADED!');
         this.titleWrapper.className = 'hidden';
         this.canvasWrapper.className = null;
     }
@@ -77,7 +76,7 @@ class SiteManager {
 
         this.sideBarCloseButton.addEventListener('click', () => {
             this.closeSideBar();
-            
+
             if (this.contentWrapperOpen) {
                 this.closeContentWrapper();
             }
@@ -86,7 +85,7 @@ class SiteManager {
         this.contentCloseButton.addEventListener('click', () => {
             this.closeContentWrapper();
         });
-        
+
         // Array.from required for IE
         Array.from(this.sideBarList).forEach((element) => {
             element.addEventListener('click', () => {

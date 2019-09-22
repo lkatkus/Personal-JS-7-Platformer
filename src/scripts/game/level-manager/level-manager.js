@@ -8,22 +8,22 @@ import {
     TILESHEET_SPRITE_SIZE,
 } from './constants';
 
-import LevelTileSheet from './../../../assets/textures/level-tile-sheet.png'
+import LevelTileSheet from './../../../assets/textures/level-tile-sheet.png';
 
 class LevelManager {
     constructor(canvas, canvasContext, setPlayerPosition) {
         this.canvas = canvas;
         this.context = canvasContext;
         this.levelTextureManager = new LevelTextureManager();
-        
+
         this.setTileSize();
         this.setTileContainer(setPlayerPosition);
-        
+
         this.loadingHandler = new Promise((resolve) => {
             this.textureSheet = new Image();
             this.textureSheet.src = LevelTileSheet;
-            this.textureSheet.onload = () => resolve()
-        })
+            this.textureSheet.onload = () => resolve();
+        });
     }
 
     setTileSize() {
@@ -68,7 +68,7 @@ class LevelManager {
                         row: row,
                         spawnX: col * this.TILE_SIZE,
                         spawnY: row * this.TILE_SIZE,
-                    }
+                    };
                 }
 
                 return new LevelTile(
@@ -84,22 +84,22 @@ class LevelManager {
     updateVisibleTiles() {
         let leftCol = Math.floor(this.cameraOffsetX / this.TILE_SIZE) - 2;
         if (leftCol < 0) {
-            leftCol = 0
+            leftCol = 0;
         }
 
         let rightCol = leftCol + this.colsOnScreen + 4;
         if (rightCol > LEVEL_LAYOUT[0].length) {
-            rightCol = LEVEL_LAYOUT[0].length
+            rightCol = LEVEL_LAYOUT[0].length;
         }
 
         let topRow = Math.floor(this.cameraOffsetY / this.TILE_SIZE) - 2;
         if (topRow < 0) {
-            topRow = 0
+            topRow = 0;
         }
 
         let bottomRow = topRow + this.rowsOnScreen + 4;
         if (bottomRow > LEVEL_LAYOUT.length) {
-            bottomRow = LEVEL_LAYOUT.length
+            bottomRow = LEVEL_LAYOUT.length;
         }
 
         this.visibleLeftCol = leftCol;
@@ -108,7 +108,7 @@ class LevelManager {
         this.visibleBottomRow = bottomRow;
     }
 
-    draw(newOffsetX, newOffsetY) {       
+    draw(newOffsetX, newOffsetY) {
         if (this.cameraOffsetX !== newOffsetX || this.cameraOffsetY !== newOffsetY) {
             this.cameraOffsetX = -newOffsetX;
             this.cameraOffsetY = -newOffsetY;
@@ -136,7 +136,7 @@ class LevelManager {
                             tile.height
                         );
                     }
-                })
+                });
             }
         });
     }
