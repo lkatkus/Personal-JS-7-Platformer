@@ -1,4 +1,5 @@
 import LevelManager from './level-manager/level-manager';
+import EventManager from './event-manager/event-manager';
 import Camera from './camera';
 import Player from './player';
 
@@ -17,6 +18,7 @@ class Game {
         this.setControls();
 
         this.level = new LevelManager(this.canvas, this.context, this.setPlayerPosition);
+        this.eventManager = new EventManager();
         this.player = new Player(this.canvas, this.context, this.level.initialPlayerLocation);
         this.camera = new Camera(this.canvas, this.level, this.player);
 
@@ -80,6 +82,8 @@ class Game {
         this.context.restore();
 
         requestAnimationFrame(this.mainDraw);
+
+        this.eventManager.checkEvent(this.player.row, this.player.col);
     }
 
     startGame(onLoadCallback) {

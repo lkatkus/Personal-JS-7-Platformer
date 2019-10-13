@@ -19,6 +19,9 @@ class SiteManager {
         this.sideBarOpen = false;
         this.contentWrapperOpen = false;
         this.contentWrapper.className = 'closed';
+        this.contentWrapper.style.animationDuration = '0.2s';
+        this.sideBarWrapper.style.animationDuration = '0.2s';
+
         this.currentContentTab = null;
         this.game = null;
 
@@ -26,20 +29,31 @@ class SiteManager {
     }
 
     openSideBar() {
-        this.sideBarWrapper.className = 'open';
+        this.sideBarWrapper.className = 'opening';
+
+        setTimeout(() => {
+            this.sideBarWrapper.className = 'open';
+        }, 200);
     }
 
     closeSideBar() {
-        this.sideBarWrapper.className = 'closed';
+        this.sideBarWrapper.className = 'closing';
+
+        setTimeout(() => {
+            this.sideBarWrapper.className = 'closed';
+        }, 200);
     }
 
     toggleContentWrapper(nextTab) {
         if (!this.contentWrapperOpen && !this.currentContentTab) {
             this.currentContentTab = nextTab;
-            this.contentWrapper.className = 'open';
+            this.contentWrapper.className = 'opening';
             document.getElementById(nextTab).className = 'open';
 
-            this.contentWrapperOpen = !this.contentWrapperOpen;
+            setTimeout(() => {
+                this.contentWrapper.className = 'open';
+                this.contentWrapperOpen = !this.contentWrapperOpen;
+            }, 200);
         } else if (this.contentWrapperOpen) {
             if (this.currentContentTab !== nextTab) {
                 document.getElementById(this.currentContentTab).className = 'closed';
@@ -52,9 +66,13 @@ class SiteManager {
 
     closeContentWrapper() {
         document.getElementById(this.currentContentTab).className = 'closed';
-        this.contentWrapper.className = 'closed';
-        this.contentWrapperOpen = false;
-        this.currentContentTab = null;
+        this.contentWrapper.className = 'closing';
+
+        setTimeout(() => {
+            this.contentWrapper.className = 'closed';
+            this.contentWrapperOpen = false;
+            this.currentContentTab = null;
+        }, 200);
     }
 
     startGame() {

@@ -68,16 +68,48 @@ body {
         display: flex;
     }
 
+    @keyframes sideBarOpen {
+        0% {
+            left: -100%;
+            opacity: 0;
+        }
+        100% {
+            left: 0;
+            opacity: 1;
+        }
+    }
+
+    @keyframes sideBarClosed {
+        0% {
+            left: 0;
+            opacity: 1;
+        }
+        100% {
+            left: -100%;
+            opacity: 0;
+        }
+    }
+
+
     #sideBarWrapper {
         position: relative;
         display: flex;
         flex-direction: column;
-        transition-duration: 0.3s;
+        animation-duration: 0.2s;
+        animation-iteration-count: 1;
+    
+        &.opening {
+            animation-name: sideBarOpen;
+        }
     
         &.open {
             left: 0;
         }
-    
+
+        &.closing {
+            animation-name: sideBarClosed;
+        }
+
         &.closed {
             left: -100%;
         }
@@ -118,7 +150,7 @@ body {
         flex: 1;
         display: flex;
         flex-direction: column;
-        transition-duration: 0.3s;
+        animation-iteration-count: 1;
         
         #contentCloseButton {
             & > * {
@@ -142,14 +174,45 @@ body {
             }
         }
     
+        @keyframes contentOpen {
+            0% {
+                left: 100%;
+                opacity: 0;
+            }
+            100% {
+                left: 0;
+                opacity: 1;
+            }
+        }
+    
+        @keyframes contentClosed {
+            0% {
+                left: 0;
+                opacity: 1;
+            }
+            100% {
+                left: 100%;
+                opacity: 0;
+            }
+        }
+
+        &.opening {
+            animation-name: contentOpen;
+        }
+    
         &.open {
             left: 0;
         }
-    
+
+        &.closing {
+            animation-name: contentClosed;
+        }
+
+            
         &.closed {
             left: 100%;
         }
-    
+
         @media screen and (max-width: $break-small) {
             position: absolute;
             top: 0;
@@ -157,5 +220,26 @@ body {
             width: 100%;
             height: 100%;
         }
+    }
+}
+
+#textBoxContainer {
+    padding: 50px;
+    width: 100%;
+    position: absolute;
+    
+    &.closed {
+        display: none;
+    }
+
+    &.open {
+        display: block;
+    }
+    
+    #textBox {
+        padding: 20px;
+        background-color: rgba(0,0,0,0.5);
+        border: 3px solid white;
+        color: white;
     }
 }

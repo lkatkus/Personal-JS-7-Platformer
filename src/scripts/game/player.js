@@ -43,11 +43,10 @@ class Player {
     }
 
     move(tileSize) {
-        // TODO use consts
-        // TODO update row and col
-        this.col = Math.floor(this.x / tileSize);
+        this.row = Math.floor(this.y / tileSize);
         this.col = Math.floor(this.x / tileSize);
 
+        // TODO use consts for direction
         switch(this.direction){
             case('right'):
                 this.tileRowOffset = 0;
