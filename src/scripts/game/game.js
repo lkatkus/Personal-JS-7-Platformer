@@ -1,13 +1,7 @@
 import LevelManager from './level-manager/level-manager';
 import EventManager from './event-manager/event-manager';
 import Camera from './camera';
-import Player from './player';
-
-import {
-    FPS,
-    MOVEMENT_KEYS,
-    MOVEMENT_KEY_CODES,
-} from './constants';
+import { Player, Npc } from './entity';
 
 class Game {
     constructor(onLoadCallback) {
@@ -15,16 +9,18 @@ class Game {
         this.handleResize = this.handleResize.bind(this);
 
         this.setCanvas();
-        this.setControls();
 
         this.level = new LevelManager(this.canvas, this.context, this.setPlayerPosition);
         this.eventManager = new EventManager();
-        this.player = new Player(this.canvas, this.context, this.level.initialPlayerLocation);
+        this.player = new Player(this.canvas, this.context, 'player', this.level.initialPlayerLocation);
         this.camera = new Camera(this.canvas, this.level, this.player);
+        // TODO create npc manager
+        this.npc = new Npc(this.canvas, this.context, 'npc', this.level.initialPlayerLocation);
 
         Promise.all([
             this.level.loadingHandler,
             this.player.loadingHandler
+            // TODO npc loading handler
         ]).then(() => {
             this.startGame(onLoadCallback);
         });
@@ -48,25 +44,11 @@ class Game {
 
         this.level.resetTileSize();
         this.player.resetPosition(this.level.TILE_SIZE);
+        // TODO create npc manager
+        this.npc.resetPosition(this.level.TILE_SIZE);
         this.camera.resetCameraOffset();
 
-        this.drawInterval = requestAnimationFrame(this.mainDraw);
-    }
-
-    setControls() {
-        document.addEventListener('keydown', (event) => {
-            if (MOVEMENT_KEY_CODES.includes(event.keyCode)) {
-                this.player.moveStart(MOVEMENT_KEYS[event.key]);
-            }
-        });
-
-        document.addEventListener('keyup', (event) => {
-            if (MOVEMENT_KEY_CODES.includes(event.keyCode)) {
-                this.player.moveEnd(MOVEMENT_KEYS[event.key]);
-            }
-        });
-
-        // TODO add touch event listeners
+        window.requestAnimationFrame(this.mainDraw);
     }
 
     mainDraw() {
@@ -77,18 +59,19 @@ class Game {
         this.context.translate(this.camera.offsetX, this.camera.offsetY);
 
         this.level.draw(this.camera.offsetX, this.camera.offsetY);
+        // TODO create npc manager
+        this.npc.draw(this.level.TILE_SIZE);
         this.player.draw(this.level.TILE_SIZE);
 
         this.context.restore();
 
-        requestAnimationFrame(this.mainDraw);
-
+        this.drawInterval = window.requestAnimationFrame(this.mainDraw);
         this.eventManager.checkEvent(this.player.row, this.player.col);
     }
 
     startGame(onLoadCallback) {
         onLoadCallback();
-        this.drawInterval = requestAnimationFrame(this.mainDraw);
+        window.requestAnimationFrame(this.mainDraw);
     }
 }
 
