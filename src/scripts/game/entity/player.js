@@ -7,8 +7,6 @@ import {
   MOVEMENT_DIRECTION
 } from './../constants';
 
-const CAN_BE_CLIMBED = [21, 22, 23];
-
 class Player extends Entity {
   constructor(canvas, canvasContext, name, initialPlayerLocation, level) {
     super(
@@ -42,6 +40,36 @@ class Player extends Entity {
   updateAnchor(tileSize) {
     this.anchorX = this.x + tileSize / 2;
     this.anchorY = this.y + tileSize;
+  }
+
+  checkFalling(tileSize) {
+    const anchorCol = Math.floor(this.anchorX / tileSize);
+    const tileBelow = this.level.getTile(this.row + 1, anchorCol);
+
+    if (!this.level.canWalkTile(tileBelow.type)) {
+      this.isFalling = true;
+    }
+  }
+
+  fall(tileSize) {
+    let nextRow;
+    let nextCol;
+    let nextTile;
+
+    nextRow = Math.floor((this.y + tileSize + 10) / tileSize);
+    nextCol = Math.floor(this.anchorX / tileSize);
+    nextTile = this.level.getTile(nextRow, nextCol);
+
+    if (!this.level.canWalkTile(nextTile.type)) {
+      /** @todo add some sort acceleration, when falling */
+      this.y = this.y + tileSize / 8;
+    } else {
+      this.isFalling = false;
+      this.row = nextTile.row - 1;
+      this.y = nextTile.y - nextTile.height;
+    }
+
+    this.updateAnchor(tileSize);
   }
 
   move(tileSize) {
@@ -88,20 +116,20 @@ class Player extends Entity {
 
         break;
       case MOVEMENT_DIRECTION.up:
-        if (CAN_BE_CLIMBED.includes(nextTile.type)) {
+        if (this.level.canClimbTile(nextTile.type)) {
           this.row = nextTile.row;
           this.y = this.y - this.speedY;
-        } else if (!CAN_BE_CLIMBED.includes(nextTile.type)) {
+        } else {
           this.row = nextTile.row;
           this.y = nextTile.y;
         }
 
         break;
       case MOVEMENT_DIRECTION.down:
-        if (CAN_BE_CLIMBED.includes(nextTile.type)) {
+        if (this.level.canClimbTile(nextTile.type)) {
           this.row = nextTile.row - 1;
           this.y = this.y + this.speedY;
-        } else if (!CAN_BE_CLIMBED.includes(nextTile.type)) {
+        } else {
           this.row = nextTile.row - 1;
           this.y = nextTile.y - nextTile.height;
         }
@@ -110,6 +138,7 @@ class Player extends Entity {
     }
 
     this.updateAnchor(tileSize);
+    this.checkFalling(tileSize);
   }
 
   moveStart(direction) {

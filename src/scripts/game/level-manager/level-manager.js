@@ -2,6 +2,8 @@ import LevelTextureManager from './level-texture-manager';
 import LevelTile from './level-tile';
 
 import {
+  TILES_SOLID,
+  TILES_CLIMBABLE,
   SPAWN_MARKER,
   LEVEL_LAYOUT,
   TILES_PER_ROW,
@@ -149,6 +151,14 @@ class LevelManager {
 
   getTile(row, col) {
     return this.tileContainer[row][col];
+  }
+
+  canClimbTile(type) {
+    return TILES_CLIMBABLE.includes(type);
+  }
+
+  canWalkTile(type) {
+    return TILES_SOLID.includes(type);
   }
 }
 

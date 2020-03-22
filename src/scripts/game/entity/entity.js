@@ -40,6 +40,8 @@ class Entity {
 
   draw(tileSize) {
     this.isMoving && this.move(tileSize);
+    this.isFalling && this.fall(tileSize);
+
     this.context.drawImage(
       this.textureSheet,
       100 * this.tileColOffset,
