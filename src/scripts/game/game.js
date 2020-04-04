@@ -3,6 +3,9 @@ import EventManager from './event-manager/event-manager';
 import Camera from './camera';
 import { Player, Npc } from './entity';
 
+import NpcCatTexture from './../../assets/textures/npc-cat-tileSheet.png';
+import PlayerTexture from './../../assets/textures/player-tile-sheet.png';
+
 class Game {
   constructor(onLoadCallback) {
     this.mainDraw = this.mainDraw.bind(this);
@@ -16,22 +19,47 @@ class Game {
       this.setPlayerPosition
     );
     this.eventManager = new EventManager();
-    this.player = new Player(
-      this.canvas,
-      this.context,
-      'player',
-      this.level.initialPlayerLocation,
-      this.level
-    );
-    this.camera = new Camera(this.canvas, this.level, this.player);
+    this.player = new Player(this.context, this.level, {
+      name: 'player',
+      movement: {
+        speedX: 8,
+        speedY: 8,
+      },
+      texture: {
+        source: PlayerTexture,
+        height: 200,
+        width: 100,
+        tileCols: 8,
+        drawOffset: 1,
+        drawHeightOffset: 2
+      }
+    });
     // TODO create npc manager
-    this.npc = new Npc(
-      this.canvas,
-      this.context,
-      'npc',
-      this.level.initialPlayerLocation,
-      this.level
-    );
+    this.npc = new Npc(this.context, this.level, {
+      name: 'cat',
+      movement: {
+        speedX: 10,
+        speedY: 8,
+      },
+      texture: {
+        source: NpcCatTexture,
+        height: 64,
+        width: 64,
+        tileCols: 3,
+        drawOffset: 0,
+        drawHeightOffset: 1
+      },
+      min: {
+        row: 33,
+        col: 12
+      },
+      max: {
+        row: 33,
+        col: 24
+      }
+    });
+
+    this.camera = new Camera(this.canvas, this.level, this.player);
 
     Promise.all([
       this.level.loadingHandler,
@@ -82,7 +110,13 @@ class Game {
     this.context.fillStyle = 'red';
     this.context.beginPath();
     this.context.arc(this.player.x, this.player.y, 5, 0, 2 * Math.PI);
-    this.context.arc(this.player.anchorX, this.player.anchorY, 5, 0, 2 * Math.PI);
+    this.context.arc(
+      this.player.anchorX,
+      this.player.anchorY,
+      5,
+      0,
+      2 * Math.PI
+    );
     this.context.fill();
   }
 

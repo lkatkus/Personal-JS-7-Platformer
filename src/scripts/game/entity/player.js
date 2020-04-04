@@ -1,5 +1,4 @@
 import Entity from './entity';
-import PlayerTileSheet from './../../../assets/textures/player-tile-sheet.png';
 
 import {
   MOVEMENT_KEYS,
@@ -8,14 +7,12 @@ import {
 } from './../constants';
 
 class Player extends Entity {
-  constructor(canvas, canvasContext, name, initialPlayerLocation, level) {
+  constructor(canvasContext, level, config) {
     super(
-      canvas,
       canvasContext,
-      name,
-      initialPlayerLocation,
-      PlayerTileSheet,
-      level
+      level,
+      level.initialPlayerLocation,
+      config
     );
 
     this.setControls();

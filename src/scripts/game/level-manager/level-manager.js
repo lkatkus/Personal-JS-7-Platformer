@@ -67,8 +67,8 @@ class LevelManager {
           this.initialPlayerLocation = {
             col: col,
             row: row,
-            spawnX: col * this.TILE_SIZE,
-            spawnY: row * this.TILE_SIZE
+            x: col * this.TILE_SIZE,
+            y: row * this.TILE_SIZE
           };
         }
 

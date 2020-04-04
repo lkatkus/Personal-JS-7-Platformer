@@ -60,5 +60,14 @@ export const EVENT_CONFIG = [
       'Autocad, Archicad, 3DS MAX, Photoshop, Illustrator, Nikon, Aperture, Bokeh and etc. Lots of fancy words, huh?'
     ),
     onLeave: onLeaveCallback
+  },
+  {
+    id: 'catSpeak',
+    row: [33, 33],
+    col: [13, 24],
+    eventHandler: updateTextBox(
+      'Meow!'
+    ),
+    onLeave: onLeaveCallback
   }
 ];
