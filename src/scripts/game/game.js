@@ -7,7 +7,7 @@ import NpcCatTexture from './../../assets/textures/npc-cat-tileSheet.png';
 import PlayerTexture from './../../assets/textures/player-tile-sheet.png';
 
 class Game {
-  constructor(onLoadCallback) {
+  constructor(onLoadCallback, siteActions) {
     this.mainDraw = this.mainDraw.bind(this);
     this.handleResize = this.handleResize.bind(this);
 
@@ -18,7 +18,7 @@ class Game {
       this.context,
       this.setPlayerPosition
     );
-    this.eventManager = new EventManager();
+    this.eventManager = new EventManager(siteActions);
     this.player = new Player(this.context, this.level, {
       name: 'player',
       movement: {

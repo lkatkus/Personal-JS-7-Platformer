@@ -2,26 +2,26 @@
 @import './common/grid';
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
+  margin: 0;
 }
 
 #canvasWrapper {
-    #sceneCanvas {
-        background-color: skyblue;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
+  #sceneCanvas {
+    background-color: skyblue;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 
-    &.hidden {
-        display: none;
-    }
+  &.hidden {
+    display: none;
+  }
 }
 
 #debugContainer {
@@ -34,221 +34,248 @@ body {
 }
 
 #titleWrapper {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    &.hidden {
-        display: none;
-    }
+  &.hidden {
+    display: none;
+  }
 
-    #startGameButton {
-        cursor: pointer;
-        border: 1px solid red;
-        border-radius: 5px;
-        padding: $spacer;
-    }
+  #startGameButton {
+    cursor: pointer;
+    border: 1px solid red;
+    border-radius: 5px;
+    padding: $spacer;
+  }
 }
 
 #contentContainer {
-    position: fixed;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  #sideBarOpenButton {
+    cursor: pointer;
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    
-    #sideBarOpenButton {
-        cursor: pointer;
-        position: absolute;
-        top: 0;
-        left: 0;
 
-        & > * {
-            padding: $spacer;
-        }
+    & > * {
+      padding: $spacer;
     }
+  }
 
-    @media screen and (min-width: $break-small) {
-        display: flex;
+  @media screen and (min-width: $break-small) {
+    display: flex;
+  }
+
+  @keyframes sideBarOpen {
+    0% {
+      left: -100%;
+      opacity: 0;
     }
-
-    @keyframes sideBarOpen {
-        0% {
-            left: -100%;
-            opacity: 0;
-        }
-        100% {
-            left: 0;
-            opacity: 1;
-        }
+    100% {
+      left: 0;
+      opacity: 1;
     }
+  }
 
-    @keyframes sideBarClosed {
-        0% {
-            left: 0;
-            opacity: 1;
-        }
-        100% {
-            left: -100%;
-            opacity: 0;
-        }
+  @keyframes sideBarClosed {
+    0% {
+      left: 0;
+      opacity: 1;
     }
-
-
-    #sideBarWrapper {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        animation-duration: 0.2s;
-        animation-iteration-count: 1;
-    
-        &.opening {
-            animation-name: sideBarOpen;
-        }
-    
-        &.open {
-            left: 0;
-        }
-
-        &.closing {
-            animation-name: sideBarClosed;
-        }
-
-        &.closed {
-            left: -100%;
-        }
-        
-        #sideBarCloseButton {
-            display: flex;
-            justify-content: flex-end;
-            background-color: $grey-light;
-            
-            & > * {
-                cursor: pointer;
-                padding: $spacer;
-            }
-        }
-        
-        #sideBar {
-            flex: 1;
-            position: relative;
-            background-color: $grey-light;
-    
-            #sideBarList {
-                & > * {
-                    padding: $spacer $spacer-double;
-                    cursor: pointer;
-                }
-            }
-        }
-    
-        @media screen and (max-width: $break-small) {
-            width: 100%;
-            height: 100%;
-        }
+    100% {
+      left: -100%;
+      opacity: 0;
     }
+  }
 
-    #contentWrapper {
-        background-color: $grey-light;
-        position: relative;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        animation-iteration-count: 1;
-        
-        #contentCloseButton {
-            & > * {
-                padding: $spacer;
-                cursor: pointer;
-            }
-        }
-    
-        #content {
-            overflow-y: auto;
-            padding: $spacer;
-    
-            & > * {
-                &.open {
-                    display: unset;
-                }
-    
-                &.closed {
-                    display: none;
-                }
-            }
-        }
-    
-        @keyframes contentOpen {
-            0% {
-                left: 100%;
-                opacity: 0;
-            }
-            100% {
-                left: 0;
-                opacity: 1;
-            }
-        }
-    
-        @keyframes contentClosed {
-            0% {
-                left: 0;
-                opacity: 1;
-            }
-            100% {
-                left: 100%;
-                opacity: 0;
-            }
-        }
+  #sideBarWrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    animation-duration: 0.2s;
+    animation-iteration-count: 1;
 
-        &.opening {
-            animation-name: contentOpen;
-        }
-    
-        &.open {
-            left: 0;
-        }
-
-        &.closing {
-            animation-name: contentClosed;
-        }
-
-            
-        &.closed {
-            left: 100%;
-        }
-
-        @media screen and (max-width: $break-small) {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-    }
-}
-
-#textBoxContainer {
-    padding: 50px;
-    width: 100%;
-    position: absolute;
-    
-    &.closed {
-        display: none;
+    &.opening {
+      animation-name: sideBarOpen;
     }
 
     &.open {
-        display: block;
+      left: 0;
     }
-    
+
+    &.closing {
+      animation-name: sideBarClosed;
+    }
+
+    &.closed {
+      left: -100%;
+    }
+
+    #sideBarCloseButton {
+      display: flex;
+      justify-content: flex-end;
+      background-color: $grey-light;
+
+      & > * {
+        cursor: pointer;
+        padding: $spacer;
+      }
+    }
+
+    #sideBar {
+      flex: 1;
+      position: relative;
+      background-color: $grey-light;
+
+      #sideBarList {
+        & > * {
+          padding: $spacer $spacer-double;
+          cursor: pointer;
+        }
+      }
+    }
+
+    @media screen and (max-width: $break-small) {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  #contentWrapper {
+    background-color: $grey-light;
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    animation-iteration-count: 1;
+
+    #contentCloseButton {
+      & > * {
+        padding: $spacer;
+        cursor: pointer;
+      }
+    }
+
+    #content {
+      overflow-y: auto;
+      padding: $spacer;
+
+      & > * {
+        &.open {
+          display: unset;
+        }
+
+        &.closed {
+          display: none;
+        }
+      }
+    }
+
+    @keyframes contentOpen {
+      0% {
+        left: 100%;
+        opacity: 0;
+      }
+      100% {
+        left: 0;
+        opacity: 1;
+      }
+    }
+
+    @keyframes contentClosed {
+      0% {
+        left: 0;
+        opacity: 1;
+      }
+      100% {
+        left: 100%;
+        opacity: 0;
+      }
+    }
+
+    &.opening {
+      animation-name: contentOpen;
+    }
+
+    &.open {
+      left: 0;
+    }
+
+    &.closing {
+      animation-name: contentClosed;
+    }
+
+    &.closed {
+      left: 100%;
+    }
+
+    @media screen and (max-width: $break-small) {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+#textBoxWrapper {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  padding: 0 50px;
+  flex-direction: column;
+  align-items: flex-end;
+
+  &.closed {
+    display: none;
+  }
+
+  &.open {
+    display: flex;
+  }
+
+  #textBoxContainer {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 4px solid white;
+    color: white;
+    display: flex;
+    width: 100%;
+
+    #textBoxImage {
+      @media screen and (max-width: $break-small) {
+        display: none;
+      }
+    }
+
     #textBox {
-        padding: 20px;
-        background-color: rgba(0,0,0,0.5);
-        border: 3px solid white;
-        color: white;
+      flex: auto;
+      padding: 20px;
     }
+  }
+
+  #textBoxButton {
+    display: none;
+    cursor: pointer;
+    margin-top: 10px;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    background-color: white;
+
+    &.visible {
+      display: block;
+    }
+  }
 }
