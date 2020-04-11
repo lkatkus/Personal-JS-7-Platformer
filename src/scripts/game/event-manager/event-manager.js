@@ -4,27 +4,30 @@ import workerImage from './../../../assets/textures/animation-worker.gif';
 import { getEventConfig } from './constants';
 
 class EventManager {
-  constructor(siteActions) {
-    this.events = getEventConfig(siteActions, {
-      player: playerImage,
-      cat: catImage,
-      worker: workerImage
-    });
+  constructor(gameActions, siteActions) {
+    this.events = getEventConfig(
+      { gameActions, siteActions },
+      {
+        player: playerImage,
+        cat: catImage,
+        worker: workerImage
+      }
+    );
     this.currentEvent = null;
   }
 
-  checkEvent(playerRow, playerCol) {
+  checkEvent(player) {
     const nextEvent = this.events.find(
       event =>
-        playerRow >= event.row[0] &&
-        playerRow <= event.row[1] &&
-        playerCol >= event.col[0] &&
-        playerCol <= event.col[1]
+        player.row >= event.row[0] &&
+        player.row <= event.row[1] &&
+        player.col >= event.col[0] &&
+        player.col <= event.col[1]
     );
 
     if (!this.currentEvent && nextEvent) {
       this.currentEvent = nextEvent;
-      this.currentEvent.eventHandler();
+      this.currentEvent.eventHandler(player);
     } else if (this.currentEvent && nextEvent) {
       if (nextEvent.id !== this.currentEvent.id) {
         this.currentEvent.onLeave();

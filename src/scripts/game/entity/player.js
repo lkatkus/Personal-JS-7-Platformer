@@ -8,12 +8,8 @@ import {
 
 class Player extends Entity {
   constructor(canvasContext, level, config) {
-    super(
-      canvasContext,
-      level,
-      level.initialPlayerLocation,
-      config
-    );
+    super(canvasContext, level, level.initialPlayerLocation, config);
+    this.canFly = false;
 
     this.setControls();
   }
@@ -34,6 +30,24 @@ class Player extends Entity {
     // TODO add touch event listeners
   }
 
+  enableControls() {
+    // TODO
+  }
+
+  disableControls() {
+    // TODO
+  }
+
+  levelUp(newTexture) {
+    const newTextureSheet = new Image();
+    newTextureSheet.src = newTexture;
+
+    this.textureSheet = newTextureSheet;
+    this.canFly = true;
+    this.speedX = 20;
+    this.speedY = 20;
+  }
+
   updateAnchor(tileSize) {
     this.anchorX = this.x + tileSize / 2;
     this.anchorY = this.y + tileSize;
@@ -49,24 +63,26 @@ class Player extends Entity {
   }
 
   fall(tileSize) {
-    let nextRow;
-    let nextCol;
-    let nextTile;
+    if (!this.canFly) {
+      let nextRow;
+      let nextCol;
+      let nextTile;
 
-    nextRow = Math.floor((this.y + tileSize + 10) / tileSize);
-    nextCol = Math.floor(this.anchorX / tileSize);
-    nextTile = this.level.getTile(nextRow, nextCol);
+      nextRow = Math.floor((this.y + tileSize + 10) / tileSize);
+      nextCol = Math.floor(this.anchorX / tileSize);
+      nextTile = this.level.getTile(nextRow, nextCol);
 
-    if (!this.level.canWalkTile(nextTile.type)) {
-      /** @todo add some sort acceleration, when falling */
-      this.y = this.y + tileSize / 8;
-    } else {
-      this.isFalling = false;
-      this.row = nextTile.row - 1;
-      this.y = nextTile.y - nextTile.height;
+      if (!this.level.canWalkTile(nextTile.type)) {
+        /** @todo add some sort acceleration, when falling */
+        this.y = this.y + tileSize / 8;
+      } else {
+        this.isFalling = false;
+        this.row = nextTile.row - 1;
+        this.y = nextTile.y - nextTile.height;
+      }
+
+      this.updateAnchor(tileSize);
     }
-
-    this.updateAnchor(tileSize);
   }
 
   move(tileSize) {
@@ -95,9 +111,13 @@ class Player extends Entity {
 
     nextTile = this.level.getTile(nextRow, nextCol);
 
+    if (nextTile === null) {
+      return;
+    }
+
     switch (this.direction) {
       case MOVEMENT_DIRECTION.right:
-        if (nextTile.type !== -1) {
+        if (nextTile.type !== -1 || this.canFly) {
           this.tileRowOffset = 0;
           this.col = nextTile.col;
           this.x = this.x + this.speedX;
@@ -105,7 +125,7 @@ class Player extends Entity {
 
         break;
       case MOVEMENT_DIRECTION.left:
-        if (nextTile.type !== -1) {
+        if (nextTile.type !== -1 || this.canFly) {
           this.tileRowOffset = 1;
           this.col = nextTile.col;
           this.x = this.x - this.speedX;
@@ -113,7 +133,10 @@ class Player extends Entity {
 
         break;
       case MOVEMENT_DIRECTION.up:
-        if (this.level.canClimbTile(nextTile.type)) {
+        if (this.canFly) {
+          this.row = nextTile.row;
+          this.y = this.y - this.speedY > 0 ? this.y - this.speedY : 0;
+        } else if (this.level.canClimbTile(nextTile.type)) {
           this.row = nextTile.row;
           this.y = this.y - this.speedY;
         } else {
@@ -123,7 +146,10 @@ class Player extends Entity {
 
         break;
       case MOVEMENT_DIRECTION.down:
-        if (this.level.canClimbTile(nextTile.type)) {
+        if (this.canFly) {
+          this.row = nextTile.row - 1;
+          this.y = this.y + this.speedY;
+        } else if (this.level.canClimbTile(nextTile.type)) {
           this.row = nextTile.row - 1;
           this.y = this.y + this.speedY;
         } else {
@@ -135,7 +161,7 @@ class Player extends Entity {
     }
 
     this.updateAnchor(tileSize);
-    this.checkFalling(tileSize);
+    !this.canFly && this.checkFalling(tileSize);
   }
 
   moveStart(direction) {

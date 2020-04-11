@@ -150,6 +150,15 @@ class LevelManager {
   }
 
   getTile(row, col) {
+    if (
+      row < 0 ||
+      row > this.tileContainer.length - 1 ||
+      col < 0 ||
+      col > this.tileContainer[0].length - 1
+    ) {
+      return null;
+    }
+
     return this.tileContainer[row][col];
   }
 

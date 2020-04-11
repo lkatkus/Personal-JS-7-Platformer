@@ -5,6 +5,7 @@ import { Player, Npc } from './entity';
 
 import NpcCatTexture from './../../assets/textures/npc-cat-tileSheet.png';
 import PlayerTexture from './../../assets/textures/player-tile-sheet.png';
+import PlayerTextureLeveled from './../../assets/textures/player-tile-sheet-leveled.png';
 
 class Game {
   constructor(onLoadCallback, siteActions) {
@@ -18,12 +19,11 @@ class Game {
       this.context,
       this.setPlayerPosition
     );
-    this.eventManager = new EventManager(siteActions);
     this.player = new Player(this.context, this.level, {
       name: 'player',
       movement: {
         speedX: 8,
-        speedY: 8,
+        speedY: 8
       },
       texture: {
         source: PlayerTexture,
@@ -39,7 +39,7 @@ class Game {
       name: 'cat',
       movement: {
         speedX: 10,
-        speedY: 8,
+        speedY: 8
       },
       texture: {
         source: NpcCatTexture,
@@ -59,6 +59,14 @@ class Game {
       }
     });
 
+    this.eventManager = new EventManager(
+      {
+        levelUp: () => this.player.levelUp(PlayerTextureLeveled),
+        enableControls: () => this.player.enableControls(),
+        disableControls: () => this.player.disableControls()
+      },
+      siteActions
+    );
     this.camera = new Camera(this.canvas, this.level, this.player);
 
     Promise.all([
@@ -105,6 +113,7 @@ class Game {
       speedX ${this.player.speedX}
       speedY ${this.player.speedY}
       isFalling ${this.player.isFalling}
+      canFly ${this.player.canFly}
     `;
 
     this.context.fillStyle = 'red';
@@ -135,7 +144,7 @@ class Game {
     this.context.restore();
 
     this.drawInterval = window.requestAnimationFrame(this.mainDraw);
-    this.eventManager.checkEvent(this.player.row, this.player.col);
+    this.eventManager.checkEvent(this.player);
   }
 
   startGame(onLoadCallback) {

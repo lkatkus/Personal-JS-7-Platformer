@@ -3,13 +3,13 @@ const onLeaveCallback = () => {
   document.getElementById('textBox').innerHTML = '';
 };
 
-const updateTextBox = (text, image, siteAction) => () => {
+const updateTextBox = ({ text, image, shouldUpdate }, siteAction) => () => {
   const textBoxWrapper = document.getElementById('textBoxWrapper');
   const textBox = document.getElementById('textBox');
   const imageBox = document.getElementById('textBoxImage');
   const textBoxButton = document.getElementById('textBoxButton');
 
-  if (textBoxWrapper.className !== 'open') {
+  if (textBoxWrapper.className !== 'open' || shouldUpdate) {
     textBoxWrapper.className = 'open';
     textBox.innerHTML = text;
     imageBox.src = image;
@@ -24,12 +24,18 @@ const updateTextBox = (text, image, siteAction) => () => {
   }
 };
 
-export const getEventConfig = (siteActions, images) => [
+export const getEventConfig = (
+  { gameActions, siteActions },
+  { player, worker, cat }
+) => [
   {
     id: 'initialEvent',
     row: [41, 41],
-    col: [3, 8],
-    eventHandler: updateTextBox('Whoo... What is this place?', images.player),
+    col: [5, 9],
+    eventHandler: updateTextBox({
+      text: 'Whoo... What is this place?',
+      image: player
+    }),
     onLeave: onLeaveCallback
   },
   {
@@ -37,8 +43,11 @@ export const getEventConfig = (siteActions, images) => [
     row: [41, 41],
     col: [14, 27],
     eventHandler: updateTextBox(
-      'I think that someone has told me that architects make great developers.',
-      images.player,
+      {
+        text:
+          'I think that someone has told me that architects make great developers.',
+        image: player
+      },
       { name: 'About', callback: () => siteActions.openTab('contentAbout') }
     ),
     onLeave: onLeaveCallback
@@ -47,7 +56,10 @@ export const getEventConfig = (siteActions, images) => [
     id: 'moveUp',
     row: [41, 41],
     col: [35, 39],
-    eventHandler: updateTextBox('You should try climbing up.', images.worker),
+    eventHandler: updateTextBox({
+      text: 'You should try climbing up.',
+      image: worker
+    }),
     onLeave: onLeaveCallback
   },
   {
@@ -55,8 +67,10 @@ export const getEventConfig = (siteActions, images) => [
     row: [35, 35],
     col: [35, 39],
     eventHandler: updateTextBox(
-      'Hmmm... Not too bad! I think that I should come back later.',
-      images.player,
+      {
+        text: 'Hmmm... Not too bad! I think that I should come back later.',
+        image: player
+      },
       {
         name: 'Portfolio',
         callback: () => siteActions.openTab('contentPortfolio')
@@ -69,8 +83,11 @@ export const getEventConfig = (siteActions, images) => [
     row: [35, 35],
     col: [40, 45],
     eventHandler: updateTextBox(
-      '"In case of fire - git add -A, git commit -m "FIRE!", git push --force"',
-      images.player,
+      {
+        text:
+          '"In case of fire - git add -A, git commit -m "FIRE!", git push origin HEAD --force"',
+        image: player
+      },
       {
         name: 'Github',
         callback: () => {
@@ -85,8 +102,11 @@ export const getEventConfig = (siteActions, images) => [
     row: [35, 35],
     col: [46, 50],
     eventHandler: updateTextBox(
-      'Autocad, Archicad, 3DS MAX, Photoshop, Illustrator, Nikon, Aperture, Bokeh and etc. Lots of fancy words, huh?',
-      images.player,
+      {
+        text:
+          'Autocad, Archicad, 3DS MAX, Photoshop, Illustrator, Nikon, Aperture, Bokeh and etc. Lots of fancy words, huh?',
+        image: player
+      },
       { name: 'Other', callback: () => siteActions.openTab('contentOther') }
     ),
     onLeave: onLeaveCallback
@@ -95,7 +115,50 @@ export const getEventConfig = (siteActions, images) => [
     id: 'catSpeak',
     row: [33, 33],
     col: [13, 24],
-    eventHandler: updateTextBox('Meow!', images.cat),
+    eventHandler: updateTextBox({ text: 'Meow!', image: cat }),
+    onLeave: onLeaveCallback
+  },
+  {
+    id: 'initialEvent',
+    row: [5, 6],
+    col: [10, 12],
+    eventHandler: playerRef => {
+      if (playerRef.canFly) {
+        updateTextBox({ text: 'Meow!', image: cat })();
+      } else {
+        updateTextBox(
+          {
+            text:
+              'That thing looks interesting...? It seems to be REACTing to something.',
+            image: player
+          },
+          {
+            name: 'Touch the strange thing',
+            callback: () => {
+              gameActions.levelUp();
+              gameActions.disableControls();
+
+              updateTextBox(
+                {
+                  text:
+                    'What is this new power, that i feel?! Virtual DOM, Hooks, Redux, GraphQL, Node!',
+                  image: cat,
+                  shouldUpdate: true
+                },
+                {
+                  name: 'Try out this new power!',
+                  callback: () => {
+                    gameActions.enableControls();
+
+                    onLeaveCallback();
+                  }
+                }
+              )();
+            }
+          }
+        )();
+      }
+    },
     onLeave: onLeaveCallback
   }
 ];

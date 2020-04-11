@@ -1,10 +1,5 @@
 class Entity {
-  constructor(
-    contextRef,
-    levelRef,
-    initialLocation,
-    config
-  ) {
+  constructor(contextRef, levelRef, initialLocation, config) {
     this.name = config.name;
     this.context = contextRef;
     this.level = levelRef;
