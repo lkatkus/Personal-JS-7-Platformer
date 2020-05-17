@@ -23,7 +23,7 @@ class Game {
       name: 'player',
       movement: {
         speedX: 8,
-        speedY: 8
+        speedY: 8,
       },
       texture: {
         source: PlayerTexture,
@@ -31,15 +31,15 @@ class Game {
         width: 100,
         tileCols: 8,
         drawOffset: 1,
-        drawHeightOffset: 2
-      }
+        drawHeightOffset: 2,
+      },
     });
     // TODO create npc manager
     this.npc = new Npc(this.context, this.level, {
       name: 'cat',
       movement: {
         speedX: 10,
-        speedY: 8
+        speedY: 8,
       },
       texture: {
         source: NpcCatTexture,
@@ -47,23 +47,29 @@ class Game {
         width: 64,
         tileCols: 3,
         drawOffset: 0,
-        drawHeightOffset: 1
+        drawHeightOffset: 1,
       },
       min: {
         row: 33,
-        col: 12
+        col: 12,
       },
       max: {
         row: 33,
-        col: 24
-      }
+        col: 24,
+      },
     });
 
     this.eventManager = new EventManager(
       {
-        levelUp: () => this.player.levelUp(PlayerTextureLeveled),
+        levelUp: () =>
+          this.player.levelUp(PlayerTextureLeveled, {
+            tileCols: 3,
+            canFly: true,
+            speedX: 20,
+            speedY: 20,
+          }),
         enableControls: () => this.player.enableControls(),
-        disableControls: () => this.player.disableControls()
+        disableControls: () => this.player.disableControls(),
       },
       siteActions
     );
@@ -71,7 +77,7 @@ class Game {
 
     Promise.all([
       this.level.loadingHandler,
-      this.player.loadingHandler
+      this.player.loadingHandler,
       // TODO npc loading handler
     ]).then(() => {
       this.startGame(onLoadCallback);

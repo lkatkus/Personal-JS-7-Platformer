@@ -3,7 +3,7 @@ import Entity from './entity';
 import {
   MOVEMENT_KEYS,
   MOVEMENT_KEY_CODES,
-  MOVEMENT_DIRECTION
+  MOVEMENT_DIRECTION,
 } from './../constants';
 
 class Player extends Entity {
@@ -15,13 +15,13 @@ class Player extends Entity {
   }
 
   setControls() {
-    document.addEventListener('keydown', event => {
+    document.addEventListener('keydown', (event) => {
       if (MOVEMENT_KEY_CODES.includes(event.keyCode)) {
         this.moveStart(MOVEMENT_KEYS[event.key]);
       }
     });
 
-    document.addEventListener('keyup', event => {
+    document.addEventListener('keyup', (event) => {
       if (MOVEMENT_KEY_CODES.includes(event.keyCode)) {
         this.moveEnd(MOVEMENT_KEYS[event.key]);
       }
@@ -38,14 +38,15 @@ class Player extends Entity {
     // TODO
   }
 
-  levelUp(newTexture) {
+  levelUp(newTexture, config) {
     const newTextureSheet = new Image();
     newTextureSheet.src = newTexture;
 
     this.textureSheet = newTextureSheet;
-    this.canFly = true;
-    this.speedX = 20;
-    this.speedY = 20;
+
+    for (let prop in config) {
+      this[prop] = config[prop];
+    }
   }
 
   updateAnchor(tileSize) {

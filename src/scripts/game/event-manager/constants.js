@@ -26,7 +26,7 @@ const updateTextBox = ({ text, image, shouldUpdate }, siteAction) => () => {
 
 export const getEventConfig = (
   { gameActions, siteActions },
-  { player, worker, cat }
+  { player, worker, cat, robo }
 ) => [
   {
     id: 'initialEvent',
@@ -34,9 +34,9 @@ export const getEventConfig = (
     col: [5, 9],
     eventHandler: updateTextBox({
       text: 'Whoo... What is this place?',
-      image: player
+      image: player,
     }),
-    onLeave: onLeaveCallback
+    onLeave: onLeaveCallback,
   },
   {
     id: 'makeArchitectsGreatAgain',
@@ -46,11 +46,11 @@ export const getEventConfig = (
       {
         text:
           'I think that someone has told me that architects make great developers.',
-        image: player
+        image: player,
       },
       { name: 'About', callback: () => siteActions.openTab('contentAbout') }
     ),
-    onLeave: onLeaveCallback
+    onLeave: onLeaveCallback,
   },
   {
     id: 'moveUp',
@@ -58,9 +58,9 @@ export const getEventConfig = (
     col: [35, 39],
     eventHandler: updateTextBox({
       text: 'You should try climbing up.',
-      image: worker
+      image: worker,
     }),
-    onLeave: onLeaveCallback
+    onLeave: onLeaveCallback,
   },
   {
     id: 'webPortfolio',
@@ -69,14 +69,14 @@ export const getEventConfig = (
     eventHandler: updateTextBox(
       {
         text: 'Hmmm... Not too bad! I think that I should come back later.',
-        image: player
+        image: player,
       },
       {
         name: 'Portfolio',
-        callback: () => siteActions.openTab('contentPortfolio')
+        callback: () => siteActions.openTab('contentPortfolio'),
       }
     ),
-    onLeave: onLeaveCallback
+    onLeave: onLeaveCallback,
   },
   {
     id: 'gitRedirect',
@@ -86,16 +86,16 @@ export const getEventConfig = (
       {
         text:
           '"In case of fire - git add -A, git commit -m "FIRE!", git push origin HEAD --force"',
-        image: player
+        image: player,
       },
       {
         name: 'Github',
         callback: () => {
           window.open('https://github.com/lkatkus', '_blank');
-        }
+        },
       }
     ),
-    onLeave: onLeaveCallback
+    onLeave: onLeaveCallback,
   },
   {
     id: 'miscPortfolio',
@@ -105,32 +105,32 @@ export const getEventConfig = (
       {
         text:
           'Autocad, Archicad, 3DS MAX, Photoshop, Illustrator, Nikon, Aperture, Bokeh and etc. Lots of fancy words, huh?',
-        image: player
+        image: player,
       },
       { name: 'Other', callback: () => siteActions.openTab('contentOther') }
     ),
-    onLeave: onLeaveCallback
+    onLeave: onLeaveCallback,
   },
   {
     id: 'catSpeak',
     row: [33, 33],
     col: [13, 24],
     eventHandler: updateTextBox({ text: 'Meow!', image: cat }),
-    onLeave: onLeaveCallback
+    onLeave: onLeaveCallback,
   },
   {
     id: 'initialEvent',
     row: [5, 6],
     col: [10, 12],
-    eventHandler: playerRef => {
+    eventHandler: (playerRef) => {
       if (playerRef.canFly) {
-        updateTextBox({ text: 'Meow!', image: cat })();
+        updateTextBox({ text: '01010100 01101000 01100001 01101110 01101011 00100000 01111001 01101111 01110101 00100001', image: robo })();
       } else {
         updateTextBox(
           {
             text:
               'That thing looks interesting...? It seems to be REACTing to something.',
-            image: player
+            image: player,
           },
           {
             name: 'Touch the strange thing',
@@ -142,8 +142,8 @@ export const getEventConfig = (
                 {
                   text:
                     'What is this new power, that i feel?! Virtual DOM, Hooks, Redux, GraphQL, Node!',
-                  image: cat,
-                  shouldUpdate: true
+                  image: robo,
+                  shouldUpdate: true,
                 },
                 {
                   name: 'Try out this new power!',
@@ -151,14 +151,14 @@ export const getEventConfig = (
                     gameActions.enableControls();
 
                     onLeaveCallback();
-                  }
+                  },
                 }
               )();
-            }
+            },
           }
         )();
       }
     },
-    onLeave: onLeaveCallback
-  }
+    onLeave: onLeaveCallback,
+  },
 ];

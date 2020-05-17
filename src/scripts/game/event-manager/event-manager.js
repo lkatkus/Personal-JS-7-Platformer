@@ -1,6 +1,7 @@
 import playerImage from './../../../assets/textures/animation-player.gif';
 import catImage from './../../../assets/textures/animation-cat.gif';
 import workerImage from './../../../assets/textures/animation-worker.gif';
+import roboImage from './../../../assets/textures/animation-robo.gif';
 import { getEventConfig } from './constants';
 
 class EventManager {
@@ -10,7 +11,8 @@ class EventManager {
       {
         player: playerImage,
         cat: catImage,
-        worker: workerImage
+        worker: workerImage,
+        robo: roboImage,
       }
     );
     this.currentEvent = null;
@@ -18,7 +20,7 @@ class EventManager {
 
   checkEvent(player) {
     const nextEvent = this.events.find(
-      event =>
+      (event) =>
         player.row >= event.row[0] &&
         player.row <= event.row[1] &&
         player.col >= event.col[0] &&
