@@ -1,3 +1,9 @@
+import PlayerTextureLeveled from './../../assets/textures/player-tile-sheet-leveled.png';
+import playerImage from './../../assets/textures/animation-player.gif';
+import catImage from './../../assets/textures/animation-cat.gif';
+import workerImage from './../../assets/textures/animation-worker.gif';
+import roboImage from './../../assets/textures/animation-robo.gif';
+
 const onLeaveCallback = () => {
   document.getElementById('textBoxWrapper').className = 'closed';
   document.getElementById('textBox').innerHTML = '';
@@ -24,17 +30,26 @@ const updateTextBox = ({ text, image, shouldUpdate }, siteAction) => () => {
   }
 };
 
-export const getEventConfig = (
-  { gameActions, siteActions },
-  { player, worker, cat, robo }
-) => [
+const GAME_EVENTS = {
+  levelUp: ({ player }) =>
+    player.levelUp(PlayerTextureLeveled, {
+      tileCols: 3,
+      canFly: true,
+      speedX: 20,
+      speedY: 20,
+    }),
+  enableControls: ({ player }) => player.enableControls(),
+  disableControls: ({ player }) => player.disableControls(),
+};
+
+const getEventConfig = ({ game, page }) => (gameObjects) => [
   {
     id: 'initialEvent',
     row: [41, 41],
     col: [5, 9],
     eventHandler: updateTextBox({
       text: 'Whoo... What is this place?',
-      image: player,
+      image: playerImage,
     }),
     onLeave: onLeaveCallback,
   },
@@ -46,9 +61,9 @@ export const getEventConfig = (
       {
         text:
           'I think that someone has told me that architects make great developers.',
-        image: player,
+        image: playerImage,
       },
-      { name: 'About', callback: () => siteActions.openTab('contentAbout') }
+      { name: 'About', callback: () => page.openTab('contentAbout') }
     ),
     onLeave: onLeaveCallback,
   },
@@ -58,7 +73,7 @@ export const getEventConfig = (
     col: [35, 39],
     eventHandler: updateTextBox({
       text: 'You should try climbing up.',
-      image: worker,
+      image: workerImage,
     }),
     onLeave: onLeaveCallback,
   },
@@ -69,11 +84,11 @@ export const getEventConfig = (
     eventHandler: updateTextBox(
       {
         text: 'Hmmm... Not too bad! I think that I should come back later.',
-        image: player,
+        image: playerImage,
       },
       {
         name: 'Portfolio',
-        callback: () => siteActions.openTab('contentPortfolio'),
+        callback: () => page.openTab('contentPortfolio'),
       }
     ),
     onLeave: onLeaveCallback,
@@ -86,7 +101,7 @@ export const getEventConfig = (
       {
         text:
           '"In case of fire - git add -A, git commit -m "FIRE!", git push origin HEAD --force"',
-        image: player,
+        image: playerImage,
       },
       {
         name: 'Github',
@@ -105,9 +120,9 @@ export const getEventConfig = (
       {
         text:
           'Autocad, Archicad, 3DS MAX, Photoshop, Illustrator, Nikon, Aperture, Bokeh and etc. Lots of fancy words, huh?',
-        image: player,
+        image: playerImage,
       },
-      { name: 'Other', callback: () => siteActions.openTab('contentOther') }
+      { name: 'Other', callback: () => page.openTab('contentOther') }
     ),
     onLeave: onLeaveCallback,
   },
@@ -115,7 +130,7 @@ export const getEventConfig = (
     id: 'catSpeak',
     row: [33, 33],
     col: [13, 24],
-    eventHandler: updateTextBox({ text: 'Meow!', image: cat }),
+    eventHandler: updateTextBox({ text: 'Meow!', image: catImage }),
     onLeave: onLeaveCallback,
   },
   {
@@ -124,31 +139,35 @@ export const getEventConfig = (
     col: [10, 12],
     eventHandler: (playerRef) => {
       if (playerRef.canFly) {
-        updateTextBox({ text: '01010100 01101000 01100001 01101110 01101011 00100000 01111001 01101111 01110101 00100001', image: robo })();
+        updateTextBox({
+          text:
+            '01010100 01101000 01100001 01101110 01101011 00100000 01111001 01101111 01110101 00100001',
+          image: roboImage,
+        })();
       } else {
         updateTextBox(
           {
             text:
               'That thing looks interesting...? It seems to be REACTing to something.',
-            image: player,
+            image: playerImage,
           },
           {
             name: 'Touch the strange thing',
             callback: () => {
-              gameActions.levelUp();
-              gameActions.disableControls();
+              game.levelUp(gameObjects);
+              game.disableControls(gameObjects);
 
               updateTextBox(
                 {
                   text:
                     'What is this new power, that i feel?! Virtual DOM, Hooks, Redux, GraphQL, Node!',
-                  image: robo,
+                  image: roboImage,
                   shouldUpdate: true,
                 },
                 {
                   name: 'Try out this new power!',
                   callback: () => {
-                    gameActions.enableControls();
+                    game.enableControls(gameObjects);
 
                     onLeaveCallback();
                   },
@@ -162,3 +181,14 @@ export const getEventConfig = (
     onLeave: onLeaveCallback,
   },
 ];
+
+export const prepareEvents = function () {
+  return getEventConfig({
+    game: GAME_EVENTS,
+    page: {
+      openTab: (tab) => {
+        this.toggleContentWrapper(tab, true);
+      },
+    },
+  });
+};

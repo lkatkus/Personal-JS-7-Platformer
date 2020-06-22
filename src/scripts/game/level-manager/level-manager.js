@@ -1,29 +1,29 @@
 import LevelTextureManager from './level-texture-manager';
 import LevelTile from './level-tile';
 
-import {
-  TILES_SOLID,
-  TILES_CLIMBABLE,
-  SPAWN_MARKER,
-  LEVEL_LAYOUT,
-  TILES_PER_ROW,
-  TILESHEET_SPRITE_SIZE
-} from './constants';
-
-import LevelTileSheet from './../../../assets/textures/level-tile-sheet.png';
-
 class LevelManager {
-  constructor(canvas, canvasContext, setPlayerPosition) {
+  constructor(canvas, canvasContext, config) {
     this.canvas = canvas;
     this.context = canvasContext;
-    this.levelTextureManager = new LevelTextureManager();
+
+    this.spawnMarker = config.spawnMarker;
+    this.levelLayout = config.layout;
+    this.spriteSize = config.tileSheet.spriteSize;
+    this.tilesPerRow = config.tileSheet.tilesPerRow;
+    this.tileTypes = config.tileSheet.types;
+
+    this.levelTextureManager = new LevelTextureManager({
+      spawnMarker: this.spawnMarker,
+      tileSheetCols: config.tileSheet.cols,
+      spriteSize: this.spriteSize,
+    });
 
     this.setTileSize();
-    this.setTileContainer(setPlayerPosition);
+    this.setTileContainer();
 
-    this.loadingHandler = new Promise(resolve => {
+    this.loadingHandler = new Promise((resolve) => {
       this.textureSheet = new Image();
-      this.textureSheet.src = LevelTileSheet;
+      this.textureSheet.src = config.tileSheet.src;
       this.textureSheet.onload = () => resolve();
     });
   }
@@ -31,9 +31,9 @@ class LevelManager {
   setTileSize() {
     // TODO add check to check if new TILE_SIZE !== CURRENT_TILE_SIZE
     if (this.canvas.width / this.canvas.height < 1) {
-      this.TILE_SIZE = Math.ceil(this.canvas.width / TILES_PER_ROW);
+      this.TILE_SIZE = Math.ceil(this.canvas.width / this.tilesPerRow);
     } else {
-      this.TILE_SIZE = Math.ceil(this.canvas.height / TILES_PER_ROW);
+      this.TILE_SIZE = Math.ceil(this.canvas.height / this.tilesPerRow);
     }
 
     this.colsOnScreen = Math.floor(this.canvas.width / this.TILE_SIZE);
@@ -42,25 +42,25 @@ class LevelManager {
 
   resetTileSize() {
     if (this.canvas.width / this.canvas.height < 1) {
-      this.TILE_SIZE = Math.ceil(this.canvas.width / TILES_PER_ROW);
+      this.TILE_SIZE = Math.ceil(this.canvas.width / this.tilesPerRow);
     } else {
-      this.TILE_SIZE = Math.ceil(this.canvas.height / TILES_PER_ROW);
+      this.TILE_SIZE = Math.ceil(this.canvas.height / this.tilesPerRow);
     }
 
     this.colsOnScreen = Math.floor(this.canvas.width / this.TILE_SIZE);
     this.rowsOnScreen = Math.floor(this.canvas.height / this.TILE_SIZE);
 
-    this.tileContainer.forEach(tileRow => {
-      tileRow.forEach(tile => {
+    this.tileContainer.forEach((tileRow) => {
+      tileRow.forEach((tile) => {
         tile.updateTileSize(this.TILE_SIZE);
       });
     });
   }
 
   setTileContainer() {
-    this.tileContainer = LEVEL_LAYOUT.map((layoutRow, row) =>
+    this.tileContainer = this.levelLayout.map((layoutRow, row) =>
       layoutRow.map((type, col) => {
-        if (type === SPAWN_MARKER) {
+        if (type === this.spawnMarker) {
           this.spawnX = col * this.TILE_SIZE;
           this.spawnY = row * this.TILE_SIZE;
 
@@ -68,7 +68,7 @@ class LevelManager {
             col: col,
             row: row,
             x: col * this.TILE_SIZE,
-            y: row * this.TILE_SIZE
+            y: row * this.TILE_SIZE,
           };
         }
 
@@ -90,8 +90,9 @@ class LevelManager {
     }
 
     let rightCol = leftCol + this.colsOnScreen + 4;
-    if (rightCol > LEVEL_LAYOUT[0].length) {
-      rightCol = LEVEL_LAYOUT[0].length;
+    // @todo define in constructor
+    if (rightCol > this.levelLayout[0].length) {
+      rightCol = this.levelLayout[0].length;
     }
 
     let topRow = Math.floor(this.cameraOffsetY / this.TILE_SIZE) - 2;
@@ -100,8 +101,9 @@ class LevelManager {
     }
 
     let bottomRow = topRow + this.rowsOnScreen + 4;
-    if (bottomRow > LEVEL_LAYOUT.length) {
-      bottomRow = LEVEL_LAYOUT.length;
+    // @todo define in constructor
+    if (bottomRow > this.levelLayout.length) {
+      bottomRow = this.levelLayout.length;
     }
 
     this.visibleLeftCol = leftCol;
@@ -136,8 +138,8 @@ class LevelManager {
               this.textureSheet,
               tile.texture.x,
               tile.texture.y,
-              TILESHEET_SPRITE_SIZE,
-              TILESHEET_SPRITE_SIZE,
+              this.spriteSize,
+              this.spriteSize,
               tile.x,
               tile.y,
               tile.width,
@@ -163,11 +165,11 @@ class LevelManager {
   }
 
   canClimbTile(type) {
-    return TILES_CLIMBABLE.includes(type);
+    return this.tileTypes.climbable.includes(type);
   }
 
   canWalkTile(type) {
-    return TILES_SOLID.includes(type);
+    return this.tileTypes.solid.includes(type);
   }
 }
 

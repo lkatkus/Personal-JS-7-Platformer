@@ -1,4 +1,7 @@
 import Game from './../game/game';
+import { GAME_CONFIG } from './game.config';
+import { LEVEL_CONFIG } from './level.config';
+import { prepareEvents } from './events.config';
 
 class SiteManager {
   constructor() {
@@ -81,9 +84,17 @@ class SiteManager {
 
   startGame() {
     if (!this.game) {
-      this.game = new Game(this.onLoadGame, {
-        openTab: (tab) => this.toggleContentWrapper(tab, true)
-      });
+      this.game = new Game(
+        {
+          ...GAME_CONFIG,
+          level: LEVEL_CONFIG,
+          events: prepareEvents.call(this),
+          canvas: document.getElementById('sceneCanvas'),
+        },
+        {
+          onLoadGame: this.onLoadGame,
+        }
+      );
       this.startGameButton.innerHTML = 'Loading...';
     }
   }
@@ -111,7 +122,7 @@ class SiteManager {
     });
 
     // Array.from required for IE
-    Array.from(this.sideBarList).forEach(element => {
+    Array.from(this.sideBarList).forEach((element) => {
       element.addEventListener('click', () => {
         this.toggleContentWrapper(element.getAttribute('value'));
       });

@@ -4,7 +4,7 @@ import {
   MOVEMENT_KEYS,
   MOVEMENT_KEY_CODES,
   MOVEMENT_DIRECTION,
-} from './../constants';
+} from './player.constants';
 
 class Player extends Entity {
   constructor(canvasContext, level, config) {

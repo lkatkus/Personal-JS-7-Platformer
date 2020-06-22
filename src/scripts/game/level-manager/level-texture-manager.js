@@ -1,29 +1,26 @@
-import {
-    SPAWN_MARKER,
-} from './constants';
-
-// TODO move to consts
-const TILESHEET_WIDTH = 1200;
-const TILESHEET_COLS = 20;
-const TILESHEET_SPRITE = TILESHEET_WIDTH / TILESHEET_COLS;
-
 class LevelTextureManager {
-    getTexture(type) {
-        const adjustedType = type - 1;
-        const sourceRow = Math.floor(adjustedType / TILESHEET_COLS);
-        const sourceCol = adjustedType - sourceRow * TILESHEET_COLS;
+  constructor(config) {
+    this.spawnMarker = config.spawnMarker;
+    this.tileSheetCols = config.tileSheetCols;
+    this.spriteSize = config.spriteSize;
+  }
 
-        const textureCoordinates = {
-            x: sourceCol * TILESHEET_SPRITE,
-            y: sourceRow * TILESHEET_SPRITE,
-        };
-        
-        if (type === SPAWN_MARKER) {
-            return 0;
-        }
+  getTexture(type) {
+    const adjustedType = type - 1;
+    const sourceRow = Math.floor(adjustedType / this.tileSheetCols);
+    const sourceCol = adjustedType - sourceRow * this.tileSheetCols;
 
-        return textureCoordinates;
+    const textureCoordinates = {
+      x: sourceCol * this.spriteSize,
+      y: sourceRow * this.spriteSize,
+    };
+
+    if (type === this.spawnMarker) {
+      return 0;
     }
+
+    return textureCoordinates;
+  }
 }
 
 export default LevelTextureManager;

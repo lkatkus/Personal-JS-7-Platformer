@@ -1,15 +1,16 @@
-export const SPAWN_MARKER = 'x';
-export const TILE_SIZE = 30;
-export const TILES_PER_ROW = 11;
+import LevelTileSheet from './../../assets/textures/level-tile-sheet.png'
 
-export const TILESHEET_WIDTH = 1200;
-export const TILESHEET_HEIGHT = 1200;
-export const TILESHEET_ROWS = 20;
-export const TILESHEET_COLS = 20;
-export const TILESHEET_SPRITE_SIZE = TILESHEET_WIDTH / TILESHEET_COLS;
+const SPAWN_MARKER = 'x';
+const TILES_PER_ROW = 11;
 
-export const TILES_CLIMBABLE = [21, 22, 23];
-export const TILES_SOLID = [
+const TILESHEET_WIDTH = 1200;
+const TILESHEET_HEIGHT = 1200;
+const TILESHEET_ROWS = 20;
+const TILESHEET_COLS = 20;
+const TILESHEET_SPRITE_SIZE = TILESHEET_WIDTH / TILESHEET_COLS;
+
+const TILES_CLIMBABLE = [21, 22, 23];
+const TILES_SOLID = [
   1,
   2,
   3,
@@ -29,7 +30,7 @@ export const TILES_SOLID = [
   ...TILES_CLIMBABLE
 ];
 
-export const LEVEL_LAYOUT = [
+const LEVEL_LAYOUT = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -80,3 +81,21 @@ export const LEVEL_LAYOUT = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
+
+export const LEVEL_CONFIG = {
+  layout: LEVEL_LAYOUT,
+  spawnMarker: SPAWN_MARKER,
+  tileSheet: {
+    src: LevelTileSheet,
+    tilesPerRow: TILES_PER_ROW,
+    spriteSize: TILESHEET_SPRITE_SIZE,
+    width: TILESHEET_WIDTH,
+    height: TILESHEET_HEIGHT,
+    rows: TILESHEET_ROWS,
+    cols: TILESHEET_COLS,
+    types: {
+      solid: TILES_SOLID,
+      climbable: TILES_CLIMBABLE,
+    }
+  },
+}

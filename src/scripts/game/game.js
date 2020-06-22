@@ -1,91 +1,38 @@
-import LevelManager from './level-manager/level-manager';
-import EventManager from './event-manager/event-manager';
-import Camera from './camera';
-import { Player, Npc } from './entity';
-
-import NpcCatTexture from './../../assets/textures/npc-cat-tileSheet.png';
-import PlayerTexture from './../../assets/textures/player-tile-sheet.png';
-import PlayerTextureLeveled from './../../assets/textures/player-tile-sheet-leveled.png';
+import { LevelManager } from './level-manager';
+import { EventManager } from './event-manager';
+import { Camera } from './camera';
+import { EntinyManager, Player, Npc } from './entity';
 
 class Game {
-  constructor(onLoadCallback, siteActions) {
+  constructor(config, { onLoadGame }) {
     this.mainDraw = this.mainDraw.bind(this);
     this.handleResize = this.handleResize.bind(this);
 
-    this.setCanvas();
+    this.setCanvas(config.canvas);
 
-    this.level = new LevelManager(
-      this.canvas,
+    this.level = new LevelManager(this.canvas, this.context, config.level);
+    this.player = new Player(this.context, this.level, config.player);
+    this.npcManager = new EntinyManager(
       this.context,
-      this.setPlayerPosition
-    );
-    this.player = new Player(this.context, this.level, {
-      name: 'player',
-      movement: {
-        speedX: 8,
-        speedY: 8,
-      },
-      texture: {
-        source: PlayerTexture,
-        height: 200,
-        width: 100,
-        tileCols: 8,
-        drawOffset: 1,
-        drawHeightOffset: 2,
-      },
-    });
-    // TODO create npc manager
-    this.npc = new Npc(this.context, this.level, {
-      name: 'cat',
-      movement: {
-        speedX: 10,
-        speedY: 8,
-      },
-      texture: {
-        source: NpcCatTexture,
-        height: 64,
-        width: 64,
-        tileCols: 3,
-        drawOffset: 0,
-        drawHeightOffset: 1,
-      },
-      min: {
-        row: 33,
-        col: 12,
-      },
-      max: {
-        row: 33,
-        col: 24,
-      },
-    });
-
-    this.eventManager = new EventManager(
-      {
-        levelUp: () =>
-          this.player.levelUp(PlayerTextureLeveled, {
-            tileCols: 3,
-            canFly: true,
-            speedX: 20,
-            speedY: 20,
-          }),
-        enableControls: () => this.player.enableControls(),
-        disableControls: () => this.player.disableControls(),
-      },
-      siteActions
+      this.level,
+      config.npc,
+      Npc
     );
     this.camera = new Camera(this.canvas, this.level, this.player);
+    this.eventManager = new EventManager(config.events, {
+      game: this,
+      player: this.player,
+    });
 
     Promise.all([
       this.level.loadingHandler,
       this.player.loadingHandler,
-      // TODO npc loading handler
-    ]).then(() => {
-      this.startGame(onLoadCallback);
-    });
+      this.npcManager.loadingHandler,
+    ]).then(() => this.startGame(onLoadGame));
   }
 
-  setCanvas() {
-    this.canvas = document.getElementById('sceneCanvas');
+  setCanvas(canvas) {
+    this.canvas = canvas;
     this.context = this.canvas.getContext('2d');
 
     this.canvas.width = window.innerWidth;
@@ -101,9 +48,8 @@ class Game {
     this.canvas.height = window.innerHeight;
 
     this.level.resetTileSize();
+    this.npcManager.resetPosition(this.level.TILE_SIZE);
     this.player.resetPosition(this.level.TILE_SIZE);
-    // TODO create npc manager
-    this.npc.resetPosition(this.level.TILE_SIZE);
     this.camera.resetCameraOffset();
 
     window.requestAnimationFrame(this.mainDraw);
@@ -143,8 +89,7 @@ class Game {
     this.context.translate(this.camera.offsetX, this.camera.offsetY);
 
     this.level.draw(this.camera.offsetX, this.camera.offsetY);
-    // TODO create npc manager
-    this.npc.draw(this.level.TILE_SIZE);
+    this.npcManager.draw(this.level.TILE_SIZE);
     this.player.draw(this.level.TILE_SIZE);
     this.debug();
     this.context.restore();

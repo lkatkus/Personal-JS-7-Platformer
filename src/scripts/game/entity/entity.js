@@ -28,7 +28,7 @@ class Entity {
         this.tileColOffset < this.tileCols ? (this.tileColOffset += 1) : 0;
     }, 100);
 
-    this.loadingHandler = new Promise(resolve => {
+    this.loadingHandler = new Promise((resolve) => {
       this.textureSheet = new Image();
       this.textureSheet.src = config.texture.source;
       this.textureSheet.onload = () => resolve();

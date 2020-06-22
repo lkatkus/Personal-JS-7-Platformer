@@ -1,5 +1,3 @@
-export const FPS = 1000 / 30;
-
 export const MOVEMENT_DIRECTION = {
   left: 'left',
   right: 'right',
