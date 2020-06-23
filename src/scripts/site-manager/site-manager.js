@@ -1,4 +1,5 @@
-import Game from './../game/game';
+import { Game } from 'laikajs';
+
 import { GAME_CONFIG } from './game.config';
 import { LEVEL_CONFIG } from './level.config';
 import { prepareEvents } from './events.config';
@@ -93,6 +94,31 @@ class SiteManager {
         },
         {
           onLoadGame: this.onLoadGame,
+          onDraw: function () {
+            const debugContainer = document.getElementById('debugContainer');
+            debugContainer.innerText = `
+              x ${this.player.x}
+              y ${this.player.y}
+              row ${this.player.row}
+              col ${this.player.col}
+              speedX ${this.player.speedX}
+              speedY ${this.player.speedY}
+              isFalling ${this.player.isFalling}
+              canFly ${this.player.canFly}
+            `;
+
+            this.context.fillStyle = 'red';
+            this.context.beginPath();
+            this.context.arc(this.player.x, this.player.y, 5, 0, 2 * Math.PI);
+            this.context.arc(
+              this.player.anchorX,
+              this.player.anchorY,
+              5,
+              0,
+              2 * Math.PI
+            );
+            this.context.fill();
+          },
         }
       );
       this.startGameButton.innerHTML = 'Loading...';
